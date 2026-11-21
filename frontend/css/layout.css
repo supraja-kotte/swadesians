@@ -1,0 +1,60 @@
+/* Overall page positioning. Mobile first, centred on larger screens. */
+
+.app-shell {
+  width: 100%;
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 2rem 1rem 7rem;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  animation: fade-up 0.35s ease-out;
+}
+
+.logo-tile {
+  flex: none;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 1.25rem;
+  background: var(--green-700);
+  color: var(--white);
+  display: grid;
+  place-items: center;
+  box-shadow: var(--shadow);
+}
+
+.logo-tile .icon {
+  width: 2.25rem;
+  height: 2.25rem;
+}
+
+.app-title {
+  font-size: 2rem;
+  line-height: 1.15;
+  margin-bottom: 0.25rem;
+  color: var(--stone-900);
+}
+
+.app-tagline {
+  margin-bottom: 0;
+  color: var(--stone-600);
+  font-size: 1rem;
+}
+
+.page-content {
+  animation: fade-up 0.35s ease-out;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

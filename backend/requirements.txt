@@ -1,0 +1,17 @@
+# Web framework and server
+fastapi
+uvicorn[standard]
+
+# Read .env files into Python variables
+python-dotenv
+
+# Database toolkit (SQLite now, PostgreSQL later)
+sqlalchemy
+psycopg[binary]
+
+# Multipart form parsing for local photo/video uploads
+python-multipart
+
+# Testing
+pytest
+httpx2

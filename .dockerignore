@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+_checkpoints/
+*.db
+*.db-journal
+.env
+.git/
+.github/
+backend/uploads/

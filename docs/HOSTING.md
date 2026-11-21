@@ -2,11 +2,14 @@
 
 ## Current machine status
 
-`git`, `gh`, `docker` and `psql` are not installed in this environment. I have
-prepared the repository files, but I cannot push or deploy from here until Git
-is installed and you provide the repository address and credentials.
+Git is installed and this project is connected to
+`https://github.com/thumikisaiprathima-cmyk/agri-guide.git` on `main`; the code
+has been pushed. `gh`, `docker` and `psql` are still not installed here, so
+repository administration and deployment are done through the GitHub website or
+from another machine. A hosting platform and production secrets are still
+needed before a public deploy.
 
-## Repository files prepared
+## Repository files pushed
 
 - `.github/workflows/ci.yml` — runs all pytest tests on push and pull request.
 - `Dockerfile` — builds the FastAPI backend plus the static frontend.
@@ -29,11 +32,9 @@ repository to one of:
 
 ## Information still needed from you
 
-1. GitHub repository URL or `owner/repo` and default branch.
-2. Whether to use an existing remote or create one.
-3. The deployment platform and its service/database details.
-4. The production `DATABASE_URL` (keep it secret; never paste it into frontend code).
-5. A production domain, if any.
+1. The deployment platform and its service/database details.
+2. The production `DATABASE_URL` (keep it secret; never paste it into frontend code).
+3. A production domain, if any.
 
 ## Before the first public deploy
 

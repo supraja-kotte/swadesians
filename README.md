@@ -23,7 +23,7 @@ All feature pages are now implemented. The schemes page includes 13 verified off
 
 ## Post-release workstreams
 
-1. **Production foundation (in progress)** — HttpOnly admin cookies with double-submit CSRF, PostgreSQL driver and `DATABASE_URL` normalisation, `scripts/migrate.py`, GitHub Actions CI, Dockerfile and `docs/HOSTING.md`. GitHub push/deploy is blocked until Git is installed locally and the repository URL is supplied.
+1. **Production foundation (in progress)** — HttpOnly admin cookies with double-submit CSRF, PostgreSQL driver and `DATABASE_URL` normalisation, `scripts/migrate.py`, GitHub Actions CI, Dockerfile and `docs/HOSTING.md`. The GitHub push is complete on `main`; hosting deploy still needs a platform and production secrets.
 2. **Verified government schemes (done)** — central + Andhra Pradesh + Telangana official links, categorised and dated, in `docs/SCHEME_SOURCES.md`. No amounts, eligibility rules or application claims.
 3. **Real AI voice assistant (provider-ready, waiting for key)** — natural spoken answers in all five languages via OpenAI-compatible or Gemini endpoints; the key stays in `backend/.env`. See `docs/AI_ASSISTANT.md`.
 4. **Community social UI (done)** — Instagram-style profile with a three-column photo grid, lightbox and one photo/video per post. Files stay in `backend/uploads/` and are served from `/uploads`; see `docs/COMMUNITY_MEDIA.md`.
@@ -170,9 +170,12 @@ For non-interactive setup only, `ADMIN_USERNAME` and `ADMIN_PASSWORD` environmen
 
 The browser loads `index.html` from the FastAPI server. JavaScript in `src/app.js` calls `GET /api/health` using `fetch()`. The backend returns JSON, and the page displays it. In later phases every feature will follow this same pattern: browser → API → backend → database or external service → JSON back to browser.
 
-## Version control note
+## Version control
 
-Git is not installed on this machine. Instead, each completed phase is saved as a zip snapshot in `agri-guide/_checkpoints/`. To roll back, restore the snapshot for the phase you want. If Git is installed later, run `git init` in `agri-guide/` and commit the first snapshot as your baseline.
+Git is installed and this folder is connected to
+`https://github.com/thumikisaiprathima-cmyk/agri-guide.git` on the `main`
+branch. Zip snapshots in `agri-guide/_checkpoints/` remain as extra local
+rollbacks, but Git history is now the primary record.
 
 ## Phase roadmap
 

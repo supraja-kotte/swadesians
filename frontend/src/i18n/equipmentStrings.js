@@ -125,6 +125,8 @@ export const equipmentTranslations = {
     myRenterEnquiriesHeading: "My renter enquiries",
     noFarmerProviderEnquiries: "You have not contacted a renter yet.",
     renterContactLabel: "Renter contact",
+    viewProviderDetails: "View details",
+    listingFromProfileNote: "These details are filled from your renter profile. Edit it under My renter profile.",
   },
   te: {
     equipmentTitle: "పరికరాల అద్దె",
@@ -248,6 +250,8 @@ export const equipmentTranslations = {
     myRenterEnquiriesHeading: "నా అద్దెదారు విచారణలు",
     noFarmerProviderEnquiries: "మీరు ఇంకా ఏ అద్దెదారుని సంప్రదించలేదు.",
     renterContactLabel: "అద్దెదారు contact",
+    viewProviderDetails: "వివరాలు చూడండి",
+    listingFromProfileNote: "ఈ వివరాలు మీ అద్దెదారు ప్రొఫైల్ నుంచి పూర్తయ్యాయి. వాటిని 'నా అద్దెదారు ప్రొఫైల్'లో సవరించండి.",
   },
   hi: {
     equipmentTitle: "उपकरण किराया",
@@ -371,6 +375,8 @@ export const equipmentTranslations = {
     myRenterEnquiriesHeading: "मेरे किरायेदार प्रश्न",
     noFarmerProviderEnquiries: "आपने अभी किसी किरायेदार से संपर्क नहीं किया है।",
     renterContactLabel: "किरायेदार संपर्क",
+    viewProviderDetails: "विवर देखें",
+    listingFromProfileNote: "ये जानकारी आपकी किरायेदार प्रोफ़ाइल से भरी गई है। इसे 'मेरी किरायेदार प्रोफ़ाइल' में संपादित करें।",
   },
   ta: {
     equipmentTitle: "உபகரண வாடகை",
@@ -494,6 +500,8 @@ export const equipmentTranslations = {
     myRenterEnquiriesHeading: "என் வழங்குபவர் வினவல்கள்",
     noFarmerProviderEnquiries: "நீங்கள் இதுவரை எந்த வழங்குபவரையும் தொடர்பு கொள்ளவில்லை.",
     renterContactLabel: "வழங்குபவர் தொடர்பு",
+    viewProviderDetails: "விவரங்களைக் காண்க",
+    listingFromProfileNote: "இந்த விவரங்கள் உங்கள் வழங்குபவர் சுயவிவரத்திலிருந்து நிரப்பப்பட்டன. அவற்றை 'என் வழங்குபவர் சுயவிவரம்' இல் திருத்தவும்.",
   },
   mr: {
     equipmentTitle: "उपकरण भाडे",
@@ -617,5 +625,7 @@ export const equipmentTranslations = {
     myRenterEnquiriesHeading: "माझ्या भाड्याने देणाऱ्याच्या चौकशा",
     noFarmerProviderEnquiries: "तुम्ही अद्याप कोणत्या भाडे देणाऱ्याशी संपर्क केला नाही.",
     renterContactLabel: "भाडे देणाऱ्याचा संपर्क",
+    viewProviderDetails: "तपशील पहा",
+    listingFromProfileNote: "हे तपशील तुमच्या भाडे देणाऱ्याच्या प्रोफाइलमधून भरले आहेत. ते 'माझी भाडे देणाऱ्याची प्रोफाइल' मध्ये संपादित करा.",
   },
 };

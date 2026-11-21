@@ -320,6 +320,37 @@ def test_provider_profile_is_user_entered_and_discoverable() -> None:
     assert provider["id"] not in public_provider_ids()
 
 
+def test_provider_detail_returns_live_public_profile_and_equipment() -> None:
+    key = uuid4().hex
+    provider = create_provider(
+        key,
+        display_name="Live Detail Rentals",
+        contact="detail@example.in",
+    )
+    listing = create_listing(
+        key,
+        title="Live detail tractor",
+        state="Telangana",
+        district="Warangal",
+    )
+
+    response = client.get(f"/api/equipment/providers/{provider['id']}")
+    assert response.status_code == 200, response.text
+    detail = response.json()["provider"]
+    assert detail["id"] == provider["id"]
+    assert detail["display_name"] == "Live Detail Rentals"
+    assert "contact" not in detail
+    assert [item["id"] for item in detail["listings"]] == [listing["id"]]
+    assert "owner_contact" not in detail["listings"][0]
+
+    missing = client.get("/api/equipment/providers/not-a-provider")
+    assert missing.status_code == 404
+
+    create_provider(key, status="paused")
+    paused = client.get(f"/api/equipment/providers/{provider['id']}")
+    assert paused.status_code == 404
+
+
 def test_direct_provider_enquiry_connects_farmer_and_renter() -> None:
     owner_key = uuid4().hex
     farmer_key_value = farmer_key()

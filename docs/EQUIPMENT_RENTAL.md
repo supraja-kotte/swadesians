@@ -55,13 +55,19 @@ The Equipment page has four tabs:
    quick district picks and public cards. Contact detail appears only after an
    enquiry is sent.
 2. **Find renters** — browse user-entered renter profiles with the same
-   category and place filters, see any equipment they have listed, and send a
-   direct enquiry.
+   category and place filters, open a live detail view with the renter's current
+   equipment, and send a direct enquiry.
 3. **I have equipment** — create or edit a renter profile, add a listing, see
    listings with new-enquiry counts, pause/resume a listing, and reply to or
-   close enquiries from both listings and the renter profile.
+   close enquiries from both listings and the renter profile. Listing forms are
+   pre-filled from the saved renter profile.
 4. **My enquiries** — enquiries sent from this browser to listings and renter
    profiles, with the submitted contact detail and any reply.
+
+Both public tabs reload from the API when the tab opens, when filters change,
+and after a profile, listing, status or enquiry is saved. Opening a renter's
+details fetches that profile and its equipment again from the server, so the
+two tabs stay connected without a manual page refresh.
 
 An administrator sees an **Equipment rental** section on the Admin page with
 all owner-submitted listings and enquiries, and can hide or restore a listing.
@@ -79,6 +85,7 @@ all owner-submitted listings and enquiries, and can hide or restore a listing.
 | `GET` | `/api/equipment/farmer/enquiries` | Farmer's own enquiries (`X-Farmer-Key` header) |
 | `POST` | `/api/equipment/listings/{id}/enquiries` | Farmer sends an enquiry |
 | `GET` | `/api/equipment/providers` | Public active renter profiles, optional `category` and `location` filters |
+| `GET` | `/api/equipment/providers/{id}` | One live public renter profile with its current equipment, contact hidden |
 | `PUT` | `/api/equipment/owner/provider` | Owner creates or updates a renter profile (`X-Owner-Key` header) |
 | `GET` | `/api/equipment/owner/provider` | Owner's renter profile, if one exists |
 | `POST` | `/api/equipment/providers/{id}/enquiries` | Farmer sends a direct renter enquiry |

@@ -405,6 +405,20 @@ def list_providers(
         }
 
 
+@router.get("/providers/{provider_id}")
+def get_provider(provider_id: str) -> dict[str, Any]:
+    """Return one live renter profile with its current public equipment."""
+    with SessionLocal() as db:
+        row = db.get(EquipmentProvider, provider_id)
+        if row is None or row.is_demo or row.status != "active":
+            raise HTTPException(status_code=404, detail="Renter not available")
+        return {
+            "provider": serialize_provider(
+                row, _active_listings_for_owner(db, row.owner_key_hash)
+            )
+        }
+
+
 @router.put("/owner/provider")
 def save_provider(
     payload: ProviderIn,

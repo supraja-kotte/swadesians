@@ -237,3 +237,186 @@ def test_enquiry_validation_and_ownership_checks() -> None:
 
     short_key = client.get("/api/equipment/owner/listings", headers={"X-Owner-Key": "short"})
     assert short_key.status_code == 422
+
+
+def provider_owner_headers() -> dict[str, str]:
+    return {"X-Owner-Key": uuid4().hex}
+
+
+def create_provider(owner_key: str, **overrides) -> dict:
+    payload = {
+        "display_name": "Test renter",
+        "contact": "renter@example.in",
+        "state": "Telangana",
+        "district": "Warangal",
+        "categories": ["tractors", "harvesting"],
+        "availability": "Weekends",
+        "description": "Owned and operated by the provider",
+        "status": "active",
+    }
+    payload.update(overrides)
+    response = client.put(
+        "/api/equipment/owner/provider",
+        headers={"X-Owner-Key": owner_key},
+        json=payload,
+    )
+    assert response.status_code == 200, response.text
+    return response.json()
+
+
+def public_provider_ids() -> set[str]:
+    response = client.get("/api/equipment/providers", params={"limit": 100})
+    assert response.status_code == 200
+    return {item["id"] for item in response.json()["providers"]}
+
+
+def test_provider_profile_is_user_entered_and_discoverable() -> None:
+    key = uuid4().hex
+    provider = create_provider(
+        key,
+        display_name="Warangal Tractor Rentals",
+        contact="owner@example.in",
+        district="Warangal",
+    )
+
+    assert provider["is_demo"] is False
+    assert provider["status"] == "active"
+    assert provider["display_name"] == "Warangal Tractor Rentals"
+    assert provider["contact"] == "owner@example.in"
+    assert provider["categories"] == ["tractors", "harvesting"]
+
+    public = client.get("/api/equipment/providers").json()["providers"]
+    row = next(item for item in public if item["id"] == provider["id"])
+    assert "contact" not in row
+    assert row["categories"] == ["tractors", "harvesting"]
+
+    own = client.get(
+        "/api/equipment/owner/provider", headers={"X-Owner-Key": key}
+    ).json()["profile"]
+    assert own["contact"] == "owner@example.in"
+
+    by_place = client.get(
+        "/api/equipment/providers", params={"location": "Warangal"}
+    ).json()["providers"]
+    assert provider["id"] in {item["id"] for item in by_place}
+
+    by_category = client.get(
+        "/api/equipment/providers", params={"category": "harvesting"}
+    ).json()["providers"]
+    assert provider["id"] in {item["id"] for item in by_category}
+
+    bad_category = client.get("/api/equipment/providers", params={"category": "unknown"})
+    assert bad_category.status_code == 422
+
+    updated = create_provider(
+        key,
+        display_name="Updated Rentals",
+        categories=["irrigation"],
+        status="paused",
+    )
+    assert updated["id"] == provider["id"]
+    assert updated["display_name"] == "Updated Rentals"
+    assert updated["categories"] == ["irrigation"]
+    assert provider["id"] not in public_provider_ids()
+
+
+def test_direct_provider_enquiry_connects_farmer_and_renter() -> None:
+    owner_key = uuid4().hex
+    farmer_key_value = farmer_key()
+    provider = create_provider(
+        owner_key,
+        display_name="Direct Renter",
+        contact="direct@example.in",
+    )
+
+    enquiry = client.post(
+        f"/api/equipment/providers/{provider['id']}/enquiries",
+        json={
+            "name": "Direct farmer",
+            "phone": "9876543210",
+            "message": "Need a tractor next week",
+            "farmer_key": farmer_key_value,
+        },
+    )
+    assert enquiry.status_code == 201, enquiry.text
+    body = enquiry.json()
+    assert body["provider_name"] == "Direct Renter"
+    assert body["provider_contact"] == "direct@example.in"
+    assert body["status"] == "new"
+
+    owner_rows = client.get(
+        "/api/equipment/owner/provider/enquiries",
+        headers={"X-Owner-Key": owner_key},
+    ).json()["enquiries"]
+    owner_row = next(item for item in owner_rows if item["id"] == body["id"])
+    assert owner_row["farmer_name"] == "Direct farmer"
+    assert owner_row["farmer_phone"] == "9876543210"
+    assert owner_row["message"] == "Need a tractor next week"
+
+    farmer_rows = client.get(
+        "/api/equipment/farmer/provider-enquiries",
+        headers={"X-Farmer-Key": farmer_key_value},
+    ).json()["enquiries"]
+    farmer_row = next(item for item in farmer_rows if item["id"] == body["id"])
+    assert farmer_row["provider_contact"] == "direct@example.in"
+    assert farmer_row["owner_reply"] == ""
+
+    updated = client.patch(
+        f"/api/equipment/owner/provider/enquiries/{body['id']}",
+        headers={"X-Owner-Key": owner_key},
+        json={"status": "contacted", "reply": "I will call tomorrow."},
+    )
+    assert updated.status_code == 200, updated.text
+    assert updated.json()["status"] == "contacted"
+
+    after_reply = client.get(
+        "/api/equipment/farmer/provider-enquiries",
+        headers={"X-Farmer-Key": farmer_key_value},
+    ).json()["enquiries"]
+    replied = next(item for item in after_reply if item["id"] == body["id"])
+    assert replied["status"] == "contacted"
+    assert replied["owner_reply"] == "I will call tomorrow."
+
+    other_owner = client.patch(
+        f"/api/equipment/owner/provider/enquiries/{body['id']}",
+        headers=provider_owner_headers(),
+        json={"status": "closed"},
+    )
+    assert other_owner.status_code == 404
+
+
+def test_provider_enquiry_validation_and_availability() -> None:
+    owner_key = uuid4().hex
+    provider = create_provider(owner_key)
+    key = farmer_key()
+
+    bad_phone = client.post(
+        f"/api/equipment/providers/{provider['id']}/enquiries",
+        json={"name": "Farmer", "phone": "12", "farmer_key": key},
+    )
+    assert bad_phone.status_code == 422
+
+    missing_key = client.post(
+        f"/api/equipment/providers/{provider['id']}/enquiries",
+        json={"name": "Farmer", "phone": "9876543210"},
+    )
+    assert missing_key.status_code == 422
+
+    missing_provider = client.post(
+        "/api/equipment/providers/not-a-provider/enquiries",
+        json={"name": "Farmer", "phone": "9876543210", "farmer_key": key},
+    )
+    assert missing_provider.status_code == 404
+
+    create_provider(owner_key, status="paused")
+    paused = client.post(
+        f"/api/equipment/providers/{provider['id']}/enquiries",
+        json={"name": "Farmer", "phone": "9876543210", "farmer_key": key},
+    )
+    assert paused.status_code == 404
+
+    no_provider = client.get(
+        "/api/equipment/owner/provider/enquiries",
+        headers=provider_owner_headers(),
+    ).json()
+    assert no_provider["enquiries"] == []

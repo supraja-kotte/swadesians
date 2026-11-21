@@ -15,10 +15,15 @@ const equipmentState = {
   view: "list",
   loading: false,
   listings: [],
+  renters: [],
   ownerListings: [],
   ownerEnquiries: [],
   farmerEnquiries: [],
+  providerProfile: null,
+  providerEnquiries: [],
+  farmerProviderEnquiries: [],
   selected: null,
+  selectedProvider: null,
   category: "all",
   location: "",
   message: "",
@@ -91,9 +96,18 @@ function jsonPatch(path, body, headers = {}) {
   });
 }
 
+function jsonPut(path, body, headers = {}) {
+  return api(path, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json", ...headers },
+    body: JSON.stringify(body),
+  });
+}
+
 function renderTabs(language) {
   const tabs = [
     ["browse", "tabBrowse"],
+    ["renters", "tabRenters"],
     ["owner", "tabOwner"],
     ["farmer", "tabFarmer"],
   ];
@@ -160,6 +174,79 @@ function renderPublicCard(language, item) {
   `;
 }
 
+function renderProviderCard(language, item) {
+  const listingCards = (item.listings ?? [])
+    .map(
+      (listing) => `
+        <li class="equipment-provider-listing">
+          <span>${escapeHtml(categoryLabel(language, listing.category))} · ${escapeHtml(listing.title)}</span>
+          <button type="button" class="link-button" data-enquire="${escapeHtml(listing.id)}">
+            ${t(language, "enquire")}
+          </button>
+        </li>
+      `,
+    )
+    .join("");
+
+  return `
+    <article class="equipment-card">
+      <div class="community-badges">
+        ${badge(t(language, "renterLabel"), "category")}
+        ${(item.categories ?? []).map((value) => badge(categoryLabel(language, value))).join("")}
+      </div>
+      <h3>${escapeHtml(item.display_name)}</h3>
+      ${item.description ? `<p>${escapeHtml(item.description)}</p>` : ""}
+      <p class="equipment-place">${icon("mapPin")} ${escapeHtml(item.district)}, ${escapeHtml(item.state)}</p>
+      <p class="equipment-availability">${t(language, "availabilityLabel")}: ${escapeHtml(item.availability || "—")}</p>
+      <p class="report-note">${t(language, "equipmentOffered")}: ${item.listing_count}</p>
+      ${
+        listingCards
+          ? `<ul class="equipment-provider-listings">${listingCards}</ul>`
+          : `<p class="equipment-note">${t(language, "noProviderListings")}</p>`
+      }
+      <button type="button" class="primary-button" data-provider-enquire="${escapeHtml(item.id)}">
+        ${t(language, "contactRenter")}
+      </button>
+    </article>
+  `;
+}
+
+function renderProviderEnquiryForm(language) {
+  const provider = equipmentState.selectedProvider;
+  if (!provider) return "";
+
+  return `
+    <div class="equipment-enquiry">
+      <button type="button" id="equipment-back" class="secondary-button">${t(language, "backToListings")}</button>
+      <article class="equipment-card is-selected">
+        <div class="community-badges">${badge(t(language, "renterLabel"), "category")}</div>
+        <h3>${escapeHtml(provider.display_name)}</h3>
+        <p class="equipment-place">${icon("mapPin")} ${escapeHtml(provider.district)}, ${escapeHtml(provider.state)}</p>
+      </article>
+      <section class="composer-card">
+        <h3>${t(language, "providerEnquiryHeading")}</h3>
+        <p class="equipment-note">${t(language, "enquiryNote")}</p>
+        <p class="equipment-note">${t(language, "contactPrivateRenter")}</p>
+        <form id="equipment-provider-enquiry-form" class="profile-form">
+          <label class="field-label" for="equipment-provider-name">${t(language, "eqName")}</label>
+          <input id="equipment-provider-name" class="field-input" type="text" minlength="2" maxlength="60"
+            value="${escapeHtml(farmerName())}" required />
+          <label class="field-label" for="equipment-provider-phone">${t(language, "fieldPhone")}</label>
+          <input id="equipment-provider-phone" class="field-input" type="tel" minlength="7" maxlength="20"
+            placeholder="${t(language, "phonePlaceholder")}" value="${escapeHtml(farmerPhone())}" required />
+          <label class="field-label" for="equipment-provider-message">${t(language, "fieldMessage")}</label>
+          <textarea id="equipment-provider-message" class="field-input" rows="3" maxlength="500"
+            placeholder="${t(language, "messagePlaceholder")}"></textarea>
+          <div class="form-actions">
+            <button type="submit" class="primary-button">${icon("check")} ${t(language, "sendEnquiry")}</button>
+            <button type="button" id="equipment-cancel" class="secondary-button">${t(language, "cancel")}</button>
+          </div>
+        </form>
+      </section>
+    </div>
+  `;
+}
+
 function renderEnquiryForm(language) {
   const item = equipmentState.selected;
   if (!item) return "";
@@ -206,6 +293,21 @@ function renderBrowse(language) {
     : `<p class="weather-status">${t(language, "noListings")}</p>`;
 
   return `
+    ${renderFilters(language)}
+    <div class="equipment-grid">${cards}</div>
+  `;
+}
+
+function renderRenters(language) {
+  if (equipmentState.loading) return `<p class="weather-status">${t(language, "weatherLoading")}</p>`;
+  if (equipmentState.view === "providerEnquiry") return renderProviderEnquiryForm(language);
+
+  const cards = equipmentState.renters.length
+    ? equipmentState.renters.map((item) => renderProviderCard(language, item)).join("")
+    : `<p class="weather-status">${t(language, "noRenters")}</p>`;
+
+  return `
+    <p class="equipment-note">${t(language, "rentersIntro")}</p>
     ${renderFilters(language)}
     <div class="equipment-grid">${cards}</div>
   `;
@@ -285,6 +387,98 @@ function renderAddListing(language) {
   `;
 }
 
+function renderAddProviderForm(language) {
+  const profile = equipmentState.providerProfile ?? {};
+  const chosen = profile.categories ?? [];
+  const status = profile.status ?? "active";
+  const categories = mockData.equipmentCategories
+    .map(
+      (item) => `
+        <label class="chip">
+          <input type="checkbox" name="eq-provider-category" value="${item.value}"
+            ${chosen.includes(item.value) ? "checked" : ""} />
+          ${t(language, item.key)}
+        </label>
+      `,
+    )
+    .join("");
+
+  return `
+    <div class="equipment-enquiry">
+      <button type="button" id="equipment-back" class="secondary-button">${t(language, "backToListings")}</button>
+      <section class="composer-card">
+        <h3>${t(language, "addProviderHeading")}</h3>
+        <p class="equipment-note">${t(language, "providerProfileNote")}</p>
+        <form id="equipment-provider-form" class="profile-form">
+          <label class="field-label" for="eq-provider-name">${t(language, "providerNameLabel")}</label>
+          <input id="eq-provider-name" class="field-input" type="text" minlength="2" maxlength="60"
+            value="${escapeHtml(profile.display_name || farmerName())}" required />
+
+          <label class="field-label" for="eq-provider-contact">${t(language, "providerContactLabel")}</label>
+          <input id="eq-provider-contact" class="field-input" type="text" minlength="5" maxlength="120"
+            value="${escapeHtml(profile.contact || farmerPhone())}" required />
+
+          <div class="form-grid">
+            <div>
+              <label class="field-label" for="eq-provider-state">${t(language, "stateLabel")}</label>
+              <input id="eq-provider-state" class="field-input" type="text" minlength="2" maxlength="60"
+                placeholder="${t(language, "statePlaceholder")}" value="${escapeHtml(profile.state ?? "")}" required />
+            </div>
+            <div>
+              <label class="field-label" for="eq-provider-district">${t(language, "districtLabel")}</label>
+              <input id="eq-provider-district" class="field-input" type="text" minlength="2" maxlength="60"
+                placeholder="${t(language, "districtPlaceholder")}" value="${escapeHtml(profile.district ?? "")}" required />
+            </div>
+          </div>
+
+          <fieldset class="equipment-category-picker">
+            <legend class="field-label">${t(language, "providerCategoriesLabel")}</legend>
+            <div class="category-options">${categories}</div>
+          </fieldset>
+
+          <label class="field-label" for="eq-provider-availability">${t(language, "availabilityLabel")}</label>
+          <input id="eq-provider-availability" class="field-input" type="text" maxlength="120"
+            placeholder="${t(language, "availabilityPlaceholder")}" value="${escapeHtml(profile.availability ?? "")}" />
+
+          <label class="field-label" for="eq-provider-description">${t(language, "providerDescriptionLabel")}</label>
+          <textarea id="eq-provider-description" class="field-input" rows="3" maxlength="500"
+            placeholder="${t(language, "descriptionPlaceholder")}">${escapeHtml(profile.description ?? "")}</textarea>
+
+          <label class="field-label" for="eq-provider-status">${t(language, "profileStatusLabel")}</label>
+          <select id="eq-provider-status" class="field-input">
+            <option value="active"${status === "active" ? " selected" : ""}>${t(language, "statusActive")}</option>
+            <option value="paused"${status === "paused" ? " selected" : ""}>${t(language, "statusPaused")}</option>
+          </select>
+
+          <div class="form-actions">
+            <button type="submit" class="primary-button">${icon("check")} ${t(language, "publishProfile")}</button>
+            <button type="button" id="equipment-cancel" class="secondary-button">${t(language, "cancel")}</button>
+          </div>
+        </form>
+      </section>
+    </div>
+  `;
+}
+
+function renderOwnerProviderCard(language) {
+  const profile = equipmentState.providerProfile;
+  if (!profile) return "";
+
+  return `
+    <article class="equipment-card">
+      <div class="community-badges">
+        ${badge(t(language, "renterLabel"), "category")}
+        ${badge(t(language, profile.status === "paused" ? "statusPaused" : "statusActive"))}
+      </div>
+      <h3>${escapeHtml(profile.display_name)}</h3>
+      <p class="equipment-place">${icon("mapPin")} ${escapeHtml(profile.district)}, ${escapeHtml(profile.state)}</p>
+      <p class="report-note">${t(language, "providerContactLabel")}: ${escapeHtml(profile.contact)}</p>
+      <p class="report-note">${t(language, "equipmentOffered")}: ${profile.listing_count}</p>
+      <button type="button" id="eq-edit-provider" class="secondary-button">${t(language, "editProvider")}</button>
+    </article>
+  `;
+}
+
 function renderOwnerListing(language, item) {
   const isPaused = item.status === "paused";
   return `
@@ -333,9 +527,39 @@ function renderOwnerEnquiry(language, item) {
   `;
 }
 
+function renderOwnerProviderEnquiry(language, item) {
+  const statuses = ["new", "contacted", "closed"];
+  return `
+    <article class="equipment-card enquiry-card" data-provider-enquiry-card="${escapeHtml(item.id)}">
+      <div class="community-badges">
+        ${badge(t(language, enquiryStatusKey(item.status)), "category")}
+      </div>
+      <h3>${escapeHtml(item.provider_name)}</h3>
+      <p class="report-note">${t(language, "farmerNameLabel")}: ${escapeHtml(item.farmer_name)} · ${escapeHtml(item.farmer_phone)}</p>
+      <p>${escapeHtml(item.message)}</p>
+      <label class="field-label" for="eq-provider-status-${escapeHtml(item.id)}">${t(language, "enquiryStatusLabel")}</label>
+      <select id="eq-provider-status-${escapeHtml(item.id)}" class="field-input">
+        ${statuses
+          .map(
+            (status) =>
+              `<option value="${status}"${item.status === status ? " selected" : ""}>${t(language, enquiryStatusKey(status))}</option>`,
+          )
+          .join("")}
+      </select>
+      <label class="field-label" for="eq-provider-reply-${escapeHtml(item.id)}">${t(language, "replyLabel")}</label>
+      <textarea id="eq-provider-reply-${escapeHtml(item.id)}" class="field-input" rows="2" maxlength="300"
+        placeholder="${t(language, "replyPlaceholder")}">${escapeHtml(item.owner_reply)}</textarea>
+      <button type="button" class="primary-button" data-eq-save-provider="${escapeHtml(item.id)}">
+        ${t(language, "saveResponse")}
+      </button>
+    </article>
+  `;
+}
+
 function renderOwner(language) {
   if (equipmentState.loading) return `<p class="weather-status">${t(language, "weatherLoading")}</p>`;
   if (equipmentState.view === "add") return renderAddListing(language);
+  if (equipmentState.view === "addProvider") return renderAddProviderForm(language);
 
   const listingCards = equipmentState.ownerListings.length
     ? equipmentState.ownerListings.map((item) => renderOwnerListing(language, item)).join("")
@@ -345,10 +569,19 @@ function renderOwner(language) {
     ? equipmentState.ownerEnquiries.map((item) => renderOwnerEnquiry(language, item)).join("")
     : `<p class="weather-status">${t(language, "noOwnerEnquiries")}</p>`;
 
+  const providerEnquiryCards = equipmentState.providerEnquiries.length
+    ? equipmentState.providerEnquiries.map((item) => renderOwnerProviderEnquiry(language, item)).join("")
+    : `<p class="weather-status">${t(language, "noProviderEnquiries")}</p>`;
+
   return `
     <p class="equipment-note smart-disclaimer">${t(language, "ownerIntro")}</p>
     <p class="equipment-note">${t(language, "identityNote")}</p>
-    <button type="button" id="eq-add-listing" class="primary-button">${t(language, "addListingHeading")}</button>
+    <button type="button" id="eq-add-provider" class="primary-button">${t(language, "addProviderHeading")}</button>
+    <button type="button" id="eq-add-listing" class="secondary-button">${t(language, "addListingHeading")}</button>
+    <section class="smart-section">
+      <h3 class="smart-heading">${t(language, "myRenterProfileHeading")}</h3>
+      <div class="equipment-grid">${renderOwnerProviderCard(language) || `<p class="weather-status">${t(language, "noProviderProfile")}</p>`}</div>
+    </section>
     <section class="smart-section">
       <h3 class="smart-heading">${t(language, "myListingsHeading")}</h3>
       <div class="equipment-grid">${listingCards}</div>
@@ -356,6 +589,10 @@ function renderOwner(language) {
     <section class="smart-section">
       <h3 class="smart-heading">${t(language, "ownerEnquiriesHeading")}</h3>
       <div class="equipment-grid">${enquiryCards}</div>
+    </section>
+    <section class="smart-section">
+      <h3 class="smart-heading">${t(language, "providerEnquiriesHeading")}</h3>
+      <div class="equipment-grid">${providerEnquiryCards}</div>
     </section>
   `;
 }
@@ -374,6 +611,20 @@ function renderFarmerEnquiry(language, item) {
   `;
 }
 
+function renderFarmerProviderEnquiry(language, item) {
+  return `
+    <article class="equipment-card enquiry-card">
+      <div class="community-badges">
+        ${badge(t(language, "renterLabel"), "category")}
+        ${badge(t(language, enquiryStatusKey(item.status)))}
+      </div>
+      <h3>${escapeHtml(item.provider_name)}</h3>
+      <p class="report-note">${t(language, "renterContactLabel")}: ${escapeHtml(item.provider_contact)}</p>
+      <p class="report-note">${t(language, "ownerReplyLabel")}: ${escapeHtml(item.owner_reply || t(language, "noReplyYet"))}</p>
+    </article>
+  `;
+}
+
 function renderFarmer(language) {
   if (equipmentState.loading) return `<p class="weather-status">${t(language, "weatherLoading")}</p>`;
 
@@ -381,11 +632,17 @@ function renderFarmer(language) {
     ? equipmentState.farmerEnquiries.map((item) => renderFarmerEnquiry(language, item)).join("")
     : `<p class="weather-status">${t(language, "noFarmerEnquiries")}</p>`;
 
+  const providerCards = equipmentState.farmerProviderEnquiries.length
+    ? equipmentState.farmerProviderEnquiries.map((item) => renderFarmerProviderEnquiry(language, item)).join("")
+    : `<p class="weather-status">${t(language, "noFarmerProviderEnquiries")}</p>`;
+
   return `
     <p class="equipment-note smart-disclaimer">${t(language, "farmerIntro")}</p>
     <p class="equipment-note">${t(language, "identityNote")}</p>
     <h3 class="smart-heading">${t(language, "myEnquiriesHeading")}</h3>
     <div class="equipment-grid">${cards}</div>
+    <h3 class="smart-heading">${t(language, "myRenterEnquiriesHeading")}</h3>
+    <div class="equipment-grid">${providerCards}</div>
     <button type="button" id="eq-find-more" class="secondary-button">${t(language, "enquireAgain")}</button>
   `;
 }
@@ -393,6 +650,7 @@ function renderFarmer(language) {
 function renderView(language) {
   if (equipmentState.tab === "owner") return renderOwner(language);
   if (equipmentState.tab === "farmer") return renderFarmer(language);
+  if (equipmentState.tab === "renters") return renderRenters(language);
   return renderBrowse(language);
 }
 
@@ -424,21 +682,51 @@ async function loadListings(language) {
   equipmentState.listings = data.listings ?? [];
 }
 
+async function loadRenters() {
+  const params = new URLSearchParams();
+  if (equipmentState.category !== "all") params.set("category", equipmentState.category);
+  if (equipmentState.location.trim()) params.set("location", equipmentState.location.trim());
+
+  const data = await api(`/api/equipment/providers?${params.toString()}`);
+  equipmentState.renters = data.providers ?? [];
+}
+
 async function loadOwnerData() {
   const headers = { "X-Owner-Key": ownerKey() };
-  const [listings, enquiries] = await Promise.all([
+  const [listings, enquiries, profile, providerEnquiries] = await Promise.all([
     api("/api/equipment/owner/listings", { headers }),
     api("/api/equipment/owner/enquiries", { headers }),
+    api("/api/equipment/owner/provider", { headers }),
+    api("/api/equipment/owner/provider/enquiries", { headers }),
   ]);
   equipmentState.ownerListings = listings.listings ?? [];
   equipmentState.ownerEnquiries = enquiries.enquiries ?? [];
+  equipmentState.providerProfile = profile.profile ?? null;
+  equipmentState.providerEnquiries = providerEnquiries.enquiries ?? [];
 }
 
 async function loadFarmerData() {
-  const data = await api("/api/equipment/farmer/enquiries", {
-    headers: { "X-Farmer-Key": farmerKey() },
-  });
-  equipmentState.farmerEnquiries = data.enquiries ?? [];
+  const [enquiries, providerEnquiries] = await Promise.all([
+    api("/api/equipment/farmer/enquiries", {
+      headers: { "X-Farmer-Key": farmerKey() },
+    }),
+    api("/api/equipment/farmer/provider-enquiries", {
+      headers: { "X-Farmer-Key": farmerKey() },
+    }),
+  ]);
+  equipmentState.farmerEnquiries = enquiries.enquiries ?? [];
+  equipmentState.farmerProviderEnquiries = providerEnquiries.enquiries ?? [];
+}
+
+async function refreshFilterData(language) {
+  equipmentState.view = "list";
+  try {
+    if (equipmentState.tab === "renters") await loadRenters();
+    else await loadListings(language);
+  } catch {
+    equipmentState.error = t(language, equipmentState.tab === "renters" ? "renterLoadError" : "loadError");
+  }
+  updateView(language);
 }
 
 async function loadTab(language) {
@@ -450,6 +738,7 @@ async function loadTab(language) {
   try {
     if (equipmentState.tab === "owner") await loadOwnerData();
     else if (equipmentState.tab === "farmer") await loadFarmerData();
+    else if (equipmentState.tab === "renters") await loadRenters();
     else await loadListings(language);
   } catch {
     equipmentState.error =
@@ -457,7 +746,9 @@ async function loadTab(language) {
         ? t(language, "listingLoadError")
         : equipmentState.tab === "farmer"
           ? t(language, "enquiryLoadError")
-          : t(language, "loadError");
+          : equipmentState.tab === "renters"
+            ? t(language, "renterLoadError")
+            : t(language, "loadError");
   } finally {
     equipmentState.loading = false;
     updateView(language);
@@ -465,9 +756,22 @@ async function loadTab(language) {
 }
 
 function openEnquiry(listingId, language) {
-  equipmentState.selected = equipmentState.listings.find((item) => item.id === listingId) ?? null;
+  const knownListings = [
+    ...equipmentState.listings,
+    ...equipmentState.renters.flatMap((item) => item.listings ?? []),
+  ];
+  equipmentState.selected = knownListings.find((item) => item.id === listingId) ?? null;
   if (!equipmentState.selected) return;
   equipmentState.view = "enquiry";
+  clearStatus();
+  updateView(language);
+}
+
+function openProviderEnquiry(providerId, language) {
+  equipmentState.selectedProvider =
+    equipmentState.renters.find((item) => item.id === providerId) ?? null;
+  if (!equipmentState.selectedProvider) return;
+  equipmentState.view = "providerEnquiry";
   clearStatus();
   updateView(language);
 }
@@ -495,6 +799,65 @@ async function submitEnquiry(language) {
     await loadListings(language);
   } catch {
     equipmentState.error = t(language, "createError");
+  }
+  updateView(language);
+}
+
+async function submitProviderEnquiry(language) {
+  const value = (selector) => document.querySelector(selector)?.value ?? "";
+  const name = value("#equipment-provider-name");
+  const phone = value("#equipment-provider-phone");
+
+  try {
+    await jsonPost(
+      `/api/equipment/providers/${encodeURIComponent(equipmentState.selectedProvider.id)}/enquiries`,
+      {
+        name,
+        phone,
+        message: value("#equipment-provider-message"),
+        farmer_key: farmerKey(),
+      },
+    );
+    saveFarmerContact(name, phone);
+    equipmentState.view = "list";
+    equipmentState.selectedProvider = null;
+    equipmentState.message = t(language, "providerEnquirySent");
+    equipmentState.error = "";
+    await loadRenters();
+  } catch {
+    equipmentState.error = t(language, "createError");
+  }
+  updateView(language);
+}
+
+async function submitProvider(language) {
+  const value = (selector) => document.querySelector(selector)?.value ?? "";
+  const categories = [...document.querySelectorAll('input[name="eq-provider-category"]:checked')]
+    .map((input) => input.value);
+  const payload = {
+    display_name: value("#eq-provider-name"),
+    contact: value("#eq-provider-contact"),
+    state: value("#eq-provider-state"),
+    district: value("#eq-provider-district"),
+    categories,
+    availability: value("#eq-provider-availability"),
+    description: value("#eq-provider-description"),
+    status: value("#eq-provider-status"),
+  };
+
+  try {
+    equipmentState.providerProfile = await jsonPut(
+      "/api/equipment/owner/provider",
+      payload,
+      { "X-Owner-Key": ownerKey() },
+    );
+    saveFarmerContact(payload.display_name, payload.contact);
+    equipmentState.view = "list";
+    equipmentState.message = t(language, "providerSaved");
+    equipmentState.error = "";
+    await loadOwnerData();
+  } catch {
+    equipmentState.error = t(language, "providerSaveError");
   }
   updateView(language);
 }
@@ -563,6 +926,25 @@ async function saveEnquiryResponse(language, enquiryId, card) {
   updateView(language);
 }
 
+async function saveProviderResponse(language, enquiryId, card) {
+  try {
+    await jsonPatch(
+      `/api/equipment/owner/provider/enquiries/${encodeURIComponent(enquiryId)}`,
+      {
+        status: card.querySelector("select")?.value ?? "new",
+        reply: card.querySelector("textarea")?.value ?? "",
+      },
+      { "X-Owner-Key": ownerKey() },
+    );
+    equipmentState.message = t(language, "responseSaved");
+    equipmentState.error = "";
+    await loadOwnerData();
+  } catch {
+    equipmentState.error = t(language, "enquiryLoadError");
+  }
+  updateView(language);
+}
+
 function attachEvents(language) {
   const root = document.querySelector("#equipment-root");
   if (!root) return;
@@ -578,39 +960,40 @@ function attachEvents(language) {
     const category = event.target.closest("[data-eq-category]");
     if (category) {
       equipmentState.category = category.dataset.eqCategory;
-      equipmentState.view = "list";
-      loadListings(language).then(() => updateView(language)).catch(() => {
-        equipmentState.error = t(language, "loadError");
-        updateView(language);
-      });
+      refreshFilterData(language);
       return;
     }
 
     const district = event.target.closest("[data-district]");
     if (district) {
       equipmentState.location = district.dataset.district;
-      equipmentState.view = "list";
-      loadListings(language).then(() => updateView(language)).catch(() => {
-        equipmentState.error = t(language, "loadError");
-        updateView(language);
-      });
+      refreshFilterData(language);
       return;
     }
 
     if (event.target.closest("#clear-equipment-filters")) {
       equipmentState.category = "all";
       equipmentState.location = "";
-      equipmentState.view = "list";
-      loadListings(language).then(() => updateView(language)).catch(() => {
-        equipmentState.error = t(language, "loadError");
-        updateView(language);
-      });
+      refreshFilterData(language);
       return;
     }
 
     const enquire = event.target.closest("[data-enquire]");
     if (enquire) {
       openEnquiry(enquire.dataset.enquire, language);
+      return;
+    }
+
+    const providerEnquire = event.target.closest("[data-provider-enquire]");
+    if (providerEnquire) {
+      openProviderEnquiry(providerEnquire.dataset.providerEnquire, language);
+      return;
+    }
+
+    if (event.target.closest("#eq-add-provider") || event.target.closest("#eq-edit-provider")) {
+      equipmentState.view = "addProvider";
+      clearStatus();
+      updateView(language);
       return;
     }
 
@@ -640,9 +1023,17 @@ function attachEvents(language) {
       return;
     }
 
+    const saveProviderButton = event.target.closest("[data-eq-save-provider]");
+    if (saveProviderButton) {
+      const card = saveProviderButton.closest("[data-provider-enquiry-card]");
+      if (card) saveProviderResponse(language, saveProviderButton.dataset.eqSaveProvider, card);
+      return;
+    }
+
     if (event.target.closest("#equipment-back") || event.target.closest("#equipment-cancel")) {
       equipmentState.view = "list";
       equipmentState.selected = null;
+      equipmentState.selectedProvider = null;
       clearStatus();
       updateView(language);
     }
@@ -652,14 +1043,16 @@ function attachEvents(language) {
     if (event.target.id === "equipment-location-form") {
       event.preventDefault();
       equipmentState.location = document.querySelector("#equipment-location")?.value ?? "";
-      equipmentState.view = "list";
-      loadListings(language).then(() => updateView(language)).catch(() => {
-        equipmentState.error = t(language, "loadError");
-        updateView(language);
-      });
+      refreshFilterData(language);
     } else if (event.target.id === "equipment-enquiry-form") {
       event.preventDefault();
       submitEnquiry(language);
+    } else if (event.target.id === "equipment-provider-enquiry-form") {
+      event.preventDefault();
+      submitProviderEnquiry(language);
+    } else if (event.target.id === "equipment-provider-form") {
+      event.preventDefault();
+      submitProvider(language);
     } else if (event.target.id === "equipment-listing-form") {
       event.preventDefault();
       submitListing(language);

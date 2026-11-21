@@ -1,4 +1,4 @@
-"""Validation rules for owner-submitted equipment listings and enquiries."""
+"""Validation rules for owner-submitted listings, renter profiles and enquiries."""
 
 from pydantic import BaseModel, Field, field_validator
 
@@ -15,6 +15,7 @@ VALID_PRICE_UNITS = {"hour", "day", "season"}
 OWNER_LISTING_STATUSES = {"active", "paused"}
 ADMIN_LISTING_STATUSES = {"active", "hidden"}
 VALID_ENQUIRY_STATUSES = {"new", "contacted", "closed"}
+VALID_PROVIDER_STATUSES = {"active", "paused"}
 
 
 def _check_choice(value: str | None, allowed: set[str]) -> str | None:
@@ -94,3 +95,48 @@ class AdminListingStatusIn(BaseModel):
     @classmethod
     def check_status(cls, value: str) -> str:
         return _check_choice(value, ADMIN_LISTING_STATUSES) or value
+
+
+class ProviderIn(BaseModel):
+    display_name: str = Field(..., min_length=2, max_length=60)
+    contact: str = Field(..., min_length=5, max_length=120)
+    state: str = Field(..., min_length=2, max_length=60)
+    district: str = Field(..., min_length=2, max_length=60)
+    categories: list[str] = Field(..., min_length=1, max_length=7)
+    availability: str = Field("", max_length=120)
+    description: str = Field("", max_length=500)
+    status: str = Field("active", max_length=20)
+
+    @field_validator("categories")
+    @classmethod
+    def check_categories(cls, value: list[str]) -> list[str]:
+        cleaned: list[str] = []
+        for item in value:
+            category = _check_choice(item.strip(), VALID_EQUIPMENT_CATEGORIES)
+            if category and category not in cleaned:
+                cleaned.append(category)
+        if not cleaned:
+            raise ValueError("At least one equipment category is required")
+        return cleaned
+
+    @field_validator("status")
+    @classmethod
+    def check_status(cls, value: str) -> str:
+        return _check_choice(value, VALID_PROVIDER_STATUSES) or value
+
+
+class ProviderEnquiryIn(BaseModel):
+    name: str = Field(..., min_length=2, max_length=60)
+    phone: str = Field(..., min_length=7, max_length=20)
+    message: str = Field("", max_length=500)
+    farmer_key: str = Field(..., min_length=16, max_length=128)
+
+
+class ProviderEnquiryUpdateIn(BaseModel):
+    status: str = Field(..., max_length=20)
+    reply: str = Field("", max_length=300)
+
+    @field_validator("status")
+    @classmethod
+    def check_status(cls, value: str) -> str:
+        return _check_choice(value, VALID_ENQUIRY_STATUSES) or value

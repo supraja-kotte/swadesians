@@ -192,3 +192,4 @@ rollbacks, but Git history is now the primary record.
 10. Rule-based voice assistant (browser speech only, no AI without a key)
 11. Administration and moderation — complete
 12. Testing, hardening and release — complete
+

@@ -6,16 +6,28 @@ target-language cells and change `PENDING` to `APPROVED` with a date.
 
 | Key | English source | Telugu | Hindi | Tamil | Marathi | Status |
 |---|---|---|---|---|---|---|
+| `addListingHeading` | Add your equipment | మీ పరికరం నమోదు చేయండి | अपना उपकरण जोड़ें | உங்கள் உபகரணத்தைச் சேர்க்கவும் | तुमचे उपकरण जोडा | PENDING |
 | `adminActionDone` | Status updated. | స్థితి నవీకరించబడింది. | स्थिति अपडेट हो गई। | நிலை புதுப்பிக்கப்பட்டது. | स्थिती अद्ययावत केली. | PENDING |
 | `adminActionError` | Could not update the status. Please try again. | స్థితి మార్చలేకపోయాం. దయచేసి మళ్లీ ప్రయత్నించండి. | स्थिति अपडेट नहीं हो सकी। कृपया फिर प्रयास करें। | நிலையை மாற்ற முடியவில்லை. தயவுசெய்து மீண்டும் முயற்சிக்கவும். | स्थिती बदलता आली नाही. कृपया पुन्हा प्रयत्न करा. | PENDING |
+| `adminApproveListing` | Show publicly | బహిరంగంగా చూపించు | सार्वजनिक दिखाएँ | பொதுவாகக் காட்டு | सार्वजनिक दाखवा | PENDING |
 | `adminDisclaimer` | Development foundation only. Farmer posts still use plain text and a random browser ID. No public registration or role management exists yet. | ఇది కేవలం అభివృద్ధి దశలో ఉన్న వ్యవస్థ. రైతు పోస్టులు ఇంకా సాధారణ వచనం మరియు యాదృచ్ఛిక బ్రౌజర్ ID తోనే ఉంటాయి. ఇంకా పబ్లిక్ రిజిస్ట్రేషన్ లేదా పాత్ర నిర్వహణ లేదు. | केवल विकास चरण की नींव। किसान पोस्ट अभी भी सादा पाठ और यादृच्छिक ब्राउज़र ID का उपयोग करते हैं। अभी सार्वजनिक पंजीकरण या भूमिका प्रबंधन नहीं है। | இது ஒரு மேம்பாட்டு நிலை அடித்தளம் மட்டுமே. விவசாயி இடுகைகள் இன்னும் சாதாரண உரை மற்றும் சீரற்ற உலாவி ID ஐப் பயன்படுத்துகின்றன. பொது பதிவு அல்லது பாத்திர மேலாண்மை இல்லை. | ही फक्त विकासाच्या टप्प्यातली पायाभूत सुविधा आहे. शेतकऱ्यांचे पोस्ट अजूनही साधा मजकूर व यादृच्छिक ब्राउझर ID वापरतात. सार्वजनिक नोंदणी किंवा भूमिका व्यवस्थापन नाही. | PENDING |
+| `adminEquipmentEnquiries` | Rental enquiries | అద్దె విచారణలు | किराया प्रश्न | வாடகை வினவல்கள் | भाडे चौकशा | PENDING |
+| `adminEquipmentHeading` | Equipment rental | పరికరాల అద్దె | उपकरण किराया | உபகரண வாடகை | उपकरण भाडे | PENDING |
+| `adminEquipmentIntro` | Review owner-submitted equipment listings and rental enquiries. | యజమానులు నమోదు చేసిన పరికరాల జాబితాలు, అద్దె విచారణలు పరిశీలించండి. | मालिक द्वारा दर्ज उपकरण सूचियों और किराया प्रश्नों की समीक्षा करें। | உரிமையாளர்கள் பதிவு செய்த உபகரணங்கள் மற்றும் வாடகை வினவல்களைப் பார்க்கவும். | मालकाने नोंदवलेली उपकरणे व भाडे चौकशा तपासा. | PENDING |
+| `adminEquipmentListings` | Equipment listings | పరికరాల జాబితాలు | उपकरण सूचियाँ | உபகரணப் பட்டியல்கள் | उपकरणांच्या याद्या | PENDING |
+| `adminEquipmentLoadError` | Could not load equipment moderation data. | పరికరాల నియంత్రణ డేటా లోడ్ కాలేదు. | उपकरण नियंत्रण डेटा लोड नहीं हो सका। | உபகரண நிர்வாகத் தகவல் ஏற்ற முடியவில்லை. | उपकरण नियंत्रण माहिती लोड होऊ शकली नाही. | PENDING |
+| `adminFarmerContact` | Farmer contact | రైతు contact | किसान की संपर्क जानकारी | விவசாயி தொடர்பு | शेतकऱ्याचा संपर्क | PENDING |
 | `adminHide` | Hide | దాచండి | छिपाएँ | மறை | लपवा | PENDING |
+| `adminHideListing` | Hide | దాచు | छिपाएँ | மறை | लपवा | PENDING |
 | `adminHint` | Create an administrator with: python -m scripts.create_admin | నిర్వాహకుడిని సృష్టించండి: python -m scripts.create_admin | प्रशासक बनाएँ: python -m scripts.create_admin | நிர்வாகியை உருவாக்க: python -m scripts.create_admin | प्रशासक तयार करा: python -m scripts.create_admin | PENDING |
 | `adminIntro` | Sign in with an administrator account to review reported community content. | కమ్యూనిటీలో నివేదించిన విషయాలను పరిశీలించడానికి నిర్వాహక ఖాతాతో సైన్ ఇన్ చేయండి. | सामुदायिक सामग्री की समीक्षा के लिए प्रशासक खाते से साइन इन करें। | சமூகத்தில் புகாரளிக்கப்பட்ட உள்ளடக்கத்தைப் பார்ப்பதற்கு நிர்வாக கணக்கில் உள்நுழையவும். | समुदायातील नोंदींची पडताळणी करण्यासाठी प्रशासक खात्याने साइन इन करा. | PENDING |
 | `adminLoadError` | Could not load moderation data. | నియంత్రణ డేటా లోడ్ కాలేదు. | मॉडरेशन डेटा लोड नहीं हो सका। | மேற்பார்வை தரவை ஏற்ற முடியவில்லை. | देखरेख डेटा लोड होऊ शकला नाही. | PENDING |
 | `adminLoginError` | Sign-in failed. Check your username and password. | సైన్ ఇన్ విఫలమైంది. వినియోగదారు పేరు మరియు పాస్\u200Cవర్డ్ తనిఖీ చేయండి. | साइन इन विफल। उपयोगकर्ता नाम और पासवर्ड जाँचें। | உள்நுழைவு தோல்வி. பயனர்பெயர் மற்றும் கடவுச்சொல்லைச் சரிபார்க்கவும். | साइन इन अयशस्वी. वापरकर्तानाव व पासवर्ड तपासा. | PENDING |
+| `adminNoEquipmentEnquiries` | No rental enquiries yet. | ఇంకా అద్దె విచారణలు లేవు. | अभी कोई किराया प्रश्न नहीं है। | இதுவரை வாடகை வினவல்கள் இல்லை. | अद्याप भाडे चौकशा नाहीत. | PENDING |
+| `adminNoEquipmentListings` | No owner-submitted equipment yet. | ఇంకా యజమానులు పరికరాలు నమోదు చేయలేదు. | अभी मालिक ने कोई उपकरण दर्ज नहीं किया है। | இதுவரை உரிமையாளர்கள் உபகரணங்கள் பதிவு செய்யவில்லை. | अद्याप मालकाने उपकरणे नोंदवली नाहीत. | PENDING |
 | `adminNoQueue` | No farmer-written content yet. | ఇంకా రైతులు రాసిన విషయాలు లేవు. | अभी किसानों ने कुछ नहीं लिखा है। | இதுவரை விவசாயிகள் எதுவும் எழுதவில்லை. | अद्याप शेतकऱ्यांनी काहीही लिहिलेले नाही. | PENDING |
 | `adminNoReports` | Nothing has been reported. | ఇంకా ఏదీ నివేదించబడలేదు. | अभी कुछ रिपोर्ट नहीं किया गया है। | இதுவரை எதுவும் புகாரளிக்கப்படவில்லை. | अद्याप काहीही नोंद केलेले नाही. | PENDING |
+| `adminOwnerContact` | Owner contact | యజమాని contact | मालिक की संपर्क जानकारी | உரிமையாளர் தொடர்பு | मालकाचा संपर्क | PENDING |
 | `adminPassword` | Password | పాస్\u200Cవర్డ్ | पासवर्ड | கடவுச்சொல் | पासवर्ड | PENDING |
 | `adminPost` | Question | ప్రశ్న | प्रश्न | கேள்வி | प्रश्न | PENDING |
 | `adminQueue` | Recent farmer content | ఇటీవలి రైతు విషయాలు | हाल की किसान सामग्री | அண்மைய விவசாயி உள்ளடக்கம் | अलीकडील शेतकरी सामग्री | PENDING |
@@ -43,6 +55,7 @@ target-language cells and change `PENDING` to `APPROVED` with a date.
 | `adviceWindTitle` | Strong wind | బలమైన గాలులు | तेज़ हवा | பலமான காற்று | जोरदार वारा | PENDING |
 | `alertsHeading` | Alerts | హెచ్చరికలు | चेतावनी | எச்சரிக்கைகள் | सूचना | PENDING |
 | `allCategories` | All topics | అన్ని అంశాలు | सभी विषय | அனைத்து தலைப்புகள் | सर्व विषय | PENDING |
+| `allEquipment` | All equipment | అన్ని పరికరాలు | सभी उपकरण | அனைத்து உபகரணங்கள் | सर्व उपकरणे | PENDING |
 | `appTitle` | AgriGuide | అగ్రిగైడ్ | एग्रीगाइड | அக்ரிகைட் | एग्रीगाइड | PENDING |
 | `askQuestion` | Ask a question | ప్రశ్న అడగండి | प्रश्न पूछें | கேள்வி கேள் | प्रश्न विचारा | PENDING |
 | `assistantAiDisclaimer` | Answers come from an AI service. Check important decisions with your local agriculture office or an official source. | సమాధానాలు AI సేవ నుంచి వస్తాయి. ముఖ్యమైన నిర్ణయాలను స్థానిక వ్యవసాయ కార్యాలయం లేదా అధికారిక వనరులో తనిఖీ చేయండి. | उत्तर एक AI सेवा से आते हैं। महत्वपूर्ण निर्णयों के लिए स्थानीय कृषि कार्यालय या आधिकारिक स्रोत से जाँच करें। | பதில்கள் ஒரு AI சேவையிலிருந்து வருகின்றன. முக்கிய முடிவுகளுக்கு உள்ளூர் வேளாண் அலுவலகம் அல்லது அதிகாரப்பூர்வ மூலத்தில் சரிபார்க்கவும். | उत्तरे एका AI सेवेकडून येतात. महत्त्वाच्या निर्णयांसाठी स्थानिक कृषी कार्यालय किंवा अधिकृत स्रोतावर तपासा. | PENDING |
@@ -74,7 +87,9 @@ target-language cells and change `PENDING` to `APPROVED` with a date.
 | `assistantTypeLabel` | Or type a command | లేదా ఆదేశం టైప్ చేయండి | या आदेश टाइप करें | அல்லது கட்டளை தட்டச்சு செய்யுங்கள் | किंवा आदेश टाइप करा | PENDING |
 | `assistantTypePlaceholder` | e.g. weather | ఉదా: వాతావరణం | जैसे मौसम | எ.கா. வானிலை | उदा. हवामान | PENDING |
 | `assistantVoiceNote` | Speech uses your device voice for the selected language. | మాట్లాడటానికి ఎంచుకున్న భాష కోసం మీ పరికరం గొంతు వాడబడుతుంది. | बोलने के लिए चुनी गई भाषा की आपके डिवाइस की आवाज़ इस्तेमाल होती है। | பேச தேர்ந்தெடுத்த மொழிக்கான உங்கள் சாதனத்தின் குரல் பயன்படுகிறது. | बोलण्यासाठी निवडलेल्या भाषेचा तुमच्या डिवाइसचा आवाज वापरला जातो. | PENDING |
-| `backToListings` | ← Back to listings | ← జాబితాలకు తిరిగి వెళ్లండి | ← सूचियों पर वापस जाएँ | ← பட்டியல்களுக்குத் திரும்பு | ← यादीकडे परना | PENDING |
+| `availabilityLabel` | Availability | అందుబాటు | उपलब्धता | கிடைக்கும் நேரம் | उपलब्धता | PENDING |
+| `availabilityPlaceholder` | e.g. Weekdays, 8am–5pm | ఉదా: వార రోజులు, ఉ. 8–సా. 5 | जैसे कार्यदिवस, सुबह 8–शाम 5 | எ.கா. வாரநாட்களில், காலை 8–மாலை 5 | उदा. कामाचे दिवस, सकाळी 8–संध्याकाळी 5 | PENDING |
+| `backToListings` | ← Back to listings | ← జాబితాల్లోకి తిరిగి | ← सूची में लौटें | ← பட்டியலுக்குத் திரும்பு | ← यादीकडे परत | PENDING |
 | `backToQuestions` | ← Back to questions | ← ప్రశ్నలకు తిరిగి వెళ్లండి | ← प्रश्नों पर वापस जाएँ | ← கேள்விகளுக்குத் திரும்பு | ← प्रश्नांकडे परना | PENDING |
 | `bodyPlaceholder` | Add a few details so others can help | ఇతరులు సహాయం చేయడానికి కొన్ని వివరాలు జోడించండి | दूसरों की मदद के लिए कुछ विवरण जोड़ें | மற்றவர்கள் உதவுவதற்கு சில விவரங்கள் சேர்க்கவும் | इतरांना मदत होण्यासाठी काही तपशील जोडा | PENDING |
 | `cancel` | Cancel | రద్దు చేయండి | रद्द करें | ரத்து செய் | रद्द करा | PENDING |
@@ -102,13 +117,14 @@ target-language cells and change `PENDING` to `APPROVED` with a date.
 | `catMarketplace` | Marketplace | మార్కెట్\u200Cప్లేస్ | बाज़ार | சந்தை | बाजार | PENDING |
 | `catOther` | Other | ఇతరం | अन्य | மற்றவை | इतर | PENDING |
 | `catSchemes` | Schemes | పథకాలు | योजनाएँ | திட்டங்கள் | योजना | PENDING |
-| `catSpraying` | Spraying | పిచికారీ | छिड़काव | தெளிப்பு | फवारणी | PENDING |
+| `catSpraying` | Spraying | స్ప్రేయింగ్ | छिड़काव | தெளிப்பு | फवारणी | PENDING |
 | `catTillage` | Tillage | నాగలి పనులు | जुताई | உழவு | मशागत | PENDING |
 | `catTractors` | Tractors | ట్రాక్టర్లు | ट्रैक्टर | டிராக்டர்கள் | ट्रॅक्टर | PENDING |
 | `catTransport` | Transport | రవాణా | परिवहन | போக்குவரத்து | वाहतूक | PENDING |
 | `catWeather` | Weather | వాతావరణం | मौसम | வானிலை | हवामान | PENDING |
+| `categoryLabel` | Category | వర్గం | श्रेणी | வகை | प्रकार | PENDING |
 | `chooseManually` | Choose a place manually | స్థలాన్ని మాన్యువల్\u200Cగా ఎంచుకోండి | स्थान मैन्युअल रूप से चुनें | இடத்தை கைமுறையாக தேர்ந்தெடுக்க | ठिकाण स्वतः निवडा | PENDING |
-| `clearFilters` | Clear filters | ఫిల్టర్లు తీసివేయండి | फ़िल्टर हटाएँ | வடிகட்டிகளை அகற்று | फिल्टर काढा | PENDING |
+| `clearFilters` | Clear filters | ఫిల్టర్లు తీసేయండి | फ़िल्टर हटाएँ | வடிகட்டலை அகற்று | फिल्टर काढा | PENDING |
 | `comingSoon` | Coming in a later phase | తర్వాతి దశలో వస్తుంది | अगले चरणों में आएगा | அடுத்த கட்டங்களில் வரும் | पुढील टप्प्यांमध्ये येईल | PENDING |
 | `communityAddMedia` | Add photo or video | ఫోటో లేదా వీడియో జోడించండి | फ़ोटो या वीडियो जोड़ें | படம் அல்லது வீடியோ சேர் | छायाचित्र किंवा व्हिडिओ जोडा | PENDING |
 | `communityAllPosts` | All posts | అన్ని పోస్టులు | सभी पोस्ट | அனைத்து இடுகைகள் | सर्व पोस्ट | PENDING |
@@ -150,7 +166,10 @@ target-language cells and change `PENDING` to `APPROVED` with a date.
 | `condSnow` | Snow | మంచు | बर्फ़ | பனி | बर्फ | PENDING |
 | `condThunderstorm` | Thunderstorm | ఉరుములు, మెరుపులు | तूफ़ान | இடி மின்னல் | वादळ | PENDING |
 | `condUnknown` | Unknown | తెలియదు | अज्ञात | தெரியவில்லை | माहीत नाही | PENDING |
-| `createError` | Could not save the enquiry. Please try again. | విచారణ భద్రపరచలేకపోయాం. దయచేసి మళ్లీ ప్రయత్నించండి. | पूछताछ सहेजी नहीं जा सकी। कृपया फिर प्रयास करें। | விசாரணையைச் சேமிக்க முடியவில்லை. தயவுசெய்து மீண்டும் முயற்சிக்கவும். | चौकशी जतन होऊ शकली नाही. कृपया पुन्हा प्रयत्न करा. | PENDING |
+| `contactLabel` | Phone or contact link | ఫోన్ లేదా contact లింక్ | फ़ोन या संपर्क लिंक | தொலைபேசி அல்லது தொடர்பு இணைப்பு | फोन किंवा संपर्क लिंक | PENDING |
+| `contactPlaceholder` | Shown only to farmers who enquire | విచారణ చేసిన రైతులకే చూపిస్తారు | केवल पूछताछ करने वाले किसानों को दिखेगा | வினவல் அனுப்புபவருக்கே காட்டப்படும் | फक्त चौकशी करणाऱ्या शेतकऱ्याला दिसेल | PENDING |
+| `contactPrivate` | The owner's contact is shown only after you send an enquiry. | మీరు విచారణ పంపిన తర్వాతే యజమాని contact చూపిస్తారు. | मालिक की संपर्क जानकारी केवल प्रश्न भेजने के बाद दिखाई देगी। | நீங்கள் வினவல் அனுப்பிய பிறகே உரிமையாளரின் தொடர்பு காட்டப்படும். | तुम्ही चौकशी पाठवल्यावरच मालकाचा संपर्क दिसेल. | PENDING |
+| `createError` | Could not save the enquiry. Please try again. | విచారణ భద్రపరచలేకపోయాం. దయచేసి మళ్లీ ప్రయత్నించండి. | प्रश्न सहेजा नहीं जा सका। कृपया फिर प्रयास करें। | வினவலைச் சேமிக்க முடியவில்லை. தயவுசெய்து மீண்டும் முயற்சிக்கவும். | चौकशी जतन होऊ शकली नाही. कृपया पुन्हा प्रयत्न करा. | PENDING |
 | `cropOptional` | Crop (optional) | పంట (ఐచ్ఛికం) | फसल (वैकल्पिक) | பயிர் (விரும்பினால்) | पीक (पर्यायी) | PENDING |
 | `cropPlaceholder` | e.g. rice | ఉదా: వరి | जैसे धान | எ.கா. நெல் | उदा. तांदूळ | PENDING |
 | `currentConditions` | Current conditions | ప్రస్తుత పరిస్థితులు | वर्तमान स्थिति | தற்போதைய நிலை | सध्याची परिस्थिती | PENDING |
@@ -159,22 +178,32 @@ target-language cells and change `PENDING` to `APPROVED` with a date.
 | `dashboardTitle` | My Farm | నా పొలం | मेरा खेत | என் பயிர் | माझे शेत | PENDING |
 | `demoData` | Demo data — not real-world information | డెమో డేటా — నిజమైన సమాచారం కాదు | डेमो डेटा — वास्तविक जानकारी नहीं | டெமோ தரவு — நிஜத் தகவல் அல்ல | डेमो डेटा — वास्तविक माहिती नाही | PENDING |
 | `demoLabel` | Demo | డెమో | डेमो | டெமோ | डेमो | PENDING |
-| `demoListing` | Demo listing | డెమో జాబితా | डेमो सूची | டெமோ பட்டியல் | डेमो यादी | PENDING |
 | `demoPost` | Demo post | డెమో పోస్ట్ | डेमो पोस्ट | டெமோ இடுகை | डेमो पोस्ट | PENDING |
 | `demoReply` | Demo reply | డెమో సమాధానం | डेमो जवाब | டெமோ பதில் | डेमो उत्तर | PENDING |
 | `demoTip` | Demo tip | డెమో సలహా | डेमो सलाह | டெமோ ஆலோசனை | डेमो सल्ला | PENDING |
 | `demoTipBody` | This is sample guidance. Check with a local expert before acting. | ఇది నమూనా సలహా మాత్రమే. చర్య తీసుకునే ముందు స్థానిక నిపుణుడిని అడగండి. | यह केवल नमूना सलाह है। काम करने से पहले स्थानीय विशेषज्ञ से पूछें। | இது மாதிரி ஆலோசனை மட்டுமே. செயல்படுவதற்கு முன் உள்ளூர் நிபுணரைக் கேளுங்கள். | हा केवळ नमुना सल्ला आहे. काम करण्यापूर्वी स्थानिक तज्ञाला विचारा. | PENDING |
 | `demoWeatherNote` | Demo weather data — not live information | డెమో వాతావరణ డేటా — ప్రత్యక్ష సమాచారం కాదు | डेमो मौसम डेटा — जीवंत जानकारी नहीं | டெமோ வானிலை தரவு — நேரடித் தகவல் அல்ல | डेमो हवामान डेटा — प्रत्यक्ष माहिती नाही | PENDING |
-| `districtPlaceholder` | e.g. Hyderabad | ఉదా: హైదరాబాద్ | जैसे हैदराबाद | எ.கா. ஹைதராபாத் | उदा. हैदराबाद | PENDING |
+| `descriptionLabel` | Description | వివరణ | विवरण | விவரம் | वर्णन | PENDING |
+| `descriptionPlaceholder` | Model, condition, attachments and any terms the farmer should know | మోడల్, పరిస్థితి, అనుబంధాలు, రైతు తెలుసుకోవాల్సిన నిబంధనలు | मॉडल, स्थिति, अतिरिक्त सामान और वे शर्तें जो किसान को जाननी चाहिए | மாதிரி, நிலை, இணைப்புகள் மற்றும் விவசாயி அறிய வேண்டிய நிபந்தனைகள் | मॉडेल, स्थिती, जोडण्या आणि शेतकऱ्याला माहीत असाव्या अशा अटी | PENDING |
+| `districtLabel` | District | జిల్లా | ज़िला | மாவட்டம் | जिल्हा | PENDING |
+| `districtPlaceholder` | e.g. Guntur | ఉదా: గుంటూరు | जैसे गुंटूर | எ.கா. குண்டூர் | उदा. गुंटूर | PENDING |
 | `en` | English |  |  |  |  | PENDING |
-| `enquire` | Enquire | అడగండి | पूछताछ करें | விசாரிக்க | चौकशी करा | PENDING |
-| `enquiryHeading` | Enquiry (demo) | విచారణ (డెమో) | पूछताछ (डेमो) | விசாரணை (டெமோ) | चौकशी (डेमो) | PENDING |
-| `enquiryNote` | This is a sample listing. No real provider will contact you. Your enquiry is saved for the future verified-provider flow. | ఇది నమూనా జాబితా. నిజమైన సరఫరాదారు మీకు సంప్రదించరు. భవిష్యత్తులో ధృవీకరించిన సరఫరాదారుల కోసం మీ విచారణ భద్రపరచబడుతుంది. | यह एक नमूना सूची है। कोई वास्तविक प्रदाता आपसे संपर्क नहीं करेगा। आपकी पूछताछ भविष्य के सत्यापित प्रदाता कार्यक्रम के लिए सहेजी जाती है। | இது ஒரு மாதிரி பட்டியல். உண்மையான வழங்குநர் உங்களைத் தொடர்புகொள்ள மாட்டார். எதிர்கால சரிபார்க்கப்பட்ட வழங்குநர் செயல்முறைக்காக உங்கள் விசாரணை சேமிக்கப்படுகிறது. | ही एक नमुना यादी आहे. कोणताही खरा पुरवठादार तुम्हाला संपर्क करणार नाही. तुमची चौकशी भविष्यातील पडताळलेल्या पुरवठादार प्रक्रियेसाठी जतन केली जाते. | PENDING |
-| `enquirySent` | Demo enquiry saved. No real provider will contact you. | డెమో విచారణ భద్రపరచబడింది. నిజమైన సరఫరాదారు సంప్రదించరు. | डेमो पूछताछ सहेजी गई। कोई वास्तविक प्रदाता संपर्क नहीं करेगा। | டெமோ விசாரணை சேமிக்கப்பட்டது. உண்மையான வழங்குநர் தொடர்புகொள்ள மாட்டார். | डेमो चौकशी जतन केली. कोणताही खरा पुरवठादार संपर्क करणार नाही. | PENDING |
+| `enquire` | Enquire | అడిగి తెలుసుకోండి | पूछताछ करें | வினவு | चौकशी करा | PENDING |
+| `enquireAgain` | Find more equipment | మరిన్ని పరికరాలు చూడండి | और उपकरण देखें | மேலும் உபகரணங்கள் காண்க | अधिक उपकरणे पहा | PENDING |
+| `enquiryHeading` | Send an enquiry | విచారణ పంపండి | प्रश्न भेजें | வினவல் அனுப்பு | चौकशी पाठवा | PENDING |
+| `enquiryLoadError` | Could not load enquiries. | విచారణలు లోడ్ కాలేదు. | प्रश्न लोड नहीं हो सके। | வினவல்களை ஏற்ற முடியவில்லை. | चौकशा लोड होऊ शकल्या नाहीत. | PENDING |
+| `enquiryNote` | Your name and phone number will be shown to this owner so they can contact you directly. | యజమాని మిమ్మల్ని నేరుగా సంప్రదించడానికి మీ పేరు, ఫోన్ నంబర్ చూపిస్తారు. | मालिक को आपसे सीधे संपर्क करने के लिए आपका नाम और फ़ोन नंबर दिखाए जाएँगे। | உரிமையாளர் உங்களை நேரடியாக தொடர்பு கொள்ள உங்கள் பெயரும் தொலைபேசி எண்ணும் காட்டப்படும். | मालक तुम्हाला थेट संपर्क करू शकण्यासाठी तुमचे नाव व फोन क्रमांक दाखवले जातील. | PENDING |
+| `enquirySent` | Enquiry sent. The owner's contact details are shown in My enquiries. | విచారణ పంపబడింది. యజమాని contact వివరాలు 'నా విచారణలు'లో చూపిస్తాయి. | प्रश्न भेज दिया गया। मालिक की संपर्क जानकारी 'मेरे प्रश्न' में दिखेगी। | வினவல் அனுப்பப்பட்டது. உரிமையாளரின் தொடர்பு விவரங்கள் 'என் வினவல்கள்' இல் உள்ளன. | चौकशी पाठवली. मालकाचा संपर्क 'माझ्या चौकशा' मध्ये दिसेल. | PENDING |
+| `enquiryStatusLabel` | Enquiry status | విచారణ స్థితి | प्रश्न की स्थिति | வினவல் நிலை | चौकशीची स्थिती | PENDING |
 | `eqName` | Your name | మీ పేరు | आपका नाम | உங்கள் பெயர் | तुमचे नाव | PENDING |
-| `equipmentIntro` | Browse sample farm equipment. These are demo listings — no real owners or prices. | నమూనా వ్యవసాయ పరికరాలు చూడండి. ఇవి డెమో జాబితాలు — నిజమైన యజమానులు లేదా ధరలు లేవు. | नमूना कृषि उपकरण देखें। ये डेमो सूचियाँ हैं — कोई वास्तविक मालिक या कीमत नहीं है। | மாதிரி விவசாய இயந்திரங்களைப் பாருங்கள். இவை டெமோ பட்டியல்கள் — உண்மையான உரிமையாளர்கள் அல்லது விலைகள் இல்லை. | नमुना शेती साधने पहा. या डेमो यादी आहेत — कोणतेही खरे मालक किंवा किंमत नाही. | PENDING |
-| `equipmentTitle` | Equipment rental | పరికరాల అద్దె | उपकरण किराया | இயந்திர வாடகை | साधनांचे भाडे | PENDING |
+| `eqTitleLabel` | Equipment title | పరికరం పేరు | उपकरण का नाम | உபகரணத்தின் பெயர் | उपकरणाचे नाव | PENDING |
+| `eqTitlePlaceholder` | e.g. 45 HP tractor | ఉదా: 45 HP ట్రాక్టర్ | जैसे 45 HP ट्रैक्टर | எ.கா. 45 HP டிராக்டர் | उदा. 45 HP ट्रॅक्टर | PENDING |
+| `equipmentDisclaimer` | AgriGuide does not verify ownership, equipment condition or rates. Check everything before paying or handing over equipment. | యజమానితనం, పరికర పరిస్థితి లేదా రేట్లను AgriGuide ధృవీకరించదు. చెల్లించే లేదా పరికరం అప్పగించే ముందు అన్నీ తనిఖీ చేసుకోండి. | AgriGuide स्वामित्व, उपकरण की स्थिति या दरों की पुष्टि नहीं करता। भुगतान या उपकरण सौंपने से पहले सब कुछ जाँच लें। | உரிமையை, உபகரண நிலையை அல்லது விலையை AgriGuide சரிபார்க்காது. பணம் செலுத்துவதற்கு அல்லது உபகரணத்தை ஒப்படைப்பதற்கு முன் அனைத்தையும் பார்த்துக் கொள்ளுங்கள். | AgriGuide मालकी, उपकरणाची स्थिती किंवा दरांची पुष्टी करत नाही. पैसे देण्याआधी किंवा उपकरण देण्याआधी सर्व तपासून पहा. | PENDING |
+| `equipmentIntro` | List your own farm equipment or find machinery near you. Owners enter their own details and rates. | మీ సొంత వ్యవసాయ పరికరాలను జాబితా చేయండి లేదా దగ్గర్లోని యంత్రాలను కనుక్కోండి. యజమానులు తమ వివరాలు, రేట్లు తామే నమోదు చేస్తారు. | अपने खेती उपकरण सूचीबद्ध करें या अपने पास मशीनें खोजें। मालिक अपना विवरण और दरें स्वयं दर्ज करते हैं। | உங்கள் விவசாய உபகரணங்களை பதிவு செய்யுங்கள் அல்லது அருகில் உள்ள இயந்திரங்களைக் கண்டுபிடியுங்கள். உரிமையாளர்கள் தங்கள் விவரங்களையும் விலையையும் தாமே உள்ளிடுகிறார்கள். | तुमची शेती उपकरणे सूचीबद्ध करा किंवा जवळच्या यंत्रांचा शोध घ्या. मालक स्वतः तपशील आणि दर नोंदवतात. | PENDING |
+| `equipmentTitle` | Equipment rental | పరికరాల అద్దె | उपकरण किराया | உபகரண வாடகை | उपकरण भाडे | PENDING |
 | `farmAdvice` | Farming suggestions | వ్యవసాయ సలహాలు | खेती सलाह | விவசாய ஆலோசனை | शेती सल्ला | PENDING |
+| `farmerIntro` | Enquiries you send from this browser appear here with the owner's contact details. | ఈ బ్రౌజర్‌ నుంచి మీరు పంపిన విచారణలు యజమాని contact వివరాలతో ఇక్కడ చూపిస్తాయి. | इस ब्राउज़र से आपने भेजे गए प्रश्न मालिक की संपर्क जानकारी के साथ यहाँ दिखते हैं। | இந்த உலாவியிலிருந்து நீங்கள் அனுப்பிய வினவல்கள் உரிமையாளரின் தொடர்பு விவரங்களுடன் இங்கு தோன்றும். | या ब्राउझरमधून तुम्ही पाठवलेल्या चौकशा मालकाच्या संपर्कासह येथे दिसतात. | PENDING |
+| `farmerNameLabel` | Farmer | రైతు | किसान | விவசாயி | शेतकरी | PENDING |
 | `feelsLike` | Feels like | అనుభూతి ఉష్ణోగ్రత | महसूस तापमान | உணரப்படும் வெப்பம் | जाणवणारे तापमान | PENDING |
 | `fieldBody` | Details | వివరాలు | विवरण | விவரங்கள் | तपशील | PENDING |
 | `fieldCategory` | Category | విభాగం | श्रेणी | பகுப்பு | श्रेणी | PENDING |
@@ -195,6 +224,7 @@ target-language cells and change `PENDING` to `APPROVED` with a date.
 | `homeTitle` | Welcome | స్వాగతం | स्वागत है | வரவேற்பு | स्वागत | PENDING |
 | `hourlyForecast` | Hourly forecast | గంటసారి అంచనా | घंटेवार पूर्वानुमान | மணிநேர முன்னறிவிப்பு | तासनुसार अंदाज | PENDING |
 | `humidity` | Humidity | తేమ | आर्द्रता | ஈரப்பதம் | आर्द्रता | PENDING |
+| `identityNote` | A private key is saved in this browser so you can return to your listings and enquiries. Keep using this browser. | మీ జాబితాలు, విచారణలు తిరిగి చూడటానికి ఈ బ్రౌజర్‌లో ఒక గోప్య key భద్రపరచబడుతుంది. ఇదే బ్రౌజర్ వాడటం కొనసాగించండి. | आपकी सूची और प्रश्न दोबारा देखने के लिए इस ब्राउज़र में एक निजी कुंजी सहेजी जाती है। इसी ब्राउज़र का उपयोग करें। | உங்கள் பட்டியல்களையும் வினவல்களையும் மீண்டும் காண இந்த உலாவியில் ஒரு தனியான குறியீடு சேமிக்கப்படும். இதே உலாவியைப் பயன்படுத்தவும். | तुमच्या याद्या व चौकशी पुन्हा पाहण्यासाठी या ब्राउझरमध्ये एक खाजगी कुंजी जतन केली जाते. हाच ब्राउझर वापरा. | PENDING |
 | `irrCanal` | Canal | కాలువ | नहर | கால்வாய் | कालवा | PENDING |
 | `irrDrip` | Drip | డ్రిప్ | ड्रिप | ட்ரிப் | ड्रिप | PENDING |
 | `irrRainfed` | Rainfed | వర్షాధారం | वर्षा आधारित | மழைச் சார்ந்த | पावसावर आधारित | PENDING |
@@ -205,14 +235,18 @@ target-language cells and change `PENDING` to `APPROVED` with a date.
 | `landOver10` | Over 10 acres | 10 ఎకరాల పైన | 10 एकड़ से अधिक | 10 ஏக்கருக்கு மேல் | 10 एकरपेक्षा जास्त | PENDING |
 | `landUnder1` | Under 1 acre | 1 ఎకరంలోపు | 1 एकड़ से कम | 1 ஏக்கருக்குக் குறைவு | 1 एकरपेक्षा कमी | PENDING |
 | `languageLabel` | Your language | మీ భాష | आपकी भाषा | உங்கள் மொழி | आपली भाषा | PENDING |
-| `loadError` | Could not load equipment listings. | పరికరాల జాబితాలు లోడ్ కాలేదు. | उपकरण सूचियाँ लोड नहीं हो सकीं। | இயந்திர பட்டியல்களை ஏற்ற முடியவில்லை. | साधनांच्या यादी लोड होऊ शकल्या नाहीत. | PENDING |
+| `listingLoadError` | Could not load your listings. | మీ జాబితాలు లోడ్ కాలేదు. | आपकी सूचियाँ लोड नहीं हो सकीं। | உங்கள் பட்டியல்களை ஏற்ற முடியவில்லை. | तुमच्या याद्या लोड होऊ शकल्या नाहीत. | PENDING |
+| `listingPublished` | Listing published. Farmers can now see it. | జాబితా ప్రచురించబడింది. రైతులు ఇప్పుడు దీన్ని చూడగలరు. | सूची प्रकाशित हो गई। किसान अब इसे देख सकते हैं। | பட்டியல் வெளியிடப்பட்டது. விவசாயிகள் இப்போது இதைக் காணலாம். | यादी प्रकाशित झाली. शेतकरी आता ती पाहू शकतात. | PENDING |
+| `listingUpdated` | Listing updated. | జాబితా నవీకరించబడింది. | सूची अपडेट हो गई। | பட்டியல் புதுப்பிக்கப்பட்டது. | यादी अद्यापित झाली. | PENDING |
+| `loadError` | Could not load equipment listings. | పరికరాల జాబితా లోడ్ కాలేదు. | उपकरण सूची लोड नहीं हो सकी। | உபகரணப் பட்டியலை ஏற்ற முடியவில்லை. | उपकरणांची यादी लोड होऊ शकली नाही. | PENDING |
 | `locating` | Finding your location… | మీ స్థానం కనుక్కుంటున్నాం… | आपका स्थान ढूँढ रहे हैं… | உங்கள் இடத்தைக் கண்டறிகிறோம்… | तुमचे ठिकाण शोधत आहोत… | PENDING |
 | `locationDenied` | Location permission was denied. Please choose a place manually. | స్థాన అనుమతి నిరాకరించబడింది. దయచేసి స్థలాన్ని మాన్యువల్\u200Cగా ఎంచుకోండి. | स्थान की अनुमति नहीं मिली। कृपया स्थान मैन्युअल रूप से चुनें। | இட அனுமதி மறுக்கப்பட்டது. தயவுசெய்து இடத்தை கைமுறையாக தேர்ந்தெடுக்கவும். | स्थानाची परवानगी मिळाली नाही. कृपया ठिकाण स्वतः निवडा. | PENDING |
 | `locationLabel` | District or state | జిల్లా లేదా రాష్ట్రం | ज़िला या राज्य | மாவட்டம் அல்லது மாநிலம் | जिल्हा किंवा राज्य | PENDING |
 | `locationPlaceholder` | e.g. Guntur | ఉదా: గుంటూరు | जैसे गुंटूर | எ.கா. குண்டூர் | उदा. गुंटूर | PENDING |
 | `marketplaceIntro` | Browse sample farm produce. Demo listings only — no real sellers or live prices. | నమూనా వ్యవసాయ ఉత్పత్తులు చూడండి. ఇవి డెమో జాబితాలు మాత్రమే — నిజమైన విక్రేతలు లేదా జీవ ధరలు లేవు. | नमूना कृषि उत्पाद देखें। केवल डेमो सूचियाँ — कोई वास्तविक विक्रेता या लाइव कीमत नहीं है। | மாதிரி விவசாய உற்பத்திகளைப் பாருங்கள். டெமோ பட்டியல்கள் மட்டுமே — உண்மையான விற்பனையாளர்கள் அல்லது நேரடி விலைகள் இல்லை. | नमुना शेती उत्पादने पहा. फक्त डेमो यादी — कोणतेही खरे विक्रेते किंवा थेट किंमत नाही. | PENDING |
 | `marketplaceTitle` | Marketplace | మార్కెట్\u200Cప్లేస్ | बाज़ार | சந்தை | बाजारपेठ | PENDING |
-| `messagePlaceholder` | When do you need it? | ఎప్పుడు కావాలి? | आपको कब चाहिए? | எப்போது தேவை? | तुम्हाला कधी हवे? | PENDING |
+| `messageLabel` | Message | సందేశం | संदेश | செய்தி | संदेश | PENDING |
+| `messagePlaceholder` | When do you need it? | దీన్ని ఎప్పుడు కావాలి? | आपको यह कब चाहिए? | இது எப்போது தேவை? | तुम्हाला हे कधी हवे आहे? | PENDING |
 | `mkBackToListings` | ← Back to listings | ← జాబితాలకు తిరిగి వెళ్లండి | ← सूचियों पर वापस जाएँ | ← பட்டியல்களுக்குத் திரும்பு | ← यादीकडे परना | PENDING |
 | `mkCreateError` | Could not save the enquiry. Please try again. | విచారణ భద్రపరచలేకపోయాం. దయచేసి మళ్లీ ప్రయత్నించండి. | पूछताछ सहेजी नहीं जा सकी। कृपया फिर प्रयास करें। | விசாரணையைச் சேமிக்க முடியவில்லை. தயவுசெய்து மீண்டும் முயற்சிக்கவும். | चौकशी जतन होऊ शकली नाही. कृपया पुन्हा प्रयत्न करा. | PENDING |
 | `mkEnquire` | Enquire to buy | కొనడానికి అడగండి | खरीदने के लिए पूछें | வாங்க விசாரிக்க | खरेदीसाठी चौकशी करा | PENDING |
@@ -236,23 +270,44 @@ target-language cells and change `PENDING` to `APPROVED` with a date.
 | `mkSpices` | Spices | సుగంధ ద్రవ్యాలు | मसाले | மசாலாப் பொருட்கள் | मसाले | PENDING |
 | `mkVegetables` | Vegetables | కూరగాయలు | सब्ज़ियाँ | காய்கறிகள் | भाज्या | PENDING |
 | `mr` | मराठी |  |  |  |  | PENDING |
+| `myEnquiriesHeading` | My rental enquiries | నా అద్దె విచారణలు | मेरे किराया प्रश्न | என் வாடகை வினவல்கள் | माझ्या भाड्याच्या चौकशा | PENDING |
+| `myListingsHeading` | My listings | నా జాబితాలు | मेरी सूचियाँ | என் பட்டியல்கள் | माझ्या याद्या | PENDING |
 | `namePlaceholder` | e.g. Ravi | ఉదా: రవి | जैसे रवि | எ.கா. ரவி | उदा. रवी | PENDING |
 | `navAssistant` | Assistant | సహాయకుడు | सहायक | உதவியாளர் | सहाय्यक | PENDING |
 | `navCommunity` | Community | కమ్యూనిటీ | समुदाय | சமூகம் | समुदाय | PENDING |
 | `navHome` | Home | హోమ్ | होम | முகப்பு | मुख्यपृष्ठ | PENDING |
 | `navSchemes` | Schemes | పథకాలు | योजनाएँ | திட்டங்கள் | योजना | PENDING |
 | `navWeather` | Weather | వాతావరణం | मौसम | வானிலை | हवामान | PENDING |
+| `newEnquiries` | New enquiries | కొత్త విచారణలు | नए प्रश्न | புதிய வினவல்கள் | नव्या चौकशा | PENDING |
 | `noAlerts` | No major alerts right now. | ప్రస్తుతం ప్రధాన హెచ్చరికలు లేవు. | अभी कोई बड़ी चेतावनी नहीं है। | தற்போது பெரிய எச்சரிக்கைகள் இல்லை. | सध्या कोणतीही मोठी सूचना नाही. | PENDING |
-| `noListings` | No sample listings found for this filter. | ఈ ఫిల్టర్\u200Cకు నమూనా జాబితాలు లేవు. | इस फ़िल्टर के लिए कोई नमूना सूची नहीं मिली। | இந்த வடிகட்டியில் மாதிரி பட்டியல்கள் இல்லை. | या फिल्टरसाठी कोणत्याही नमुना यादी नाहीत. | PENDING |
+| `noFarmerEnquiries` | You have not sent any equipment enquiry yet. | మీరు ఇంకా ఏ పరికరం విచారణ పంపలేదు. | आपने अभी कोई उपकरण प्रश्न नहीं भेजा है। | நீங்கள் இதுவரை எந்த உபகரண வினவலும் அனுப்பவில்லை. | तुम्ही अद्याप कोणत्या उपकरणाची चौकशी पाठवली नाही. | PENDING |
+| `noListings` | No equipment listings found for this filter. Try another category or place. | ఈ ఫిల్టర్‌కు పరికరాలు లేవు. వేరే వర్గం లేదా ప్రాంతం ప్రయత్నించండి. | इस फ़िल्टर के लिए कोई उपकरण नहीं मिला। दूसरी श्रेणी या स्थान आज़माएँ। | இந்த வடிகட்டலில் உபகரணங்கள் இல்லை. வேறு வகை அல்லது இடத்தை முயற்சிக்கவும். | या फिल्टरसाठी उपकरणे आढळली नाहीत. दुसरा प्रकार किंवा ठिकाण वापरून पहा. | PENDING |
+| `noOwnerEnquiries` | No farmer has enquired yet. | ఇంకా ఏ రైతు విచారణ చేయలేదు. | अभी किसी किसान ने पूछताछ नहीं की है। | இதுவரை எந்த விவசாயியும் வினவல் செய்யவில்லை. | अद्याप कोणत्या शेतकऱ्याने चौकशी केली नाही. | PENDING |
+| `noOwnerListings` | You have not added any equipment yet. | మీరు ఇంకా ఏ పరికరం నమోదు చేయలేదు. | आपने अभी कोई उपकरण नहीं जोड़ा है। | நீங்கள் இதுவரை எந்த உபகரணத்தையும் சேர்க்கவில்லை. | तुम्ही अद्याप कोणतेही उपकरण जोडले नाही. | PENDING |
 | `noPlacesFound` | No places found | స్థలాలు కనుక్కోబడలేదు | कोई स्थान नहीं मिला | இடங்கள் கிடைக்கவில்லை | कोणतेही ठिकाण सापडले नाही | PENDING |
 | `noPosts` | No questions yet. Be the first to ask. | ఇంకా ప్రశ్నలు లేవు. మొదటివారు కావాలా? | अभी कोई प्रश्न नहीं है। पहले पूछने वाले बनें। | இதுவரை கேள்விகள் இல்லை. முதலில் கேட்பவராக இருங்கள். | अद्याप कोणतेही प्रश्न नाहीत. पहिला प्रश्न विचारा. | PENDING |
 | `noReplies` | No replies yet. | ఇంకా సమాధానాలు లేవు. | अभी कोई जवाब नहीं है। | இதுவரை பதில்கள் இல்லை. | अद्याप कोणतीही उत्तरे नाहीत. | PENDING |
+| `noReplyYet` | No reply yet. | ఇంకా సమాధానం లేదు. | अभी कोई उत्तर नहीं। | இதுவரை பதில் இல்லை. | अद्याप उत्तर नाही. | PENDING |
 | `noWarnings` | No major weather warning in this forecast. | ఈ అంచనాలో ప్రధాన వాతావరణ హెచ్చరిక లేదు. | इस पूर्वानुमान में कोई बड़ी मौसम चेतावनी नहीं है। | இந்த முன்னறிவிப்பில் பெரிய வானிலை எச்சரிக்கை இல்லை. | या अंदाजात कोणतीही मोठी हवामान सूचना नाही. | PENDING |
+| `ownerContactLabel` | Owner contact | యజమాని contact | मालिक की संपर्क जानकारी | உரிமையாளர் தொடர்பு | मालकाचा संपर्क | PENDING |
+| `ownerEnquiriesHeading` | Enquiries for my equipment | నా పరికరాలపై విచారణలు | मेरे उपकरणों के प्रश्न | என் உபகரணங்களுக்கான வினவல்கள் | माझ्या उपकरणांच्या चौकशा | PENDING |
+| `ownerIntro` | Add the equipment you own. Your contact details stay private until a farmer sends an enquiry. | మీ సొంత పరికరాలు నమోదు చేయండి. రైతు విచారణ పంపే వరకు మీ contact వివరాలు గోప్యంగా ఉంటాయి. | अपने उपकरण दर्ज करें। किसान के प्रश्न भेजने तक आपकी संपर्क जानकारी निजी रहेगी। | உங்கள் உபகரணங்களைப் பதிவு செய்யுங்கள். விவசாயி வினவல் அனுப்பும் வரை உங்கள் தொடர்பு விவரங்கள் தனியாக இருக்கும். | तुमची उपकरणे नोंदवा. शेतकऱ्याने चौकशी पाठवेपर्यंत तुमचा संपर्क खाजगी राहील. | PENDING |
+| `ownerLabel` | Owner | యజమాని | मालिक | உரிமையாளர் | मालक | PENDING |
+| `ownerNameLabel` | Your name or business | మీ పేరు లేదా వ్యాపారం | आपका नाम या व्यवसाय | உங்கள் பெயர் அல்லது நிறுவனம் | तुमचे नाव किंवा व्यवसाय | PENDING |
+| `ownerNamePlaceholder` | The name farmers will see | రైతులు చూసే పేరు | किसानों को दिखने वाला नाम | விவசாயிகள் காணும் பெயர் | शेतकऱ्यांना दिसणारे नाव | PENDING |
+| `ownerReplyLabel` | Owner's reply | యజమాని సమాధానం | मालिक का उत्तर | உரிமையாளர் பதில் | मालकाचे उत्तर | PENDING |
+| `ownerSubmitted` | Owner-submitted | యజమాని నమోదు చేసినది | मालिक द्वारा दर्ज | உரிமையாளர் பதிவு | मालकाने नोंदवले | PENDING |
+| `pauseListing` | Pause | ఆపండి | रोकें | நிறுத்து | थांबवा | PENDING |
 | `phonePlaceholder` | e.g. 9876543210 | ఉదా: 9876543210 | जैसे 9876543210 | எ.கா. 9876543210 | उदा. 9876543210 | PENDING |
 | `placeSearchHint` | Search by town or district name | పట్టణం లేదా జిల్లా పేరుతో వెతకండి | शहर या ज़िले का नाम खोजें | நகரம் அல்லது மாவட்டப் பெயரைத் தேடுங்கள் | शहर किंवा जिल्ह्याचे नाव शोधा | PENDING |
 | `plannedForPhase` | Planned for Phase | దశ కోసం ప్రణాళిక | चरण के लिए योजनाबद्ध | கட்டத்திற்கு திட்டமிடப்பட்டது | टप्प्यासाठी नियोजित | PENDING |
 | `postCreated` | Your question was posted. | మీ ప్రశ్న పోస్ట్ అయింది. | आपका प्रश्न पोस्ट हो गया। | உங்கள் கேள்வி இடப்பட்டது. | तुमचा प्रश्न पोस्ट केला गेला. | PENDING |
-| `priceUnavailable` | Price not shown in demo | డెమోలో ధర చూపబడదు | डेमो में कीमत नहीं दिखाई गई | டெமோவில் விலை காட்டப்படவில்லை | डेमोमध्ये किंमत दाखवली नाही | PENDING |
+| `priceLabel` | Rental rate (₹) | అద్దె రేటు (₹) | किराया दर (₹) | வாடகை விலை (₹) | भाडे दर (₹) | PENDING |
+| `pricePerDay` | per day | రోజుకు | प्रति दिन | நாளுக்கு | प्रति दिवस | PENDING |
+| `pricePerHour` | per hour | గంటకు | प्रति घंटा | மணிக்கு | प्रति तास | PENDING |
+| `pricePerSeason` | per season | సీజన్‌కు | प्रति सीज़न | பருவத்திற்கு | प्रति हंगाम | PENDING |
+| `pricePlaceholder` | e.g. 2500 | ఉదా: 2500 | जैसे 2500 | எ.கா. 2500 | उदा. 2500 | PENDING |
+| `priceUnitLabel` | Rate is | రేటు | दर है | விலை | दर | PENDING |
 | `profileCancel` | Cancel | రద్దు చేయండి | रद्द करें | ரத்து செய் | रद्द करा | PENDING |
 | `profileEdit` | Edit details | వివరాలు మార్చండి | विवरण बदलें | விவரங்களை மாற்று | तपशील बदला | PENDING |
 | `profileHeading` | My farm details | నా పొలం వివరాలు | मेरे खेत की जानकारी | என் பயிர் விவரங்கள் | माझ्या शेताची माहिती | PENDING |
@@ -263,6 +318,7 @@ target-language cells and change `PENDING` to `APPROVED` with a date.
 | `profileSaved` | Saved on this device | ఈ పరికరంలో భద్రపరచబడింది | इस डिवाइस पर सहेजा गया | இந்த சாதனத்தில் சேமிக்கப்பட்டது | या डिवाइसवर जतन केले | PENDING |
 | `profileSummaryEmpty` | No details added yet | ఇంకా వివరాలు జోడించలేదు | अभी कोई विवरण नहीं जोड़ा गया | இதுவரை விவரங்கள் இல்லை | अद्याप कोणताही तपशील नाही | PENDING |
 | `publish` | Post question | ప్రశ్న పోస్ట్ చేయండి | प्रश्न पोस्ट करें | கேள்வியை இடு | प्रश्न पोस्ट करा | PENDING |
+| `publishListing` | Publish listing | జాబితా ప్రచురించండి | सूची प्रकाशित करें | பட்டியலை வெளியிடு | यादी प्रकाशित करा | PENDING |
 | `questionsHeading` | Questions | ప్రశ్నలు | प्रश्न | கேள்விகள் | प्रश्न | PENDING |
 | `rainfall` | Rainfall | వర్షపాతం | वर्षा | மழையளவு | पाऊस | PENDING |
 | `readAloud` | Read this page aloud | ఈ పేజీని చదవండి | यह पेज पढ़कर सुनाएँ | இந்தப் பக்கத்தைப் படிக்க | हा पेज वाचून दाखवा | PENDING |
@@ -270,10 +326,14 @@ target-language cells and change `PENDING` to `APPROVED` with a date.
 | `replyCount` | {count} replies | {count} సమాధానాలు | {count} जवाब | {count} பதில்கள் | {count} उत्तरे | PENDING |
 | `replyCountOne` | 1 reply | 1 సమాధానం | 1 जवाब | 1 பதில் | 1 उत्तर | PENDING |
 | `replyCreated` | Your reply was posted. | మీ సమాధానం పోస్ట్ అయింది. | आपका जवाब पोस्ट हो गया। | உங்கள் பதில் இடப்பட்டது. | तुमचे उत्तर पोस्ट केले गेले. | PENDING |
-| `replyPlaceholder` | Write a reply... | సమాధానం రాయండి... | जवाब लिखें... | பதில் எழுதுங்கள்... | उत्तर लिहा... | PENDING |
+| `replyLabel` | Reply to farmer (optional) | రైతుకు సమాధానం (ఐచ్ఛికం) | किसान को उत्तर (वैकल्पिक) | விவசாயிக்கு பதில் (விரும்பினால்) | शेतकऱ्याला उत्तर (पर्यायी) | PENDING |
+| `replyPlaceholder` | e.g. I will call this evening | ఉదా: ఈ సాయంత్రం ఫోన్ చేస్తాను | जैसे आज शाम फ़ोन करूँगा | எ.கா. இன்று மாலை அழைப்பேன் | उदा. आज संध्याकाळी फोन करेन | PENDING |
 | `report` | Report | రిపోర్ట్ చేయండి | रिपोर्ट करें | புகார் செய் | तक्रार करा | PENDING |
 | `reportNote` | Reports are queued for review. Moderation tools arrive with the admin phase. | రిపోర్టులు సమీక్ష కోసం భద్రపరచబడతాయి. మోడరేషన్ సాధనాలు అడ్మిన్ దశలో వస్తాయి. | रिपोर्ट समीक्षा के लिए सहेजी जाती हैं। मॉडरेशन टूल एडमिन चरण में आएँगे। | புகார்கள் மறுபரிசீலனைக்கு சேமிக்கப்படுகின்றன. நிர்வாகக் கருவிகள் நிர்வாக கட்டத்தில் வரும். | तक्रारी पुनरावलोकनासाठी जतन केल्या जातात. प्रशासन साधने प्रशासन टप्प्यात येतील. | PENDING |
 | `reported` | Sent for review | సమీక్షకు పంపబడింది | समीक्षा के लिए भेजा गया | மறுபரிசீலனைக்கு அனுப்பப்பட்டது | पुनरावलोकनासाठी पाठवले | PENDING |
+| `responseSaved` | Response saved. | సమాధానం భద్రపరచబడింది. | उत्तर सहेजा गया। | பதில் சேமிக்கப்பட்டது. | उत्तर जतन केले. | PENDING |
+| `resumeListing` | Resume | తిరిగి ప్రారంభించండి | फिर शुरू करें | மீண்டும் தொடங்கு | पुन्हा सुरू करा | PENDING |
+| `saveResponse` | Save response | సమాధానం భద్రపరచండి | उत्तर सहेजें | பதிலைச் சேமி | उत्तर जतन करा | PENDING |
 | `schAddQuestion` | Add question | ప్రశ్న జోడించండి | प्रश्न जोड़ें | கேள்வி சேர் | प्रश्न जोडा | PENDING |
 | `schApplication` | Applying | దరఖాస్తు | आवेदन | விண்ணப்பம் | अर्ज | PENDING |
 | `schApply1` | Use the official portal or the office counter. | అధికారిక పోర్టల్ లేదా కార్యాలయ కౌంటర్ వాడండి. | आधिकारिक पोर्टल या कार्यालय काउंटर का उपयोग करें। | அதிகாரப்பூர்வ போர்டல் அல்லது அலுவலக மற்றிையைப் பயன்படுத்தவும். | अधिकृत पोर्टल किंवा कार्यालय काउंटर वापरा. | PENDING |
@@ -339,28 +399,21 @@ target-language cells and change `PENDING` to `APPROVED` with a date.
 | `searchButton` | Search | వెతకండి | खोजें | தேடு | शोधा | PENDING |
 | `selectPlaceholder` | Choose... | ఎంచుకోండి... | चुनें... | தேர்ந்தெடுக்க... | निवडा... | PENDING |
 | `selectedPlace` | Selected place | ఎంచుకున్న స్థలం | चुना गया स्थान | தேர்ந்தெடுத்த இடம் | निवडलेले ठिकाण | PENDING |
-| `sendEnquiry` | Send enquiry | విచారణ పంపండి | पूछताछ भेजें | விசாரணை அனுப்பு | चौकशी पाठवा | PENDING |
+| `sendEnquiry` | Send enquiry | విచారణ పంపండి | प्रश्न भेजें | வினவல் அனுப்பு | चौकशी पाठवा | PENDING |
 | `sendReply` | Send reply | సమాధానం పంపండి | जवाब भेजें | பதில் அனுப்பு | उत्तर पाठवा | PENDING |
 | `setLocationHint` | Set your location on the Weather page to see local conditions here. | స్థానిక పరిస్థితులు ఇక్కడ చూడాలంటే వాతావరణం పేజీలో మీ స్థానం సెట్ చేయండి. | यहाँ स्थानीय जानकारी देखने के लिए मौसम पृष्ठ पर अपना स्थान सेट करें। | இங்கு உள்ளூர் தகவலைக் காண வானிலை பக்கத்தில் உங்கள் இடத்தை அமைக்கவும். | येथे स्थानिक माहिती पाहण्यासाठी हवामान पानावर आपले ठिकाण सेट करा. | PENDING |
-| `sfCreateError` | Could not save the note. Please try again. | నోట్ భద్రపరచలేకపోయాం. దయచేసి మళ్లీ ప్రయత్నించండి. | नोट सहेजा नहीं जा सका। कृपया फिर प्रयास करें। | குறிப்பைச் சேமிக்க முடியவில்லை. தயவுசெய்து மீண்டும் முயற்சிக்கவும். | नोंद जतन होऊ शकली नाही. कृपया पुन्हा प्रयत्न करा. | PENDING |
-| `sfCrop` | Crop | పంట | फसल | பயிர் | पीक | PENDING |
-| `sfCropPlaceholder` | e.g. Tomato | ఉదా: టమాటా | जैसे टमाटर | எ.கா. தக்காளி | उदा. टोमॅटो | PENDING |
 | `sfCrops` | Crops | పంటలు | फसलें | பயிர்கள் | पीके | PENDING |
-| `sfDisclaimer` | General information only. This app does not diagnose crops, predict yields or replace local expert advice. | ఇది కేవలం సాధారణ సమాచారం. ఈ యాప్ పంటలను నిర్ధారించదు, దిగుబడిని అంచనా వేయదు లేదా స్థానిక నిపుణుల సలహాకు బదులు కాదు. | केवल सामान्य जानकारी। यह ऐप फ़सलों का निदान नहीं करता, उत्पादन का अनुमान नहीं लगाता और स्थानीय विशेषज्ञ की सलाह की जगह नहीं लेता। | இது பொதுவான தகவல் மட்டுமே. இந்த ஆப் பயிர்களைக் கண்டறியவில்லை, மகசூலைக் கணிக்கவில்லை, உள்ளூர் நிபுணரின் ஆலோசனைக்கு மாற்றாகவும் இல்லை. | फक्त सामान्य माहिती. हे अॅप पिकांचे निदान करत नाही, उत्पन्नाचा अंदाज देत नाही किंवा स्थानिक तज्ञांच्या सल्ल्याची जागा घेत नाही. | PENDING |
-| `sfFieldName` | Field name | పొలం పేరు | खेत का नाम | வயல் பெயர் | शेताचे नाव | PENDING |
-| `sfFieldPlaceholder` | e.g. North field | ఉదా: ఉత్తర పొలం | जैसे उत्तर वाला खेत | எ.கா. வடக்கு வயல் | उदा. उत्तरचे शेत | PENDING |
+| `sfDisclaimer` | General information only. Videos are published by outside organisations; this app does not diagnose crops, predict yields or replace local expert advice. | ఇది కేవలం సాధారణ సమాచారం. వీడియోలను బయటి సంస్థలు ప్రచురిస్తాయి. ఈ యాప్ పంటలను నిర్ధారించదు, దిగుబడిని అంచనా వేయదు లేదా స్థానిక నిపుణుల సలహాకు బదులు కాదు. | केवल सामान्य जानकारी। वीडियो बाहरी संगठनों द्वारा प्रकाशित किए जाते हैं। यह ऐप फ़सलों का निदान नहीं करता, उत्पादन का अनुमान नहीं लगाता और स्थानीय विशेषज्ञ की सलाह की जगह नहीं लेता। | இது பொதுவான தகவல் மட்டுமே. வீடியோக்கள் வெளி அமைப்புகளால் வெளியிடப்படுகின்றன. இந்த ஆப் பயிர்களைக் கண்டறியவில்லை, மகசூலைக் கணிக்கவில்லை, உள்ளூர் நிபுணரின் ஆலோசனைக்கு மாற்றாகவும் இல்லை. | फक्त सामान्य माहिती. व्हिडिओ बाहेरच्या संस्थांद्वारे प्रकाशित केले जातात. हे अॅप पिकांचे निदान करत नाही, उत्पन्नाचा अंदाज देत नाही किंवा स्थानिक तज्ञांच्या सल्ल्याची जागा घेत नाही. | PENDING |
+| `sfExternalVideo` | Farming video | వ్యవసాయ వీడియో | खेती का वीडियो | விவசாய வீடியோ | शेतीचा व्हिडिओ | PENDING |
 | `sfLoadError` | Could not load smart farming content. | స్మార్ట్ వ్యవసాయ సమాచారం లోడ్ కాలేదు. | स्मार्ट खेती की सामग्री लोड नहीं हो सकी। | ஸ்மார்ட் விவசாய உள்ளடக்கத்தை ஏற்ற முடியவில்லை. | स्मार्ट शेतीची माहिती लोड होऊ शकली नाही. | PENDING |
-| `sfNoNotes` | No notes saved yet. | ఇంకా నోట్లు లేవు. | अभी कोई नोट नहीं है। | இதுவரை குறிப்புகள் இல்லை. | अद्याप कोणत्या नोंदी नाहीत. | PENDING |
-| `sfNoteSaved` | Your note was saved. | మీ నోట్ భద్రపరచబడింది. | आपका नोट सहेज गया। | உங்கள் குறிப்பு சேமிக்கப்பட்டது. | तुमची नोंद जतन केली. | PENDING |
-| `sfNotesNote` | Notes are stored as you write them. No analysis, diagnosis or prediction is made. | నోట్లు మీరు రాసినట్టుగానే భద్రపరచబడతాయి. ఎలాంటి విశ్లేషణ, నిర్ధారణ లేదా అంచనా చేయబడదు. | नोट्स को वैसे ही सहेजा जाता है जैसे आपने लिखा है। कोई विश्लेषण, निदान या अनुमान नहीं किया जाता। | குறிப்புகள் நீங்கள் எழுதിയபடியே சேமிக்கப்படுகின்றன. எந்த பகுப்பாய்வும், கண்டறிதலும், கணிப்பும் செய்யப்படவில்லை. | नोंदी तुम्ही लिहिल्याप्रमाणे जतन केल्या जातात. कोणतेही विश्लेषण, निदान किंवा अंदाज केला जात नाही. | PENDING |
-| `sfObservation` | What did you observe? | మీరు ఏమి గమనించారు? | आपने क्या देखा? | நீங்கள் என்ன கண்டீர்கள்? | तुम्हाला काय दिसले? | PENDING |
-| `sfObservationPlaceholder` | Write what you saw, in your own words | మీ సొంత మాటల్లో రాయండి | अपने शब्दों में लिखें | உங்கள் சொந்த வார்த்தைகளில் எழுதுங்கள் | तुमच्या शब्दांत लिहा | PENDING |
+| `sfNoTopics` | No guidance topics available. | మార్గదర్శక అంశాలు లేవు. | कोई मार्गदर्शन विषय नहीं है। | வழிகாட்டும் தலைப்புகள் இல்லை. | कोणतेही मार्गदर्शक विषय नाहीत. | PENDING |
+| `sfNoVideos` | No videos available for this topic. | ఈ అంశానికి వీడియోలు లేవు. | इस विषय के लिए कोई वीडियो नहीं है। | இந்த தலைப்பிற்கு வீடியோக்கள் இல்லை. | या विषयासाठी कोणतेही व्हिडिओ नाहीत. | PENDING |
 | `sfPests` | Pests | తెగుళ్లు | कीट | பூச்சிகள் | कीड | PENDING |
 | `sfRecords` | Records | నమోదులు | रिकॉर्ड | பதிவுகள் | नोंदी | PENDING |
-| `sfSaveNote` | Save note | నోట్ భద్రపరచండి | नोट सहेजें | குறிப்பைச் சேமி | नोंद जतन करा | PENDING |
 | `sfSoil` | Soil | నేల | मिट्टी | மண் | माती | PENDING |
-| `sfStage` | Stage (optional) | దశ (ఐచ్ఛికం) | अवस्था (वैकल्पिक) | நிலை (விரும்பினால்) | अवस्था (पर्यायी) | PENDING |
-| `sfStagePlaceholder` | e.g. Vegetative | ఉదా: పెరుగుదల దశ | जैसे बढ़ने की अवस्था | எ.கா. வளர்ச்சி நிலை | उदा. वाढीची अवस्था | PENDING |
+| `sfSourceIcarIiss` | ICAR – Indian Institute of Soil Science, Bhopal | ICAR – భోపాల్ మట్టి విజ్ఞాన సంస్థ | ICAR – भारतीय मृदा विज्ञान संस्थान, भोपाल | ICAR – போபால் மண் அறிவியல் நிறுவனம் | ICAR – भारतीय माती विज्ञान संस्था, भोपाळ | PENDING |
+| `sfSourceIcarNeh` | ICAR RC NEH, Umiam | ICAR RC NEH, ఉమియం | ICAR RC NEH, उमियम | ICAR RC NEH, உமியம் | ICAR RC NEH, उमियम | PENDING |
+| `sfSourceUsda` | USDA Natural Resources Conservation Service | USDA సహజ వనరుల పరిరక్షణ సేవ | USDA प्राकृतिक संसाधन संरक्षण सेवा | USDA இயற்கை வள பாதுகாப்பு சேவை | USDA नैसर्गिक संसाधन संरक्षण सेवा | PENDING |
 | `sfTopicCrops1` | Rotate crops where practical to break pest cycles. | వీలైతే తెగుళ్ల చక్రం విచ్ఛిన్నం చేయడానికి పంటలు మార్చండి. | संभव हो तो कीट चक्र तोड़ने के लिए फसल बदलें। | இயலுமானால் பூச்சி சுழற்சியை உடைக்க பயிர்களை மாற்றவும். | शक्य असल्यास कीड चक्र तोडण्यासाठी पीके बदला. | PENDING |
 | `sfTopicCrops2` | Use seed from a reliable local source. | నమ్మకమైన స్థానిక మూలం నుండి విత్తనాలు తీసుకోండి. | भरोसेमंद स्थानीय स्रोत से बीज लें। | நம்பகமான உள்ளூர் மூலத்திலிருந்து விதைகள் வாங்கவும். | विश्वासार्ह स्थानिक स्रोताकडून बियाणे घ्या. | PENDING |
 | `sfTopicCrops3` | Observe the field regularly and record what you see. | పొలాన్ని క్రమం తప్పకుండా పరిశీలించి మీరు చూసిన వాటి నోట్ చేయండి. | खेत का नियमित निरीक्षण करें और देखी गई बात लिखें। | வயலை தொடர்ந்து கவனித்து, கண்டதைப் பதிவு செய்யவும். | शेताचा नियमित निरीक्षण करा आणि दिसलेले लिहा. | PENDING |
@@ -385,14 +438,22 @@ target-language cells and change `PENDING` to `APPROVED` with a date.
 | `sfTopicWeather2` | Avoid spraying when heavy rain is expected. | భారీ వర్షం ఆశించినప్పుడు పిచికారీ చేయకండి. | भारी बारिश की संभावना हो तो छिड़काव न करें। | கனமழை எதிர்பார்க்கும்போது தெளிப்பு செய்ய வேண்டாம். | मोठा पाऊस अपेक्षित असताना फवारणी करू नका. | PENDING |
 | `sfTopicWeather3` | Save the contact number of the local disaster helpline. | స్థానిక విపత్తు హెల్ప్\u200Cలైన్ నంబర్ భద్రపరచుకోండి. | स्थानीय आपदा हेल्पलाइन का नंबर सुरक्षित रखें। | உள்ளூர் பேரிடர் உதவி எண்ணைப் பாதுகாப்பாக வைத்திருக்கவும். | स्थानिक आपत्ती मदत क्रमांक जपून ठेवा. | PENDING |
 | `sfTopicWeatherTitle` | Weather planning | వాతావరణ ప్రణాళిక | मौसम योजना | வானிலை திட்டம் | हवामान नियोजन | PENDING |
+| `sfVideoGreenManuring` | Green manuring for soil health | నేల ఆరోగ్యానికి పచ్చిరొట్ట | मिट्टी के स्वास्थ्य के लिए हरित खाद | மண் ஆரோக்கியத்திற்கு பசுந்தாழ் | मातीच्या आरोग्यासाठी हिरवे खत | PENDING |
+| `sfVideoIpm` | Integrated pest management | సమగ్ర తెగుళ్ల నిర్వహణ | समेकित कीट प्रबंधन | ஒருங்கிணைந்த பூச்சி மேலாண்மை | एकात्मिक कीड व्यवस्थापन | PENDING |
+| `sfVideoIrrigation` | Irrigation water management | నీటిపారుదల నీటి నిర్వహణ | सिंचाई जल प्रबंधन | நீர்ப்பாசன நீர் மேலாண்மை | सिंचनाच्या पाण्याचे व्यवस्थापन | PENDING |
+| `sfVideoSoilCard` | Using a soil health card | నేల ఆరోగ్య కార్డు వాడకం | मिट्टी स्वास्थ्य कार्ड का उपयोग | மண் ஆரோக்கிய அட்டையைப் பயன்படுத்துதல் | माती आरोग्य कार्डचा वापर | PENDING |
+| `sfVideoSoilHealth` | Soil health management | నేల ఆరోగ్య నిర్వహణ | मिट्टी का स्वास्थ्य प्रबंधन | மண் ஆரோக்கிய மேலாண்மை | मातीच्या आरोग्याचे व्यवस्थापन | PENDING |
+| `sfVideoUnavailable` | This video cannot be shown here. Open it on YouTube. | ఈ వీడియో ఇక్కడ చూపించలేరు. YouTube లో తెరవండి. | यह वीडियो यहाँ दिखाया नहीं जा सकता। YouTube पर खोलें। | இந்த வீடியோவை இங்கு காட்ட முடியாது. YouTube இல் திறக்கவும். | हा व्हिडिओ येथे दाखवता येत नाही. YouTube वर उघडा. | PENDING |
+| `sfVideosNote` | Videos open from YouTube. The publisher is responsible for the content, and the spoken language may differ from your selected language. | వీడియోలు YouTube నుంచి తెరుచుకుంటాయి. విషయానికి ప్రచురించిన సంస్థ బాధ్యత వహిస్తుంది. మాట్లాడే భాష మీరు ఎంచుకున్న భాషకు భిన్నంగా ఉండవచ్చు. | वीडियो YouTube से खुलते हैं। सामग्री के लिए प्रकाशक ज़िम्मेदार है और बोली जाने वाली भाषा आपकी चुनी हुई भाषा से अलग हो सकती है। | வீடியோக்கள் YouTube இலிருந்து திறக்கப்படும். உள்ளடக்கத்திற்கு வெளியிட்ட அமைப்பு பொறுப்பாகும். பேசும் மொழி நீங்கள் தேர்ந்தெடுத்த மொழியிலிருந்து வேறுபடலாம். | व्हिडिओ YouTube वरून उघडतात. सामग्रीसाठी प्रकाशक जबाबदार आहे आणि बोलली जाणारी भाषा तुमच्या निवडलेल्या भाषेपेक्षा वेगळी असू शकते. | PENDING |
+| `sfWatchOnYouTube` | Watch on YouTube | YouTube లో చూడండి | YouTube पर देखें | YouTube இல் பார்க்கவும் | YouTube वर पहा | PENDING |
 | `sfWater` | Water | నీరు | पानी | நீர் | पाणी | PENDING |
 | `sfWeather` | Weather | వాతావరణం | मौसम | வானிலை | हवामान | PENDING |
 | `smartHeading` | Smart farming | స్మార్ట్ వ్యవసాయం | स्मार्ट खेती | ஸ்மார்ட் விவசாயம் | स्मार्ट शेती | PENDING |
-| `smartIntro` | General best-practice ideas and a place to record what you see in your field. | సాధారణ ఉత్తమ పద్ధతులు మరియు మీ పొలంలో మీరు చూసిన వాటిని నమోదు చేసే చోటు. | सामान्य सर्वोत्तम उपाय और आपके खेत में देखी गई बातों को लिखने की जगह। | பொதுவான சிறந்த நடைமுறைகளும், உங்கள் வயலில் கண்டதைப் பதிவு செய்யும் இடமும். | सामान्य चांगल्या पद्धती आणि तुमच्या शेतात दिसलेल्या गोष्टी नोंदवण्याची जागा. | PENDING |
-| `smartNotesHeading` | My field notes | నా పొలం నోట్లు | मेरे खेत नोट्स | என் வயல் குறிப்புகள் | माझ्या शेताच्या नोंदी | PENDING |
+| `smartIntro` | General best-practice ideas and short videos about farming. | సాధారణ ఉత్తమ పద్ధతులు మరియు వ్యవసాయంపై చిన్న వీడియోలు. | सामान्य सर्वोत्तम उपाय और खेती पर छोटे वीडियो। | பொதுவான சிறந்த நடைமுறைகளும் விவசாயம் குறித்த குறும்படங்களும். | सामान्य चांगल्या पद्धती आणि शेतीवरील छोटे व्हिडिओ. | PENDING |
 | `smartTeaser` | Simple growing guides are planned for Phase 7. | సరళమైన పెంపకం గైడ్\u200Cలు దశ 7 లో రానున్నాయి. | सरल उगाने की मार्गदर्शिकाएँ चरण 7 में आएँगी। | எளிய வளர்ப்பு வழிகாட்டிகள் கட்டம் 7 இல் வரும். | सोप्या वाढवण्याच्या मार्गदर्शिका टप्पा 7 मध्ये येतील. | PENDING |
 | `smartTitle` | Smart farming | స్మార్ట్ వ్యవసాయం | स्मार्ट खेती | ஸ்மார்ட் விவசாயம் | स्मार्ट शेती | PENDING |
 | `smartTopicsHeading` | Guidance topics | మార్గదర్శక అంశాలు | मार्गदर्शन विषय | வழிகாட்டும் தலைப்புகள் | मार्गदर्शक विषय | PENDING |
+| `smartVideosHeading` | Watch: farming videos | చూడండి: వ్యవసాయ వీడియోలు | देखें: खेती के वीडियो | பார்க்கவும்: விவசாய வீடியோக்கள் | पहा: शेतीचे व्हिडिओ | PENDING |
 | `soilBlack` | Black soil | నల్ల నేల | काली मिट्टी | கருப்பு மண் | काळी माती | PENDING |
 | `soilClay` | Clay | బంకమట్టి | चिकनी मिट्टी | களிமண் | चिकणमाती | PENDING |
 | `soilLoam` | Loamy | లోమ్ నేల | दोमट मिट्टी | லோம் மண் | लोम माती | PENDING |
@@ -400,11 +461,21 @@ target-language cells and change `PENDING` to `APPROVED` with a date.
 | `soilSandy` | Sandy | ఇసుక నేల | रेतीली मिट्टी | மணல் மண் | वाळूची माती | PENDING |
 | `sourceLabel` | Source | మూలం | स्रोत | மூலம் | स्रोत | PENDING |
 | `speechUnsupported` | This browser does not support spoken audio. | ఈ బ్రౌజర్ మాట్లాడే సౌకర్యాన్ని ఆధరించదు. | यह ब्राउज़र बोलने का समर्थन नहीं करता। | இந்த உலாவி பேச்சை ஆதரிக்கவில்லை. | हा ब्राउजर बोलण्यास समर्थन देत नाही. | PENDING |
-| `statePlaceholder` | e.g. Telangana | ఉదా: తెలంగాణ | जैसे तेलंगाना | எ.கா. தெலங்காணா | उदा. तेलंगणा | PENDING |
+| `stateLabel` | State | రాష్ట్రం | राज्य | மாநிலம் | राज्य | PENDING |
+| `statePlaceholder` | e.g. Andhra Pradesh | ఉదా: ఆంధ్రప్రదేశ్ | जैसे आंध्र प्रदेश | எ.கா. ஆந்திரப் பிரதேசம் | उदा. आंध्र प्रदेश | PENDING |
+| `statusActive` | Public | పబ్లిక్ | सार्वजनिक | பொது | सार्वजनिक | PENDING |
+| `statusClosed` | Closed | మూసివేశాం | बंद | மூடப்பட்டது | बंद | PENDING |
+| `statusContacted` | Contacted | సంప్రదించాం | संपर्क किया | தொடர்பு கொண்டேன் | संपर्क केला | PENDING |
+| `statusHidden` | Hidden by moderator | మార్గదర్శకుడు దాచాడు | मॉडरेटर द्वारा छिपाया गया | நிர்வாகி மறைத்தார் | मॉडरेटरने लपवले | PENDING |
+| `statusNew` | New | కొత్తది | नया | புதியது | नवी | PENDING |
+| `statusPaused` | Paused | తాత్కాలికంగా ఆపి ఉంది | रोक दिया गया | நிறுத்தப்பட்டது | थांबवले | PENDING |
 | `stopReading` | Stop reading | చదవడం ఆపండి | पढ़ना रोकें | படிப்பதை நிறுத்த | वाचन थांबवा | PENDING |
 | `sunrise` | Sunrise | సూర్యోదయం | सूर्योदय | சூரிய உதயம் | सूर्योदय | PENDING |
 | `sunset` | Sunset | సూర్యాస్తమయం | सूर्यास्त | சூரிய அஸ்தமனம் | सूर्यास्त | PENDING |
 | `ta` | தமிழ் |  |  |  |  | PENDING |
+| `tabBrowse` | Browse equipment | పరికరాలు చూడండి | उपकरण देखें | உபகரணங்களைக் காண்க | उपकरणे पहा | PENDING |
+| `tabFarmer` | My enquiries | నా విచారణలు | मेरे प्रश्न | என் வினவல்கள் | माझ्या चौकशा | PENDING |
+| `tabOwner` | I have equipment | నా దగ్గర పరికరాలున్నాయి | मेरे पास उपकरण है | என்னிடம் உபகரணம் உள்ளது | माझ्याकडे उपकरण आहे | PENDING |
 | `tagline` | Press the mic and speak, or tap a card to begin. | మైక్ నొక్కి మాట్లాడండి, లేదా కార్డ్ నొక్కి మొదలుపెట్టండి. | माइक दबाकर बोलें, या कार्ड दबाकर शुरू करें। | மைக்ஃபோனை அழுத்தி பேசுங்கள், அல்லது கார்டைத் தட்டி தொடங்குங்கள். | माइक दाबा आणि बोला, किंवा कार्ड दाबा आणि सुरू करा. | PENDING |
 | `te` | తెలుగు |  |  |  |  | PENDING |
 | `titlePlaceholder` | What would you like to ask? | ఏమి అడగాలనుకుంటున్నారు? | आप क्या पूछना चाहेंगे? | என்ன கேள்வி கேட்க விரும்புகிறீர்கள்? | तुम्हाला काय विचारायचे आहे? | PENDING |
@@ -473,7 +544,7 @@ target-language cells and change `PENDING` to `APPROVED` with a date.
 | `weatherWarnings` | Weather warnings | వాతావరణ హెచ్చరికలు | मौसम चेतावनी | வானிலை எச்சரிக்கை | हवामान सूचना | PENDING |
 | `windSpeed` | Wind speed | గాలి వేగం | हवा की गति | காற்று வேகம் | वाऱ्याचा वेग | PENDING |
 
-Total keys found: 466
+Total keys found: 537
 
 ## Reviewer sign-off
 

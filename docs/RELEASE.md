@@ -61,14 +61,18 @@ service.
 - One admin level only — no viewer/editor roles, audit log or account lockout
   beyond the short rate-limit window.
 - Weather is the only live external data source, and it needs no API key.
-- Equipment, marketplace, videos and scheme data are clearly labelled samples
-  or generic official-source guidance. No invented sellers, prices, videos,
-  scheme names or benefit amounts are presented as real.
+- Equipment listings are entered by owners themselves; no owner, price, contact
+  or availability is seeded. AgriGuide does not verify ownership or condition.
+  See `docs/EQUIPMENT_RENTAL.md`.
+- Marketplace and videos are clearly labelled samples, and scheme data is
+  generic official-source guidance. No invented sellers, prices, videos, scheme
+  names or benefit amounts are presented as real.
 - Voice commands use the browser's own recognition and read-aloud. There is no
   AI model and no free-form answer endpoint.
 - Translations have not had native-speaker review.
 
 ## Rollback
 
-Git is not installed here. Restore `agri-guide/_checkpoints/phase-11.zip` to
-return to the previous phase, or `phase-12.zip` after this release checkpoint.
+Git history on `main` is the primary rollback record; zip snapshots in
+`agri-guide/_checkpoints/` remain as extra local backups. Use `git log` and
+`git revert` on this machine, or restore a checkpoint zip as a last resort.

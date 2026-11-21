@@ -37,7 +37,13 @@ app.add_middleware(
     allow_origins=[origin.strip() for origin in config.ALLOWED_ORIGINS.split(",") if origin.strip()],
     allow_credentials=True,
     allow_methods=["GET", "POST", "PATCH", "OPTIONS"],
-    allow_headers=["Authorization", "Content-Type"],
+    allow_headers=[
+        "Authorization",
+        "Content-Type",
+        "X-CSRF-Token",
+        "X-Owner-Key",
+        "X-Farmer-Key",
+    ],
 )
 
 
@@ -45,6 +51,12 @@ app.add_middleware(
 async def add_security_headers(request, call_next):
     """Add small, boring headers that reduce common browser attacks."""
     response = await call_next(request)
+    if config.MODE.strip().lower() != "production" and (
+        request.url.path in {"/", "/index.html"}
+        or request.url.path.startswith(("/src/", "/css/"))
+    ):
+        # No build step here: always load the current JS/CSS while developing.
+        response.headers["Cache-Control"] = "no-store"
     response.headers.setdefault("X-Content-Type-Options", "nosniff")
     response.headers.setdefault("X-Frame-Options", "DENY")
     response.headers.setdefault("Referrer-Policy", "strict-origin-when-cross-origin")
@@ -58,6 +70,7 @@ async def add_security_headers(request, call_next):
         "img-src 'self' data: blob:; "
         "media-src 'self' blob:; "
         "connect-src 'self'; "
+        "frame-src https://www.youtube-nocookie.com https://www.youtube.com; "
         "frame-ancestors 'none'; "
         "base-uri 'self'; "
         "object-src 'none'",

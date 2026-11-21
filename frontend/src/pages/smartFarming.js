@@ -7,10 +7,19 @@ const smartState = {
   loading: true,
   topics: [],
   category: "all",
-  notes: [],
-  notesLoading: true,
-  message: "",
+  videos: [],
+  videosLoading: true,
   error: "",
+};
+
+// The backend stores only neutral IDs, categories and public URLs. These maps
+// keep every farmer-facing word in the translated i18n files.
+const VIDEO_TEXT = {
+  "soil-health-campaign": { title: "sfVideoSoilHealth", source: "sfSourceIcarIiss" },
+  "green-manuring": { title: "sfVideoGreenManuring", source: "sfSourceIcarNeh" },
+  "soil-health-card": { title: "sfVideoSoilCard", source: "sfSourceIcarNeh" },
+  "integrated-pest-management": { title: "sfVideoIpm", source: "sfSourceIcarNeh" },
+  "irrigation-water-management": { title: "sfVideoIrrigation", source: "sfSourceUsda" },
 };
 
 function escapeHtml(value) {
@@ -30,8 +39,27 @@ function categoryLabel(language, value) {
   return match ? t(language, match.key) : escapeHtml(value);
 }
 
-function formatDate(iso) {
-  return iso ? String(iso).slice(0, 10) : "";
+function youtubeEmbedUrl(url) {
+  try {
+    const parsed = new URL(url);
+    const allowedHosts = new Set([
+      "www.youtube.com",
+      "youtube.com",
+      "m.youtube.com",
+      "www.youtube-nocookie.com",
+    ]);
+    if (!allowedHosts.has(parsed.hostname)) return "";
+
+    const id =
+      parsed.searchParams.get("v") ||
+      parsed.pathname.split("/").filter(Boolean).pop() ||
+      "";
+    if (!/^[A-Za-z0-9_-]{11}$/.test(id)) return "";
+
+    return `https://www.youtube-nocookie.com/embed/${id}`;
+  } catch {
+    return "";
+  }
 }
 
 function renderTopic(language, topic) {
@@ -66,7 +94,7 @@ function renderTopics(language) {
 
   const cards = smartState.topics.length
     ? smartState.topics.map((topic) => renderTopic(language, topic)).join("")
-    : `<p class="weather-status">${t(language, "sfNoNotes")}</p>`;
+    : `<p class="weather-status">${t(language, "sfNoTopics")}</p>`;
 
   return `
     <h3 class="smart-heading">${t(language, "smartTopicsHeading")}</h3>
@@ -75,55 +103,48 @@ function renderTopics(language) {
   `;
 }
 
-function renderNotes(language) {
-  const list = smartState.notesLoading
+function renderVideos(language) {
+  const list = smartState.videosLoading
     ? `<p class="weather-status">${t(language, "weatherLoading")}</p>`
-    : smartState.notes.length
-      ? smartState.notes
-          .map(
-            (note) => `
-            <article class="smart-note">
-              <strong>${escapeHtml(note.field_name)} — ${escapeHtml(note.crop)}</strong>
-              ${note.stage ? `<span class="community-badge category">${escapeHtml(note.stage)}</span>` : ""}
-              ${note.observation ? `<p>${escapeHtml(note.observation)}</p>` : ""}
-              <span class="smart-note-date">${formatDate(note.created_at)}</span>
-            </article>
-          `,
-          )
+    : smartState.videos.length
+      ? smartState.videos
+          .map((video) => {
+            const text = VIDEO_TEXT[video.id] ?? {
+              title: "sfExternalVideo",
+              source: "sfWatchOnYouTube",
+            };
+            const title = escapeHtml(t(language, text.title));
+            const embed = youtubeEmbedUrl(video.url);
+
+            return `
+              <article class="smart-video-card">
+                <div class="smart-video-frame">
+                  ${
+                    embed
+                      ? `<iframe src="${escapeHtml(embed)}" title="${title}" loading="lazy"
+                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                           referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+                      : `<p class="weather-status">${t(language, "sfVideoUnavailable")}</p>`
+                  }
+                </div>
+                <div class="smart-video-body">
+                  <span class="community-badge category">${categoryLabel(language, video.category)}</span>
+                  <strong>${title}</strong>
+                  <span class="smart-video-source">${escapeHtml(t(language, text.source))}</span>
+                  <a class="text-link" href="${escapeHtml(video.url)}" target="_blank" rel="noopener noreferrer">
+                    ${escapeHtml(t(language, "sfWatchOnYouTube"))}
+                  </a>
+                </div>
+              </article>
+            `;
+          })
           .join("")
-      : `<p class="weather-status">${t(language, "sfNoNotes")}</p>`;
+      : `<p class="weather-status">${t(language, "sfNoVideos")}</p>`;
 
   return `
-    <h3 class="smart-heading">${t(language, "smartNotesHeading")}</h3>
-    <p class="report-note">${t(language, "sfNotesNote")}</p>
-    <section class="composer-card">
-      <form id="smart-note-form" class="profile-form">
-        <div class="form-grid">
-          <div>
-            <label class="field-label" for="smart-field">${t(language, "sfFieldName")}</label>
-            <input id="smart-field" class="field-input" type="text" minlength="2" maxlength="60"
-              placeholder="${t(language, "sfFieldPlaceholder")}" required />
-          </div>
-          <div>
-            <label class="field-label" for="smart-crop">${t(language, "sfCrop")}</label>
-            <input id="smart-crop" class="field-input" type="text" minlength="2" maxlength="60"
-              placeholder="${t(language, "sfCropPlaceholder")}" required />
-          </div>
-          <div>
-            <label class="field-label" for="smart-stage">${t(language, "sfStage")}</label>
-            <input id="smart-stage" class="field-input" type="text" maxlength="40"
-              placeholder="${t(language, "sfStagePlaceholder")}" />
-          </div>
-        </div>
-        <label class="field-label" for="smart-observation">${t(language, "sfObservation")}</label>
-        <textarea id="smart-observation" class="field-input" rows="3" maxlength="500"
-          placeholder="${t(language, "sfObservationPlaceholder")}"></textarea>
-        <div class="form-actions">
-          <button type="submit" class="primary-button">${icon("check")} ${t(language, "sfSaveNote")}</button>
-        </div>
-      </form>
-    </section>
-    <div class="smart-note-list">${list}</div>
+    <h3 class="smart-heading">${t(language, "smartVideosHeading")}</h3>
+    <p class="report-note">${t(language, "sfVideosNote")}</p>
+    <div class="smart-video-grid">${list}</div>
   `;
 }
 
@@ -133,26 +154,31 @@ function updateView(language) {
     target.innerHTML = `
       <p class="equipment-note smart-disclaimer">${t(language, "sfDisclaimer")}</p>
       <section class="smart-section">${renderTopics(language)}</section>
-      <section class="smart-section">${renderNotes(language)}</section>
+      <section class="smart-section">${renderVideos(language)}</section>
     `;
   }
 
   const status = document.querySelector("#smart-status");
   if (status) {
-    status.textContent = smartState.message || smartState.error;
+    status.textContent = smartState.error;
     status.className = smartState.error ? "error-message" : "success-message";
   }
+}
+
+function queryForCategory() {
+  const params = new URLSearchParams();
+  if (smartState.category !== "all") params.set("category", smartState.category);
+  return params.toString();
 }
 
 async function loadTopics(language) {
   smartState.loading = true;
   updateView(language);
 
-  const params = new URLSearchParams();
-  if (smartState.category !== "all") params.set("category", smartState.category);
-
   try {
-    const response = await fetch(`${API_BASE_URL}/api/smart-farming/topics?${params.toString()}`);
+    const response = await fetch(
+      `${API_BASE_URL}/api/smart-farming/topics?${queryForCategory()}`,
+    );
     if (!response.ok) throw new Error("topic load failed");
     smartState.topics = (await response.json()).topics ?? [];
   } catch {
@@ -163,46 +189,20 @@ async function loadTopics(language) {
   }
 }
 
-async function loadNotes(language) {
-  smartState.notesLoading = true;
+async function loadVideos(language) {
+  smartState.videosLoading = true;
   updateView(language);
 
   try {
-    const response = await fetch(`${API_BASE_URL}/api/smart-farming/notes`);
-    if (!response.ok) throw new Error("note load failed");
-    smartState.notes = (await response.json()).notes ?? [];
+    const response = await fetch(
+      `${API_BASE_URL}/api/smart-farming/videos?${queryForCategory()}`,
+    );
+    if (!response.ok) throw new Error("video load failed");
+    smartState.videos = (await response.json()).videos ?? [];
   } catch {
     smartState.error = t(language, "sfLoadError");
   } finally {
-    smartState.notesLoading = false;
-    updateView(language);
-  }
-}
-
-async function saveNote(language) {
-  const value = (selector) => document.querySelector(selector)?.value ?? "";
-  const payload = {
-    field_name: value("#smart-field"),
-    crop: value("#smart-crop"),
-    stage: value("#smart-stage"),
-    observation: value("#smart-observation"),
-  };
-
-  try {
-    const response = await fetch(`${API_BASE_URL}/api/smart-farming/notes`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-    if (!response.ok) throw new Error("note save failed");
-
-    smartState.message = t(language, "sfNoteSaved");
-    smartState.error = "";
-    await loadNotes(language);
-    smartState.message = t(language, "sfNoteSaved");
-    updateView(language);
-  } catch {
-    smartState.error = t(language, "sfCreateError");
+    smartState.videosLoading = false;
     updateView(language);
   }
 }
@@ -213,17 +213,12 @@ function attachEvents(language) {
 
   root.addEventListener("click", (event) => {
     const category = event.target.closest("[data-sf-category]");
-    if (category) {
-      smartState.category = category.dataset.sfCategory;
-      loadTopics(language);
-    }
-  });
+    if (!category) return;
 
-  root.addEventListener("submit", (event) => {
-    if (event.target.id === "smart-note-form") {
-      event.preventDefault();
-      saveNote(language);
-    }
+    smartState.category = category.dataset.sfCategory;
+    smartState.error = "";
+    loadTopics(language);
+    loadVideos(language);
   });
 }
 
@@ -247,5 +242,5 @@ export function initSmartFarming(language) {
   attachEvents(language);
   updateView(language);
   loadTopics(language);
-  loadNotes(language);
+  loadVideos(language);
 }

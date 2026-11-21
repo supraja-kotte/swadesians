@@ -10,16 +10,16 @@ Phases completed so far:
 - **Phase 2:** live weather from Open-Meteo (no API key), GPS permission flow, manual place search, Telugu quick picks for Andhra Pradesh/Telangana, current conditions, hourly and 7-day forecasts, sunrise/sunset, warnings, cautious farm advice, 10-minute cache, demo fallback, and weather translations in all five languages.
 - **Phase 3:** SQLite database via SQLAlchemy, optional farmer profile (state, district, crop, land size, soil, irrigation, interests) saved with `GET`/`PUT /api/profile/{id}`, and a dashboard that assembles a profile summary, local weather snapshot, alerts and advice, plus honest teaser cards for later modules.
 - **Phase 4:** community questions and replies in SQLite, seven topic categories, report buttons, backend hide/restore moderation endpoints, clearly labelled demo seed posts, and community translations in all five languages.
-- **Phase 5:** seven clearly labelled sample equipment listings with category and district filters, price fields deliberately left empty (no invented prices or sellers), and a demo enquiry form that saves the enquiry while telling the farmer that no real provider will contact them. Equipment text is translated in all five languages.
+- **Phase 5:** owner-submitted equipment rental with category and district filters, an owner listing form, direct farmer enquiries, owner reply/status management and admin moderation. Nothing is seeded: owners enter their own real details, rates and contact information. See `docs/EQUIPMENT_RENTAL.md`. Equipment text is translated in all five languages.
 - **Phase 6:** eight clearly labelled sample produce listings with category and district filters, sample quantity and market hints, no invented mandi prices, and a buyer enquiry form that explains no real seller will be contacted. Marketplace text is translated in all five languages.
-- **Phase 7:** six generic smart farming guidance topics (soil, water, crops, pests, records, weather) with translated explanations, plus a field note form that saves the farmer's own observations without any analysis, diagnosis or prediction. Smart farming text is translated in all five languages.
+- **Phase 7:** six generic smart farming guidance topics (soil, water, crops, pests, records, weather) with translated explanations, plus five verified public YouTube videos on soil health, green manuring, soil health cards, pest management and irrigation. The field-note form was replaced at the farmer's request. All smart farming text is translated in all five languages.
 - **Phase 8:** eight clearly labelled sample video cards with topic filters and a local save list. No video file, channel, link or invented external content is included; video text is translated in all five languages.
 - **Phase 9:** seven generic scheme guidance topics (official sources, eligibility, documents, applying and help) that teach how to verify information through official channels, plus a personal question list. Scheme text is translated in all five languages. Verified official links were added in the post-release schemes workstream (see below); no benefit amounts or eligibility rules are ever stored.
 - **Phase 10:** a demo voice assistant with twelve fixed commands for navigation, read-aloud and help. Speech is recognised by the device's own browser engine; a typing fallback covers browsers without speech recognition. There is no AI model, no free-form question endpoint and no invented answers. Assistant text is translated in all five languages.
 - **Phase 11:** administrator sign-in with salted PBKDF2 password hashes and expiring session tokens. Reported and recent farmer content is shown in an admin queue; hiding/restoring community posts and replies now requires a valid admin token. Hidden-content reads also require a token. There is no default admin and no farmer login. Admin text is translated in all five languages.
 - **Phase 12:** release hardening: security headers including Content Security Policy, narrower CORS, a `/health` probe alias with version info, administrator login rate limiting, a one-command release check, and a documented release checklist. This is a demo release, not a production deployment.
 
-All feature pages are now implemented. The schemes page includes 13 verified official links, but there is still no eligibility checker or benefit calculator. The assistant accepts natural-language questions but needs a server-side AI key to answer them; without a key it honestly falls back to fixed commands. There is no farmer account system or role management beyond a single administrator level. Community questions/replies, enquiries, field notes, saved videos, scheme questions and voice activity use plain text or a random browser ID, not a login. The community profile adds one locally stored photo or video per post; the display name is saved only in that browser.
+All feature pages are now implemented. The schemes page includes 13 verified official links, but there is still no eligibility checker or benefit calculator. The assistant accepts natural-language questions but needs a server-side AI key to answer them; without a key it honestly falls back to fixed commands. There is no farmer account system or role management beyond a single administrator level. Community questions/replies, saved videos, scheme questions and voice activity use plain text or a random browser ID, not a login. Equipment rental is different: owners and farmers each keep a private browser key (stored only as a hash on the server) so they can return to their own listings and enquiries. The community profile adds one locally stored photo or video per post; the display name is saved only in that browser. Smart Farming now shows five verified YouTube videos instead of a field-note form.
 
 ## Post-release workstreams
 
@@ -27,11 +27,12 @@ All feature pages are now implemented. The schemes page includes 13 verified off
 2. **Verified government schemes (done)** — central + Andhra Pradesh + Telangana official links, categorised and dated, in `docs/SCHEME_SOURCES.md`. No amounts, eligibility rules or application claims.
 3. **Real AI voice assistant (provider-ready, waiting for key)** — natural spoken answers in all five languages via OpenAI-compatible or Gemini endpoints; the key stays in `backend/.env`. See `docs/AI_ASSISTANT.md`.
 4. **Community social UI (done)** — Instagram-style profile with a three-column photo grid, lightbox and one photo/video per post. Files stay in `backend/uploads/` and are served from `/uploads`; see `docs/COMMUNITY_MEDIA.md`.
-5. **Real-time farm data (waiting for API keys)** — YouTube videos and legitimate mandi/equipment/market sources.
+5. **Real-time farm data (partly done)** — five verified public YouTube videos are embedded in Smart Farming without an API key; a legitimate mandi price feed still needs an approved key and data source. See `docs/SMART_FARMING_VIDEOS.md`.
+6. **Real equipment rental (done)** — owners add their own listings, farmers enquire directly, owners manage replies and administrators moderate listings. No demo listings, prices, contacts or renters are seeded. See `docs/EQUIPMENT_RENTAL.md`.
 
-Translation review is **pending**: `docs/TRANSLATION_REVIEW.md` is a generated 466-key sheet awaiting native-speaker approval.
+Translation review is **pending**: `docs/TRANSLATION_REVIEW.md` is a generated 537-key sheet awaiting native-speaker approval.
 
-See `docs/RELEASE.md`, `docs/HOSTING.md`, `docs/SCHEME_SOURCES.md`, `docs/AI_ASSISTANT.md` and `docs/COMMUNITY_MEDIA.md` for details, limits and source policy.
+See `docs/RELEASE.md`, `docs/HOSTING.md`, `docs/SCHEME_SOURCES.md`, `docs/AI_ASSISTANT.md`, `docs/COMMUNITY_MEDIA.md`, `docs/SMART_FARMING_VIDEOS.md` and `docs/EQUIPMENT_RENTAL.md` for details, limits and source policy.
 
 ## Decisions made so far
 
@@ -134,7 +135,7 @@ From `agri-guide/backend`:
 .\.venv\Scripts\python.exe -m pytest -q
 ```
 
-All 66 tests should pass. They cover the API, database, community flow, local photo/video uploads, equipment, marketplace, smart farming, videos, schemes, verified official links, the keyless + AI assistant, cookie/CSRF auth, admin access control and release hardening.
+All 68 tests should pass. They cover the API, database, community flow, local photo/video uploads, equipment, marketplace, smart farming topics and verified YouTube links, videos, schemes, verified official links, the keyless + AI assistant, cookie/CSRF auth, admin access control and release hardening.
 
 Re-check the stored official links before a release:
 

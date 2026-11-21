@@ -1,4 +1,6 @@
-"""Tests for smart farming topics and field notes."""
+"""Tests for smart farming topics, verified videos and field notes."""
+
+from urllib.parse import urlparse
 
 from fastapi.testclient import TestClient
 
@@ -24,6 +26,38 @@ def test_topic_category_filter() -> None:
     assert water[0]["id"] == "irrigation-planning"
 
     unknown = client.get("/api/smart-farming/topics?category=unknown")
+    assert unknown.status_code == 422
+
+
+def test_verified_videos_are_seeded_and_labelled() -> None:
+    response = client.get("/api/smart-farming/videos")
+
+    assert response.status_code == 200
+    videos = response.json()["videos"]
+    assert len(videos) == 5
+    assert all(video["is_demo"] is False for video in videos)
+    assert all(video["category"] in VALID_SMART_CATEGORIES for video in videos)
+    assert all(
+        urlparse(video["url"]).netloc in {"www.youtube.com", "youtube.com"}
+        and urlparse(video["url"]).scheme == "https"
+        for video in videos
+    )
+
+
+def test_video_category_filter() -> None:
+    soil = client.get("/api/smart-farming/videos?category=soil").json()["videos"]
+    assert len(soil) == 3
+    assert {video["id"] for video in soil} == {
+        "soil-health-campaign",
+        "green-manuring",
+        "soil-health-card",
+    }
+
+    water = client.get("/api/smart-farming/videos?category=water").json()["videos"]
+    assert len(water) == 1
+    assert water[0]["id"] == "irrigation-water-management"
+
+    unknown = client.get("/api/smart-farming/videos?category=unknown")
     assert unknown.status_code == 422
 
 

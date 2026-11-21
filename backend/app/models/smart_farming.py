@@ -19,6 +19,19 @@ class SmartTopic(Base):
     created_at = Column(DateTime, server_default=func.now())
 
 
+class SmartVideo(Base):
+    """A verified external YouTube video. No title or claim is stored here."""
+
+    __tablename__ = "smart_videos"
+
+    id = Column(String, primary_key=True)
+    category = Column(String(30), nullable=False, index=True)
+    url = Column(String(500), nullable=False)
+    sort_order = Column(Integer, default=0, nullable=False)
+    is_demo = Column(Boolean, default=False, nullable=False)
+    created_at = Column(DateTime, server_default=func.now())
+
+
 class FieldNote(Base):
     __tablename__ = "field_notes"
 

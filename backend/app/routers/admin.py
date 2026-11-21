@@ -15,8 +15,11 @@ from app.config import ADMIN_COOKIE_NAME, ADMIN_HINT_COOKIE_NAME, COOKIE_SECURE,
 from app.db.connection import SessionLocal
 from app.dependencies import require_admin, session_token_from_request
 from app.models.community import CommunityPost, CommunityReply
+from app.models.equipment import EquipmentEnquiry, EquipmentListing
 from app.routers.community import media_for_posts
+from app.routers.equipment import serialize_enquiry, serialize_listing
 from app.schemas.admin import LoginIn
+from app.schemas.equipment import AdminListingStatusIn
 from app.services.auth import (
     LOGIN_LOCKOUT_SECONDS,
     TooManyLoginAttempts,
@@ -194,4 +197,58 @@ def queue(
         return {
             "posts": [_serialize_post(row, media.get(row.id)) for row in posts],
             "replies": [_serialize_reply(row) for row in replies],
+        }
+
+
+@router.get("/equipment/listings")
+def equipment_listings(
+    admin: dict[str, Any] = Depends(require_admin),
+    limit: int = Query(50, ge=1, le=100),
+) -> dict[str, Any]:
+    """Owner-submitted equipment listings for administrator review."""
+    with SessionLocal() as db:
+        rows = db.execute(
+            select(EquipmentListing)
+            .where(EquipmentListing.is_demo.is_(False))
+            .order_by(EquipmentListing.created_at.desc())
+            .limit(limit)
+        ).scalars().all()
+        return {"listings": [serialize_listing(row, include_owner=True) for row in rows]}
+
+
+@router.patch("/equipment/listings/{listing_id}")
+def moderate_equipment_listing(
+    listing_id: str,
+    payload: AdminListingStatusIn,
+    admin: dict[str, Any] = Depends(require_admin),
+) -> dict[str, Any]:
+    """Hide an owner-submitted listing or restore it to the public list."""
+    with SessionLocal() as db:
+        row = db.get(EquipmentListing, listing_id)
+        if row is None or row.is_demo:
+            raise HTTPException(status_code=404, detail="Listing not found")
+
+        row.status = payload.status
+        db.commit()
+        db.refresh(row)
+        return serialize_listing(row, include_owner=True)
+
+
+@router.get("/equipment/enquiries")
+def equipment_enquiries(
+    admin: dict[str, Any] = Depends(require_admin),
+    limit: int = Query(50, ge=1, le=100),
+) -> dict[str, Any]:
+    """Rental enquiries for administrator oversight."""
+    with SessionLocal() as db:
+        pairs = db.execute(
+            select(EquipmentEnquiry, EquipmentListing)
+            .join(EquipmentListing, EquipmentEnquiry.listing_id == EquipmentListing.id)
+            .order_by(EquipmentEnquiry.created_at.desc())
+            .limit(limit)
+        ).all()
+        return {
+            "enquiries": [
+                serialize_enquiry(enquiry, listing, "admin") for enquiry, listing in pairs
+            ]
         }

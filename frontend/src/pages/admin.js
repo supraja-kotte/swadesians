@@ -8,6 +8,8 @@ const adminState = {
   loading: false,
   reports: null,
   queue: null,
+  equipmentListings: null,
+  equipmentEnquiries: null,
   message: "",
   error: "",
 };
@@ -71,10 +73,50 @@ function renderItem(language, item, kind) {
   `;
 }
 
+function renderEquipmentAdminListing(language, item) {
+  const visible = item.status === "active";
+  const nextStatus = visible ? "hidden" : "active";
+  const action = visible ? t(language, "adminHideListing") : t(language, "adminApproveListing");
+
+  return `
+    <article class="admin-item">
+      <div class="community-badges">
+        <span class="community-badge category">${escapeHtml(item.title)}</span>
+        <span class="community-badge demo">${escapeHtml(item.status)}</span>
+      </div>
+      <p class="report-note">${t(language, "locationLabel")}: ${escapeHtml(item.district)}, ${escapeHtml(item.state)}</p>
+      <p class="report-note">${t(language, "priceLabel")}: ${escapeHtml(item.price_amount ?? "—")} ${escapeHtml(item.price_unit ?? "")}</p>
+      <p class="report-note">${t(language, "adminOwnerContact")}: ${escapeHtml(item.owner_contact)}</p>
+      <button type="button" class="secondary-button"
+        data-admin-equipment="${escapeHtml(item.id)}:${nextStatus}">${action}</button>
+    </article>
+  `;
+}
+
+function renderEquipmentAdminEnquiry(language, item) {
+  return `
+    <article class="admin-item">
+      <div class="community-badges">
+        <span class="community-badge category">${escapeHtml(item.listing_title)}</span>
+        <span class="community-badge demo">${escapeHtml(item.status)}</span>
+      </div>
+      <p class="report-note">${t(language, "adminFarmerContact")}: ${escapeHtml(item.farmer_name)} · ${escapeHtml(item.farmer_phone)}</p>
+      <p>${escapeHtml(item.message)}</p>
+      <p class="report-note">${t(language, "adminOwnerContact")}: ${escapeHtml(item.owner_contact)}</p>
+    </article>
+  `;
+}
+
 // Reported posts and replies need different moderation URLs, so render them
 // as two collections rather than one merged list.
 function renderDashboard(language) {
-  if (adminState.loading || !adminState.reports || !adminState.queue) {
+  if (
+    adminState.loading ||
+    !adminState.reports ||
+    !adminState.queue ||
+    !adminState.equipmentListings ||
+    !adminState.equipmentEnquiries
+  ) {
     return `<p class="weather-status">${t(language, "weatherLoading")}</p>`;
   }
 
@@ -108,6 +150,22 @@ function renderDashboard(language) {
           : ""}
       </div>
     </section>
+    <section class="smart-section">
+      <h3 class="smart-heading">${t(language, "adminEquipmentHeading")}</h3>
+      <p class="equipment-note">${t(language, "adminEquipmentIntro")}</p>
+      <h4 class="smart-heading">${t(language, "adminEquipmentListings")}</h4>
+      <div class="admin-items">
+        ${adminState.equipmentListings.listings.length
+          ? adminState.equipmentListings.listings.map((item) => renderEquipmentAdminListing(language, item)).join("")
+          : `<p class="weather-status">${t(language, "adminNoEquipmentListings")}</p>`}
+      </div>
+      <h4 class="smart-heading">${t(language, "adminEquipmentEnquiries")}</h4>
+      <div class="admin-items">
+        ${adminState.equipmentEnquiries.enquiries.length
+          ? adminState.equipmentEnquiries.enquiries.map((item) => renderEquipmentAdminEnquiry(language, item)).join("")
+          : `<p class="weather-status">${t(language, "adminNoEquipmentEnquiries")}</p>`}
+      </div>
+    </section>
   `;
 }
 
@@ -134,6 +192,8 @@ function expireSession(language, showExpiryMessage = false) {
   adminState.loading = false;
   adminState.reports = null;
   adminState.queue = null;
+  adminState.equipmentListings = null;
+  adminState.equipmentEnquiries = null;
   adminState.error = showExpiryMessage ? t(language, "adminSessionExpired") : "";
   adminState.message = "";
   updateView(language);
@@ -144,19 +204,30 @@ async function loadDashboard(language) {
   updateView(language);
 
   try {
-    const [reportsResponse, queueResponse] = await Promise.all([
+    const [reportsResponse, queueResponse, listingsResponse, enquiriesResponse] = await Promise.all([
       adminFetch("/api/admin/reports"),
       adminFetch("/api/admin/queue"),
+      adminFetch("/api/admin/equipment/listings"),
+      adminFetch("/api/admin/equipment/enquiries"),
     ]);
 
-    if (reportsResponse.status === 401 || queueResponse.status === 401) {
+    if (
+      reportsResponse.status === 401 ||
+      queueResponse.status === 401 ||
+      listingsResponse.status === 401 ||
+      enquiriesResponse.status === 401
+    ) {
       expireSession(language, true);
       return;
     }
-    if (!reportsResponse.ok || !queueResponse.ok) throw new Error("load failed");
+    if (!reportsResponse.ok || !queueResponse.ok || !listingsResponse.ok || !enquiriesResponse.ok) {
+      throw new Error("load failed");
+    }
 
     adminState.reports = await reportsResponse.json();
     adminState.queue = await queueResponse.json();
+    adminState.equipmentListings = await listingsResponse.json();
+    adminState.equipmentEnquiries = await enquiriesResponse.json();
   } catch {
     adminState.error = t(language, "adminLoadError");
   } finally {
@@ -231,6 +302,29 @@ async function setStatus(language, kind, id, status) {
   }
 }
 
+async function setEquipmentStatus(language, id, status) {
+  try {
+    const response = await adminFetch(`/api/admin/equipment/listings/${encodeURIComponent(id)}`, {
+      method: "PATCH",
+      body: JSON.stringify({ status }),
+    });
+    if (response.status === 401) {
+      expireSession(language, true);
+      return;
+    }
+    if (!response.ok) throw new Error("equipment status update failed");
+
+    adminState.message = t(language, "adminActionDone");
+    adminState.error = "";
+    await loadDashboard(language);
+    adminState.message = t(language, "adminActionDone");
+    updateView(language);
+  } catch {
+    adminState.error = t(language, "adminEquipmentLoadError");
+    updateView(language);
+  }
+}
+
 async function logout(language) {
   try {
     await logoutAdmin();
@@ -241,6 +335,8 @@ async function logout(language) {
   adminState.username = "";
   adminState.reports = null;
   adminState.queue = null;
+  adminState.equipmentListings = null;
+  adminState.equipmentEnquiries = null;
   adminState.message = "";
   adminState.error = "";
   updateView(language);
@@ -267,6 +363,13 @@ function attachEvents(language) {
     if (action) {
       const [kind, id, status] = action.dataset.adminAction.split(":");
       setStatus(language, kind, id, status);
+      return;
+    }
+
+    const equipment = event.target.closest("[data-admin-equipment]");
+    if (equipment) {
+      const [id, status] = equipment.dataset.adminEquipment.split(":");
+      setEquipmentStatus(language, id, status);
     }
   });
 }

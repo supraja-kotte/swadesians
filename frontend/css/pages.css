@@ -1055,6 +1055,18 @@ input[type="text"] {
   background: var(--green-050);
 }
 
+.equipment-tabs {
+  margin-bottom: 0.2rem;
+}
+
+.equipment-availability {
+  color: var(--stone-600);
+}
+
+.enquiry-card .field-input {
+  width: 100%;
+}
+
 .equipment-note {
   color: var(--stone-600);
   font-size: 0.85rem;
@@ -1149,30 +1161,50 @@ input[type="text"] {
   line-height: 1.6;
 }
 
-.smart-note-list {
+.smart-video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 0.8rem;
+}
+
+.smart-video-card {
+  background: var(--white);
+  border: 1px solid var(--stone-200);
+  border-radius: 0.9rem;
+  box-shadow: var(--shadow);
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  overflow: hidden;
 }
 
-.smart-note {
-  background: var(--green-050);
-  border: 1px solid var(--stone-200);
-  border-radius: 0.85rem;
-  padding: 0.8rem 1rem;
-  font-size: 0.85rem;
+.smart-video-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
 }
 
-.smart-note p {
-  margin: 0.4rem 0;
-  white-space: pre-wrap;
+.smart-video-frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
 }
 
-.smart-note .community-badge {
-  margin-left: 0.4rem;
+.smart-video-body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
+  padding: 0.8rem 0.9rem 0.9rem;
 }
 
-.smart-note-date {
+.smart-video-body strong {
+  font-size: 0.92rem;
+}
+
+.smart-video-source {
   color: var(--stone-600);
   font-size: 0.75rem;
 }

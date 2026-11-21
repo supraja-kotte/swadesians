@@ -1,7 +1,8 @@
-"""Smart farming API: generic guidance topics and plain field notes.
+"""Smart farming API: generic guidance topics and verified YouTube videos.
 
-There is deliberately no prediction, scoring or diagnosis endpoint. The app
-stores what the farmer writes and shows general best-practice explanations.
+There is deliberately no prediction, scoring or diagnosis endpoint. Video rows
+hold only neutral IDs, categories and public URLs; all farmer-facing wording
+lives in the frontend i18n files.
 """
 
 from typing import Any
@@ -11,7 +12,7 @@ from fastapi import APIRouter, HTTPException, Query
 from sqlalchemy import select
 
 from app.db.connection import SessionLocal
-from app.models.smart_farming import FieldNote, SmartTopic
+from app.models.smart_farming import FieldNote, SmartTopic, SmartVideo
 from app.schemas.smart_farming import FieldNoteIn, VALID_SMART_CATEGORIES
 
 router = APIRouter(prefix="/smart-farming", tags=["smart-farming"])
@@ -21,6 +22,16 @@ def serialize_topic(row: SmartTopic) -> dict[str, Any]:
     return {
         "id": row.id,
         "category": row.category,
+        "sort_order": row.sort_order,
+        "is_demo": row.is_demo,
+    }
+
+
+def serialize_video(row: SmartVideo) -> dict[str, Any]:
+    return {
+        "id": row.id,
+        "category": row.category,
+        "url": row.url,
         "sort_order": row.sort_order,
         "is_demo": row.is_demo,
     }
@@ -50,6 +61,21 @@ def list_topics(category: str | None = Query(None, max_length=30)) -> dict[str, 
 
         rows = db.execute(statement).scalars().all()
         return {"topics": [serialize_topic(row) for row in rows]}
+
+
+@router.get("/videos")
+def list_videos(category: str | None = Query(None, max_length=30)) -> dict[str, Any]:
+    """Return verified video IDs, categories and URLs, optionally filtered."""
+    with SessionLocal() as db:
+        statement = select(SmartVideo).order_by(SmartVideo.sort_order.asc())
+
+        if category and category != "all":
+            if category not in VALID_SMART_CATEGORIES:
+                raise HTTPException(status_code=422, detail="Unknown category")
+            statement = statement.where(SmartVideo.category == category)
+
+        rows = db.execute(statement).scalars().all()
+        return {"videos": [serialize_video(row) for row in rows]}
 
 
 @router.get("/notes")

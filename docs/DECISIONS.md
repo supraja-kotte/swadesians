@@ -15,9 +15,9 @@ This file records the choices made before implementation began.
 | Default admin | None — created explicitly with `scripts.create_admin` | Avoids a known default password; a database reset removes all admins |
 | Moderation access control | Admin token required for status changes and hidden-content reads | General reading and posting stay open; only privileged actions are protected |
 | Release version | `1.0.0-demo` | Marks a complete demo without claiming production readiness |
-| Security headers | `nosniff`, frame denial, referrer/permissions policies and CSP | Cheap, standard protection for a browser app; CSP allows only self-hosted scripts and the existing Google Fonts |
+| Security headers | `nosniff`, frame denial, referrer/permissions policies and CSP | Cheap, standard protection for a browser app; CSP allows self-hosted scripts, the existing Google Fonts and YouTube frames only |
 | Login rate limiting | Five failures per username/client in 15 minutes | Simple in-process guard against password guessing; a multi-worker deployment needs a shared store |
-| CORS | Configured local origins, `GET/POST/PATCH/OPTIONS`, `Authorization`/`Content-Type` only | Removes unnecessary wildcard permissions while keeping the app working |
+| CORS | Configured local origins, `GET/POST/PATCH/OPTIONS`, `Authorization`/`Content-Type`/`X-CSRF-Token`/`X-Owner-Key`/`X-Farmer-Key` | Removes unnecessary wildcard permissions while allowing the cookie and private-key headers the app needs |
 | Admin session transport | HttpOnly, Secure-in-production, SameSite=Strict cookie plus a readable double-submit CSRF token | JavaScript cannot steal the session token; writes still need a matching header. Bearer auth is kept for API clients |
 | PostgreSQL driver | `psycopg[binary]`, plain `postgresql://` URLs normalised to `postgresql+psycopg://` | No DSN rewrite needed by the user; SQLAlchemy code stays identical |
 | Migration step | `scripts/migrate.py` creates missing tables only | Safe for a fresh database; Alembic is required before altering live columns |
@@ -31,6 +31,12 @@ This file records the choices made before implementation began.
 | Community media storage | New `community_media` table, UUID files in `backend/uploads/`, served at `/uploads` | Profile photos/videos need no column migration on existing databases and never leave this server |
 | Community upload rules | JPEG/PNG/WebP/GIF ≤ 8 MB, MP4/WebM ≤ 60 MB; extension + MIME + magic bytes must agree | Blocks disguised files while keeping the local store simple; a CDN would need more policy work |
 | Community identity | Display name in browser `localStorage`, not an account | Keeps posting open; the name is a label, not an authenticated identity |
+| Smart farming media | Six guidance topics kept; field-note form replaced by five verified public YouTube embeds | Farmer asked for useful videos; no API key is needed for public embeds and no video claim is invented |
+| Video data policy | Backend stores neutral IDs, categories and URLs; titles, publishers and notes stay in frontend i18n | Keeps translations in one place and prevents invented facts in the database |
+| Video player | `youtube-nocookie.com/embed/<id>` with a direct YouTube link fallback | Reduces third-party cookies while keeping a working link if embedding is blocked |
+| Equipment rental | Owners add their own listings; no seeded renters, sellers, prices or contacts | Replaces the demo-only list and enquiry notice with a real two-sided workflow |
+| Equipment identity | Random per-browser private keys, stored only as SHA-256 hashes | Lets owners and farmers return to their records without inventing an account system or storing raw keys |
+| Equipment visibility | Public cards hide contact detail until an enquiry is sent; owners can pause, admins can hide | Gives owners control over their details and a moderation path without blocking honest enquiries |
 
 ## Rules we committed to
 

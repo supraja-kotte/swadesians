@@ -28,6 +28,11 @@ ADMIN_COOKIE_NAME = "agriguide_admin"
 CSRF_COOKIE_NAME = "agriguide_csrf"
 # A harmless readable hint so the browser can avoid a 401 probe when signed out.
 ADMIN_HINT_COOKIE_NAME = "agriguide_admin_hint"
+# Farmer accounts use a separate cookie and CSRF token so the two roles cannot
+# overwrite each other's session state.
+FARMER_COOKIE_NAME = "agriguide_farmer"
+FARMER_CSRF_COOKIE_NAME = "agriguide_farmer_csrf"
+FARMER_HINT_COOKIE_NAME = "agriguide_farmer_hint"
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./agri_guide.db")
 
 # Community photos and videos are stored on this server only, never in git or

@@ -12,6 +12,7 @@ import { smartFarmingTranslations } from "./smartFarmingStrings.js";
 import { schemeTranslations } from "./schemeStrings.js";
 import { assistantTranslations } from "./assistantStrings.js";
 import { adminTranslations } from "./adminStrings.js";
+import { loginTranslations } from "./loginStrings.js";
 
 export const dictionaries = { en, te, hi, ta, mr };
 
@@ -31,6 +32,7 @@ for (const language of supportedLanguages) {
     ...(schemeTranslations[language] ?? {}),
     ...(assistantTranslations[language] ?? {}),
     ...(adminTranslations[language] ?? {}),
+    ...(loginTranslations[language] ?? {}),
   };
 }
 

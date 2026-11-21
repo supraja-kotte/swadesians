@@ -1,8 +1,8 @@
-"""Optional farmer profile table.
+"""Farmer profile table.
 
-There is no login system yet. The browser creates a random local ID and sends
-it with each request. This is a development approach only — real accounts and
-access control arrive with the admin/auth phase.
+Signed-in farmers own a profile id derived from their account. Anonymous
+visitors may still use a browser-generated id, but the account-owned route is
+the supported way to save a private profile.
 """
 
 from sqlalchemy import Column, DateTime, String, func

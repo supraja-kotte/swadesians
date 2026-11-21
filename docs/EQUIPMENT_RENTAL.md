@@ -22,10 +22,12 @@ or the identity of either party. The page says so in every language. Farmers
 and owners must check these things themselves before paying or handing over
 equipment.
 
-## Privacy model (no farmer account system)
+## Privacy model (browser keys for rental)
 
-There is still no login for farmers or owners. Instead the browser generates a
-random private key and keeps it in `localStorage`:
+Farmer accounts now exist on the sign-in page for farm profiles, but equipment
+rental still uses browser keys so renters can contact an owner without first
+creating an account. The browser generates a random private key and keeps it in
+`localStorage`:
 
 - `agriguide.equipmentOwnerKey` — return to your own listings and enquiries.
 - `agriguide.equipmentFarmerKey` — return to enquiries you have sent.

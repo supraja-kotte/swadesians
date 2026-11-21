@@ -7,6 +7,7 @@ import { renderVoiceButton } from "./components/voiceButton.js";
 import { renderVoicePanel } from "./components/voicePanel.js";
 import { renderHome, initHome } from "./pages/home.js";
 import { renderAdmin, initAdmin } from "./pages/admin.js";
+import { renderLoginPage, initLoginPage } from "./pages/login.js";
 import { renderAssistant, initAssistant } from "./pages/assistant.js";
 import { renderSchemes, initSchemes } from "./pages/schemes.js";
 import { renderSmartFarming, initSmartFarming } from "./pages/smartFarming.js";
@@ -25,6 +26,7 @@ const pageMounts = {
   "#/": initHome,
   "#": initHome,
   "#/admin": initAdmin,
+  "#/login": initLoginPage,
   "#/assistant": initAssistant,
   "#/schemes": initSchemes,
   "#/smart-farming": initSmartFarming,
@@ -38,6 +40,7 @@ const pageMounts = {
 function pageForRoute(route, language) {
   if (route === "#/" || route === "#") return renderHome(language);
   if (route === "#/admin") return renderAdmin(language);
+  if (route === "#/login") return renderLoginPage(language);
   if (route === "#/assistant") return renderAssistant(language);
   if (route === "#/schemes") return renderSchemes(language);
   if (route === "#/smart-farming") return renderSmartFarming(language);

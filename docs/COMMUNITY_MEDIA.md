@@ -17,8 +17,8 @@ can carry one photo or video; text-only questions keep working unchanged.
   production; otherwise uploaded files disappear when a container restarts.
 
 The display name is kept in the browser's `localStorage` under
-`agriguide.farmerName`. There is still no farmer login; the name is a label,
-not an authenticated identity.
+`agriguide.farmerName`. Farmer accounts now exist for farm profiles, but community
+posts still use this browser label rather than an authenticated author identity.
 
 ## Upload rules
 

@@ -15,10 +15,11 @@ Phases completed so far:
 - **Phase 7:** six generic smart farming guidance topics (soil, water, crops, pests, records, weather) with translated explanations, plus five verified public YouTube videos on soil health, green manuring, soil health cards, pest management and irrigation. The field-note form was replaced at the farmer's request. All smart farming text is translated in all five languages.
 - **Phase 9:** seven generic scheme guidance topics (official sources, eligibility, documents, applying and help) that teach how to verify information through official channels, plus a personal question list. Scheme text is translated in all five languages. Verified official links were added in the post-release schemes workstream (see below); no benefit amounts or eligibility rules are ever stored.
 - **Phase 10:** a rule-based voice assistant with eleven fixed commands for navigation, read-aloud and help. Speech is recognised by the device's own browser engine; a typing fallback covers browsers without speech recognition. There is no AI model without a key and no invented answers. Assistant text is translated in all five languages.
-- **Phase 11:** administrator sign-in with salted PBKDF2 password hashes and expiring session tokens. Reported and recent farmer content is shown in an admin queue; hiding/restoring community posts and replies now requires a valid admin token. Hidden-content reads also require a token. There is no default admin and no farmer login. Admin text is translated in all five languages.
+- **Phase 11:** administrator sign-in with salted PBKDF2 password hashes and expiring session tokens. Reported and recent farmer content is shown in an admin queue; hiding/restoring community posts and replies now requires a valid admin token. Hidden-content reads also require a token. There is no default admin. Admin text is translated in all five languages.
 - **Phase 12:** release hardening: security headers including Content Security Policy, narrower CORS, a `/health` probe alias with version info, administrator login rate limiting, a one-command release check, and a documented release checklist.
+- **Farmer accounts:** a dedicated `#/login` page with farmer registration/sign-in and administrator sign-in. Farmer sessions use a separate HttpOnly cookie and CSRF token, and the My Farm profile is saved under the signed-in account. Login text is translated in all five languages.
 
-All feature pages are now implemented. The schemes page includes 13 verified official links, but there is still no eligibility checker or benefit calculator. The assistant accepts natural-language questions but needs a server-side AI key to answer them; without a key it honestly falls back to fixed commands. There is no farmer account system or role management beyond a single administrator level. Community questions/replies, scheme questions and voice activity use plain text or a random browser ID, not a login. Equipment rental is different: owners and farmers each keep a private browser key (stored only as a hash on the server) so they can return to their own listings and enquiries. The community profile adds one locally stored photo or video per post; the display name is saved only in that browser. Smart Farming now shows five verified YouTube videos instead of a field-note form.
+All feature pages are now implemented. The schemes page includes 13 verified official links, but there is still no eligibility checker or benefit calculator. The assistant accepts natural-language questions but needs a server-side AI key to answer them; without a key it honestly falls back to fixed commands. The `#/login` page supports both farmer registration/sign-in and administrator sign-in with separate expiring cookie sessions. Signed-in farmers save their My Farm profile to their own account. Community questions/replies, scheme questions and voice activity still use plain text or a browser display name; equipment rental uses private browser keys stored only as hashes on the server. The community profile adds one locally stored photo or video per post. Smart Farming now shows five verified YouTube videos instead of a field-note form.
 
 ## Post-release workstreams
 
@@ -29,7 +30,7 @@ All feature pages are now implemented. The schemes page includes 13 verified off
 5. **Real-time farm data (done)** — live Open-Meteo weather on Home, Dashboard and Weather, live Agmarknet/data.gov.in mandi prices on the Marketplace page, and five verified public YouTube videos embedded in Smart Farming. Upstream failures are reported honestly instead of being replaced with demo values.
 6. **Real equipment rental (done)** — owners add their own listings, farmers enquire directly, owners manage replies and administrators moderate listings. No demo listings, prices, contacts or renters are seeded. See `docs/EQUIPMENT_RENTAL.md`.
 
-Translation review is **pending**: `docs/TRANSLATION_REVIEW.md` is a generated 537-key sheet awaiting native-speaker approval.
+Translation review is **pending**: `docs/TRANSLATION_REVIEW.md` is a generated 522-key sheet awaiting native-speaker approval.
 
 See `docs/RELEASE.md`, `docs/HOSTING.md`, `docs/SCHEME_SOURCES.md`, `docs/AI_ASSISTANT.md`, `docs/COMMUNITY_MEDIA.md`, `docs/SMART_FARMING_VIDEOS.md` and `docs/EQUIPMENT_RENTAL.md` for details, limits and source policy.
 
@@ -134,7 +135,7 @@ From `backend`:
 .\.venv\Scripts\python.exe -m pytest -q
 ```
 
-All 65 tests should pass. They cover the API, database, community flow, local photo/video uploads, equipment, live mandi prices, live weather, smart farming topics and verified YouTube links, schemes, verified official links, the keyless + AI assistant, cookie/CSRF auth, admin access control and release hardening.
+All 74 tests should pass. They cover the API, database, community flow, local photo/video uploads, equipment, live mandi prices, live weather, smart farming topics and verified YouTube links, schemes, verified official links, the keyless + AI assistant, cookie/CSRF auth, admin access control and release hardening.
 
 Re-check the stored official links before a release:
 

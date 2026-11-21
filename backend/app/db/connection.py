@@ -67,7 +67,7 @@ def ensure_schema() -> None:
 
 def init_db() -> None:
     """Create tables and seed only verified or structural (non-demo) content."""
-    from app.models import admin, assistant, community, equipment, profile, schemes, smart_farming  # noqa: F401  (imports register tables)
+    from app.models import admin, assistant, community, equipment, farmer, profile, schemes, smart_farming  # noqa: F401  (imports register tables)
 
     Base.metadata.create_all(bind=engine)
     ensure_schema()

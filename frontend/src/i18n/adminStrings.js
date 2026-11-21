@@ -5,7 +5,7 @@ export const adminTranslations = {
   en: {
     adminTitle: "Admin moderation",
     adminIntro: "Sign in with an administrator account to review reported community content.",
-    adminDisclaimer: "Development foundation only. Farmer posts still use plain text and a random browser ID. No public registration or role management exists yet.",
+    adminDisclaimer: "Administrator accounts review reported community content. Farmer accounts are created from the Sign in page and save their own farm profiles.",
     adminUsername: "Username",
     adminPassword: "Password",
     adminSignIn: "Sign in",
@@ -41,7 +41,7 @@ export const adminTranslations = {
   te: {
     adminTitle: "నిర్వాహక నియంత్రణ",
     adminIntro: "కమ్యూనిటీలో నివేదించిన విషయాలను పరిశీలించడానికి నిర్వాహక ఖాతాతో సైన్ ఇన్ చేయండి.",
-    adminDisclaimer: "ఇది కేవలం అభివృద్ధి దశలో ఉన్న వ్యవస్థ. రైతు పోస్టులు ఇంకా సాధారణ వచనం మరియు యాదృచ్ఛిక బ్రౌజర్ ID తోనే ఉంటాయి. ఇంకా పబ్లిక్ రిజిస్ట్రేషన్ లేదా పాత్ర నిర్వహణ లేదు.",
+    adminDisclaimer: "నిర్వాహక ఖాతాలు నివేదించిన కమ్యూనిటీ విషయాలను పరిశీలిస్తాయి. రైతు ఖాతాలు సైన్ ఇన్ పేజీలో సృష్టించబడతాయి మరియు వారి స్వంత వ్యవసాయ వివరాలను భద్రపరుస్తాయి.",
     adminUsername: "వినియోగదారు పేరు",
     adminPassword: "పాస్\u200Cవర్డ్",
     adminSignIn: "సైన్ ఇన్",
@@ -77,7 +77,7 @@ export const adminTranslations = {
   hi: {
     adminTitle: "प्रशासन मॉडरेशन",
     adminIntro: "सामुदायिक सामग्री की समीक्षा के लिए प्रशासक खाते से साइन इन करें।",
-    adminDisclaimer: "केवल विकास चरण की नींव। किसान पोस्ट अभी भी सादा पाठ और यादृच्छिक ब्राउज़र ID का उपयोग करते हैं। अभी सार्वजनिक पंजीकरण या भूमिका प्रबंधन नहीं है।",
+    adminDisclaimer: "प्रशासक खाते रिपोर्ट की गई सामुदायिक सामग्री की समीक्षा करते हैं। किसान खाते साइन इन पेज से बनते हैं और अपनी खेत प्रोफ़ाइल सहेजते हैं।",
     adminUsername: "उपयोगकर्ता नाम",
     adminPassword: "पासवर्ड",
     adminSignIn: "साइन इन",
@@ -113,7 +113,7 @@ export const adminTranslations = {
   ta: {
     adminTitle: "நிர்வாக மேற்பார்வை",
     adminIntro: "சமூகத்தில் புகாரளிக்கப்பட்ட உள்ளடக்கத்தைப் பார்ப்பதற்கு நிர்வாக கணக்கில் உள்நுழையவும்.",
-    adminDisclaimer: "இது ஒரு மேம்பாட்டு நிலை அடித்தளம் மட்டுமே. விவசாயி இடுகைகள் இன்னும் சாதாரண உரை மற்றும் சீரற்ற உலாவி ID ஐப் பயன்படுத்துகின்றன. பொது பதிவு அல்லது பாத்திர மேலாண்மை இல்லை.",
+    adminDisclaimer: "நிர்வாக கணக்குகள் புகாரளிக்கப்பட்ட சமூக உள்ளடக்கத்தைப் பார்க்கின்றன. விவசாயி கணக்குகள் உள்நுழைவு பக்கத்தில் உருவாக்கப்பட்டு தங்கள் பண்ணை விவரங்களைச் சேமிக்கின்றன.",
     adminUsername: "பயனர்பெயர்",
     adminPassword: "கடவுச்சொல்",
     adminSignIn: "உள்நுழை",
@@ -149,7 +149,7 @@ export const adminTranslations = {
   mr: {
     adminTitle: "प्रशासकीय देखरेख",
     adminIntro: "समुदायातील नोंदींची पडताळणी करण्यासाठी प्रशासक खात्याने साइन इन करा.",
-    adminDisclaimer: "ही फक्त विकासाच्या टप्प्यातली पायाभूत सुविधा आहे. शेतकऱ्यांचे पोस्ट अजूनही साधा मजकूर व यादृच्छिक ब्राउझर ID वापरतात. सार्वजनिक नोंदणी किंवा भूमिका व्यवस्थापन नाही.",
+    adminDisclaimer: "प्रशासक खाते नोंद केलेल्या सामुदायिक माहितीची पडताळणी करतात. शेतकरी खाते साइन इन पृष्ठावर तयार होतात आणि आपली शेत माहिती जतन करतात.",
     adminUsername: "वापरकर्तानाव",
     adminPassword: "पासवर्ड",
     adminSignIn: "साइन इन",

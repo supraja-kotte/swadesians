@@ -1,7 +1,7 @@
 """Administrator accounts and short-lived sign-in sessions.
 
-Passwords are stored only as a salted PBKDF2 hash. No farmer account is
-created — this access control is for moderators only.
+Passwords are stored only as a salted PBKDF2 hash. These accounts are for
+moderators only; farmer accounts live in the separate farmer model.
 """
 
 from sqlalchemy import Boolean, Column, DateTime, ForeignKey, String, func

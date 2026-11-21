@@ -13,7 +13,7 @@ from fastapi.staticfiles import StaticFiles
 
 from app import config
 from app.db.connection import init_db
-from app.routers import admin, assistant, community, equipment, health, marketplace, profile, schemes, smart_farming, weather
+from app.routers import admin, assistant, community, equipment, farmer, health, marketplace, profile, schemes, smart_farming, weather
 
 
 @asynccontextmanager
@@ -36,7 +36,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[origin.strip() for origin in config.ALLOWED_ORIGINS.split(",") if origin.strip()],
     allow_credentials=True,
-    allow_methods=["GET", "POST", "PATCH", "OPTIONS"],
+    allow_methods=["GET", "POST", "PUT", "PATCH", "OPTIONS"],
     allow_headers=[
         "Authorization",
         "Content-Type",
@@ -83,6 +83,7 @@ app.include_router(health.router, prefix=config.API_PREFIX)
 app.include_router(health.router, include_in_schema=False)
 app.include_router(weather.router, prefix=config.API_PREFIX)
 app.include_router(profile.router, prefix=config.API_PREFIX)
+app.include_router(farmer.router, prefix=config.API_PREFIX)
 app.include_router(community.router, prefix=config.API_PREFIX)
 app.include_router(equipment.router, prefix=config.API_PREFIX)
 app.include_router(marketplace.router, prefix=config.API_PREFIX)

@@ -1,8 +1,8 @@
-# AgriGuide demo release checklist
+# AgriGuide live release checklist
 
-Version: **1.0.0-demo**. This is a complete, honestly labelled demo — not a
-production deployment with real farmer accounts, verified scheme data or an AI
-service.
+Version: **1.1.0-live**. This is the live working copy with real weather and
+mandi data, farmer/admin accounts, no standalone Videos feature and no demo
+content. Natural-language AI remains optional until a server-side key is set.
 
 ## Before sharing
 
@@ -16,12 +16,12 @@ service.
    removed Crop Doctor feature. It must print **Release check passed.**
 
 2. Start the server and open `http://127.0.0.1:8000/api/health`. It should
-   return `status: ok` and the demo version. `/health` is also available for
+   return `status: ok` and version `1.1.0-live`. `/health` is also available for
    hosting-platform probes.
 
 3. Check the five language buttons and the bottom navigation in a browser.
 
-4. Create an administrator only if moderation needs to be demonstrated:
+4. Create an administrator if moderation access is needed:
 
    ```powershell
    .\.venv\Scripts\python.exe -m scripts.create_admin
@@ -39,10 +39,12 @@ service.
   permissions policies, and a restrictive Content Security Policy.
 - CORS allows only the configured local origins and the HTTP methods/headers
   the app actually uses.
-- Administrator sign-in is rate limited after five failed attempts per
-  username and client for 15 minutes.
+- Farmer and administrator sign-in are rate limited after five failed attempts
+  per username and client for 15 minutes.
 - Passwords are salted PBKDF2 hashes; sessions are random and expire after
   eight hours.
+- Farmer and administrator sessions use separate HttpOnly cookies and separate
+  double-submit CSRF tokens.
 - `/api/health` and `/health` both report version and mode.
 
 ## Deployment notes
@@ -51,24 +53,27 @@ service.
   `backend/.env` before any public deployment.
 - Keep `backend/.env` out of source control. No API key belongs in `frontend/`.
 - Use `DATABASE_URL` to switch from SQLite to PostgreSQL later.
-- Run behind HTTPS. The current Bearer token is stored in `localStorage`; a
-  production service should move to HttpOnly, Secure, SameSite cookies.
+- Run behind HTTPS so the `Secure` session cookies are sent by the browser.
+  Cookies are already HttpOnly and `SameSite=Strict`, with CSRF protection on
+  cookie-authenticated writes.
 - The login rate limit is in-process only. Multiple workers need a shared store.
 
-## Known demo limitations
+## Known limitations
 
-- No farmer accounts or password reset; posts use a random browser ID.
+- There is no password reset or email verification yet.
 - One admin level only — no viewer/editor roles, audit log or account lockout
   beyond the short rate-limit window.
-- Weather is the only live external data source, and it needs no API key.
+- Weather comes live from Open-Meteo and needs no API key. Mandi prices come
+  live from Agmarknet/data.gov.in; no prices are invented when the feed fails.
 - Equipment listings are entered by owners themselves; no owner, price, contact
   or availability is seeded. AgriGuide does not verify ownership or condition.
   See `docs/EQUIPMENT_RENTAL.md`.
-- Marketplace and videos are clearly labelled samples, and scheme data is
-  generic official-source guidance. No invented sellers, prices, videos, scheme
-  names or benefit amounts are presented as real.
-- Voice commands use the browser's own recognition and read-aloud. There is no
-  AI model and no free-form answer endpoint.
+- Marketplace shows only official live wholesale prices. Smart Farming contains
+  five verified YouTube videos, and there is no standalone Videos page. Scheme
+  data is generic official-source guidance with verified official links.
+- Voice commands use the browser's own recognition and read-aloud. Natural
+  answers require a server-side `AI_API_KEY`; without it the UI honestly shows
+  fixed commands only.
 - Translations have not had native-speaker review.
 
 ## Rollback

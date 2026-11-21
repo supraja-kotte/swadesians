@@ -45,8 +45,8 @@ def get_profile(profile_id: str) -> dict[str, Any]:
         return serialize(db.get(FarmerProfile, profile_id), profile_id)
 
 
-@router.put("/{profile_id}")
-def save_profile(profile_id: str, payload: ProfileIn) -> dict[str, Any]:
+def save_record(profile_id: str, payload: ProfileIn) -> dict[str, Any]:
+    """Upsert one profile record. Callers decide who is allowed to use it."""
     with SessionLocal() as db:
         row = db.get(FarmerProfile, profile_id)
         if row is None:
@@ -60,3 +60,8 @@ def save_profile(profile_id: str, payload: ProfileIn) -> dict[str, Any]:
         db.commit()
         db.refresh(row)
         return serialize(row, profile_id)
+
+
+@router.put("/{profile_id}")
+def save_profile(profile_id: str, payload: ProfileIn) -> dict[str, Any]:
+    return save_record(profile_id, payload)

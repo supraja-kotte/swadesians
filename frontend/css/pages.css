@@ -1522,3 +1522,130 @@ input[type="text"] {
 .admin-item .secondary-button {
   margin-top: 0.2rem;
 }
+
+/* Farmer and administrator sign-in */
+
+.auth-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.auth-tabs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+  padding: 0.35rem;
+  background: var(--white);
+  border: 1px solid var(--stone-200);
+  border-radius: 1rem;
+  box-shadow: var(--shadow);
+}
+
+.auth-tab,
+.auth-mode {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: 2.6rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid transparent;
+  border-radius: 0.75rem;
+  background: transparent;
+  color: var(--stone-600);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.auth-tab .icon {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+.auth-tab.is-active,
+.auth-mode.is-active {
+  background: var(--green-050);
+  border-color: var(--green-700);
+  color: var(--green-800);
+}
+
+.auth-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.auth-mode-switch {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+}
+
+.auth-mode {
+  border-color: var(--stone-200);
+  background: var(--white);
+}
+
+.auth-note {
+  margin: 0;
+  color: var(--stone-600);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.auth-hint {
+  font-size: 0.78rem;
+  overflow-wrap: anywhere;
+}
+
+.auth-session-card {
+  background: var(--white);
+  border: 1px solid var(--stone-200);
+  border-radius: 1rem;
+  box-shadow: var(--shadow);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.auth-session-card p {
+  margin: 0;
+}
+
+.auth-role-badge {
+  display: inline-block;
+  margin-left: 0.4rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  background: var(--green-050);
+  color: var(--green-800);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.auth-profile-note {
+  margin: 0 0 0.75rem;
+  padding: 0.55rem 0.7rem;
+  border-radius: 0.7rem;
+  background: var(--green-050);
+  color: var(--green-800);
+  font-size: 0.8rem;
+}
+
+.home-account-links {
+  display: flex;
+  justify-content: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  margin-top: 1.25rem;
+}
+
+.primary-button[href] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  text-decoration: none;
+}

@@ -44,6 +44,28 @@
   font-size: 1rem;
 }
 
+.header-account {
+  margin-left: auto;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid var(--stone-200);
+  border-radius: 999px;
+  background: var(--white);
+  color: var(--green-800);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: var(--shadow);
+}
+
+.header-account .icon {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
 .page-content {
   animation: fade-up 0.35s ease-out;
 }

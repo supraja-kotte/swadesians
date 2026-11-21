@@ -35,14 +35,15 @@ This file records the choices made before implementation began.
 | Video data policy | Backend stores neutral IDs, categories and URLs; titles, publishers and notes stay in frontend i18n | Keeps translations in one place and prevents invented facts in the database |
 | Video player | `youtube-nocookie.com/embed/<id>` with a direct YouTube link fallback | Reduces third-party cookies while keeping a working link if embedding is blocked |
 | Equipment rental | Owners add their own listings; no seeded renters, sellers, prices or contacts | Replaces the demo-only list and enquiry notice with a real two-sided workflow |
-| Equipment identity | Random per-browser private keys, stored only as SHA-256 hashes | Lets owners and farmers return to their records without inventing an account system or storing raw keys |
+| Equipment identity | Random per-browser private keys, stored only as SHA-256 hashes | Lets owners and farmers return to rental records without requiring a login for that workflow or storing raw keys |
 | Equipment visibility | Public cards hide contact detail until an enquiry is sent; owners can pause, admins can hide | Gives owners control over their details and a moderation path without blocking honest enquiries |
 
 ## Rules we committed to
 
 - General information is available without login.
-- Personalisation is optional.
-- Mock data, simulated sensors and demo answers are clearly labelled.
+- Personalisation is optional; signed-in farmers save their farm profile to their account.
+- Farmer and administrator sessions are separate and use HttpOnly cookies with CSRF protection.
+- No mock data, simulated sensors or demo answers are presented as real.
 - Government scheme facts come from official, verified sources with a verification date.
 - No fake sellers or fake products are presented as real.
 - Each phase stays runnable and ends with a short report.

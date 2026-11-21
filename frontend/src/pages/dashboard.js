@@ -2,6 +2,7 @@ import { mockData } from "../services/mockData.js";
 import { translate } from "../i18n/index.js";
 import { icon } from "../components/icons.js";
 import { API_BASE_URL } from "../config.js";
+import { farmerFetch, hasFarmerSession } from "../services/farmerAuth.js";
 
 const PROFILE_ID_KEY = "agriguide.profileId";
 const LOCATION_KEY = "agriguide.location";
@@ -290,8 +291,11 @@ async function loadProfile(language) {
   dashboardState.loadingProfile = true;
   updateProfile(language);
 
+  const signedIn = hasFarmerSession();
   try {
-    const response = await fetch(`${API_BASE_URL}/api/profile/${encodeURIComponent(getProfileId())}`);
+    const response = signedIn
+      ? await farmerFetch("/api/farmer/profile")
+      : await fetch(`${API_BASE_URL}/api/profile/${encodeURIComponent(getProfileId())}`);
     if (!response.ok) throw new Error("profile load failed");
     const profile = await response.json();
     dashboardState.profile = profile;
@@ -300,7 +304,7 @@ async function loadProfile(language) {
     dashboardState.editing = !(profile.crop || profile.district || profile.state || profile.interests?.length);
     dashboardState.error = "";
   } catch {
-    dashboardState.error = t(language, "profileLoadError");
+    dashboardState.error = t(language, signedIn ? "authFarmerSessionExpired" : "profileLoadError");
     dashboardState.editing = true;
   } finally {
     dashboardState.loadingProfile = false;
@@ -320,23 +324,29 @@ async function saveProfile(language) {
     interests: [...selectedInterests],
   };
 
+  const signedIn = hasFarmerSession();
   dashboardState.saving = true;
   dashboardState.saveMessage = "";
   dashboardState.error = "";
   updateProfile(language);
 
   try {
-    const response = await fetch(`${API_BASE_URL}/api/profile/${encodeURIComponent(getProfileId())}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
+    const response = signedIn
+      ? await farmerFetch("/api/farmer/profile", {
+          method: "PUT",
+          body: JSON.stringify(payload),
+        })
+      : await fetch(`${API_BASE_URL}/api/profile/${encodeURIComponent(getProfileId())}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
     if (!response.ok) throw new Error("profile save failed");
     dashboardState.profile = await response.json();
     dashboardState.editing = false;
-    dashboardState.saveMessage = t(language, "profileSaved");
+    dashboardState.saveMessage = t(language, signedIn ? "profileSavedAccount" : "profileSaved");
   } catch {
-    dashboardState.error = t(language, "profileSaveError");
+    dashboardState.error = t(language, signedIn ? "authFarmerSessionExpired" : "profileSaveError");
   } finally {
     dashboardState.saving = false;
     updateProfile(language);
@@ -424,6 +434,7 @@ export function renderDashboard(language) {
 
       <section class="profile-card">
         <h3>${t(language, "profileHeading")}</h3>
+        ${hasFarmerSession() ? `<p class="auth-profile-note">${t(language, "authProfileNote")}</p>` : ""}
         <p id="profile-message" class="success-message" role="status"></p>
         <p id="profile-error" class="error-message" role="alert"></p>
         <div id="dashboard-profile">${renderProfileArea(language)}</div>

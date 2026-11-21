@@ -68,7 +68,10 @@ export function renderHome(language) {
       <div id="home-weather">${renderWeatherStrip(language)}</div>
     </section>
     <section class="feature-grid" aria-label="Features">${cards}</section>
-    <a class="admin-link" href="#/admin">${translate(language, "adminTitle")}</a>
+    <div class="home-account-links">
+      <a class="admin-link" href="#/login">${escapeHtml(t(language, "authSignInLink"))}</a>
+      <a class="admin-link" href="#/admin">${escapeHtml(t(language, "adminTitle"))}</a>
+    </div>
   `;
 }
 

@@ -48,7 +48,7 @@ See `docs/DECISIONS.md` for details.
 ## Project structure
 
 ```
-agri-guide/
+swadesians/
 ├─ frontend/
 │  ├─ index.html            # single app shell
 │  ├─ css/                  # base, layout, components, pages
@@ -91,7 +91,7 @@ No Node.js or npm is needed for the plain-JavaScript frontend.
 
 ## How to run locally
 
-Open a terminal inside `agri-guide/backend`:
+Open a terminal inside `backend`:
 
 ```powershell
 python -m venv .venv
@@ -128,7 +128,7 @@ http://127.0.0.1:8000/docs
 
 ## How to run the tests
 
-From `agri-guide/backend`:
+From `backend`:
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q
@@ -156,7 +156,7 @@ Secrets go in `backend/.env`, which is ignored by Git. Copy `backend/.env.exampl
 
 ### Create an administrator
 
-There is no default admin account. From `agri-guide/backend`, run:
+There is no default admin account. From `backend`, run:
 
 ```powershell
 .\.venv\Scripts\python.exe -m scripts.create_admin
@@ -175,7 +175,7 @@ The browser loads `index.html` from the FastAPI server. JavaScript in `src/app.j
 Git is installed and this folder is connected to
 `https://github.com/supraja-kotte/swadesians.git` on the `main` branch.
 Every local commit is automatically pushed by `.git/hooks/post-commit`; see
-`docs/GITHUB_AUTO_PUSH.md`. Zip snapshots in `agri-guide/_checkpoints/` remain
+`docs/GITHUB_AUTO_PUSH.md`. Zip snapshots in `_checkpoints/` remain
 as extra local rollbacks, but Git history is now the primary record.
 
 ## Phase roadmap

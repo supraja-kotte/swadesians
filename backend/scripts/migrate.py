@@ -4,7 +4,7 @@ This is a deliberate first migration step: it is safe for SQLite and for a new
 PostgreSQL database. It does NOT yet alter columns in an existing PostgreSQL
 database. Alembic should be added before making schema changes to live data.
 
-Run from `agri-guide/backend`:
+Run from `backend`:
     .\\.venv\\Scripts\\python.exe -m scripts.migrate
 """
 

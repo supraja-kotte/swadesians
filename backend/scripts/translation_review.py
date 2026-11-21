@@ -3,7 +3,7 @@
 No translation is marked as reviewed. A human reviewer edits this generated
 file and changes the status column only after checking the wording.
 
-Run from `agri-guide/backend`:
+Run from `backend`:
     .\\.venv\\Scripts\\python.exe -m scripts.translation_review
 """
 

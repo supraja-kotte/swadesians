@@ -4,7 +4,7 @@ Structural checks always run. With --strict, each HTTPS URL is also requested
 and must return a successful or redirect status. Some government sites block
 automated requests, so network failures are reported as warnings by default.
 
-Run from `agri-guide/backend`:
+Run from `backend`:
     .\\.venv\\Scripts\\python.exe -m scripts.verify_scheme_links
     .\\.venv\\Scripts\\python.exe -m scripts.verify_scheme_links --strict
 """

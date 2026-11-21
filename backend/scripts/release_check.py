@@ -1,6 +1,6 @@
 """Run the checks that must pass before sharing a demo release.
 
-From `agri-guide/backend`:
+From `backend`:
     .\\.venv\\Scripts\\python.exe -m scripts.release_check
 
 This is a convenience wrapper. The automated pytest suite is the source of

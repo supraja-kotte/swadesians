@@ -6,7 +6,7 @@ service.
 
 ## Before sharing
 
-1. From `agri-guide/backend`, run:
+1. From `backend`, run:
 
    ```powershell
    .\.venv\Scripts\python.exe -m scripts.release_check
@@ -74,5 +74,5 @@ service.
 ## Rollback
 
 Git history on `main` is the primary rollback record; zip snapshots in
-`agri-guide/_checkpoints/` remain as extra local backups. Use `git log` and
+`_checkpoints/` remain as extra local backups. Use `git log` and
 `git revert` on this machine, or restore a checkpoint zip as a last resort.

@@ -11,7 +11,7 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-# parents[0] = app/, parents[1] = backend/, parents[2] = agri-guide/
+# parents[0] = app/, parents[1] = backend/, parents[2] = swadesians/
 BASE_DIR = Path(__file__).resolve().parents[2]
 BACKEND_DIR = BASE_DIR / "backend"
 

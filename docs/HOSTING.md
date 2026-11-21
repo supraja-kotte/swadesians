@@ -3,7 +3,7 @@
 ## Current machine status
 
 Git is installed and this project is connected to
-`https://github.com/thumikisaiprathima-cmyk/agri-guide.git` on `main`; the code
+`https://github.com/supraja-kotte/swadesians.git` on `main`; the code
 has been pushed. `gh`, `docker` and `psql` are still not installed here, so
 repository administration and deployment are done through the GitHub website or
 from another machine. A hosting platform and production secrets are still

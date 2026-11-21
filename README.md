@@ -173,9 +173,10 @@ The browser loads `index.html` from the FastAPI server. JavaScript in `src/app.j
 ## Version control
 
 Git is installed and this folder is connected to
-`https://github.com/thumikisaiprathima-cmyk/agri-guide.git` on the `main`
-branch. Zip snapshots in `agri-guide/_checkpoints/` remain as extra local
-rollbacks, but Git history is now the primary record.
+`https://github.com/supraja-kotte/swadesians.git` on the `main` branch.
+Every local commit is automatically pushed by `.git/hooks/post-commit`; see
+`docs/GITHUB_AUTO_PUSH.md`. Zip snapshots in `agri-guide/_checkpoints/` remain
+as extra local rollbacks, but Git history is now the primary record.
 
 ## Phase roadmap
 

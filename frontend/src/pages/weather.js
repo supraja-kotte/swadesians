@@ -154,8 +154,6 @@ function renderWeatherBody(language) {
   const current = data.current;
   const today = data.daily?.[0] ?? {};
   const currentCondition = condition(language, current.condition_key);
-  const demoNote = data.is_demo ? `<p class="demo-badge">${t(language, "demoWeatherNote")}</p>` : "";
-
   const hourly = (data.hourly ?? [])
     .map(
       (hour) => `
@@ -190,7 +188,6 @@ function renderWeatherBody(language) {
   const adviceHtml = (data.advisories ?? []).map((item) => renderAdvice(language, item)).join("");
 
   return `
-    ${demoNote}
     <section class="current-card">
       <div class="current-main">
         <div class="current-icon">${currentCondition.icon}</div>
@@ -260,11 +257,17 @@ async function loadWeather(language) {
   weatherState.error = "";
   updateContent(language);
 
-  const params = new URLSearchParams();
-  if (weatherState.lat !== null && weatherState.lon !== null) {
-    params.set("lat", String(weatherState.lat));
-    params.set("lon", String(weatherState.lon));
+  if (weatherState.lat === null || weatherState.lon === null) {
+    weatherState.data = null;
+    weatherState.error = t(language, "weatherLocationNeeded");
+    weatherState.loading = false;
+    updateContent(language);
+    return;
   }
+
+  const params = new URLSearchParams();
+  params.set("lat", String(weatherState.lat));
+  params.set("lon", String(weatherState.lon));
   if (weatherState.crop.trim()) params.set("crop", weatherState.crop.trim());
 
   try {

@@ -2,24 +2,23 @@
 
 A beginner-friendly, full-stack agricultural platform for Indian farmers.
 
-**Current status: Phases 0–12 complete (demo release `1.0.0-demo`). Production-track workstreams are in progress: secure cookies, PostgreSQL-ready config and GitHub CI are prepared; 13 officially verified central/AP/Telangana scheme links are live; the community now has an Instagram-style photo diary with local video uploads.**
+**Current status: live-data release `1.1.0-live`. Weather comes from Open-Meteo, mandi prices from the official Agmarknet/data.gov.in feed, and there is no demo or sample data in the running app. Smart Farming keeps its five verified YouTube videos; the separate Videos page has been removed.**
 
 Phases completed so far:
 - **Phase 0:** folder structure, FastAPI backend, static frontend, configuration examples and `/api/health`.
-- **Phase 1:** mobile-friendly shell, green theme, language picker for English/Telugu/Hindi/Tamil/Marathi, bottom navigation, large feature cards, demo voice helper, page routing, and clean sample data in `frontend/src/services/mockData.js`.
-- **Phase 2:** live weather from Open-Meteo (no API key), GPS permission flow, manual place search, Telugu quick picks for Andhra Pradesh/Telangana, current conditions, hourly and 7-day forecasts, sunrise/sunset, warnings, cautious farm advice, 10-minute cache, demo fallback, and weather translations in all five languages.
+- **Phase 1:** mobile-friendly shell, green theme, language picker for English/Telugu/Hindi/Tamil/Marathi, bottom navigation, large feature cards, fixed-command voice helper, page routing, and static UI labels in `frontend/src/services/mockData.js`.
+- **Phase 2:** live weather from Open-Meteo (no API key), GPS permission flow, manual place search, Telugu quick picks for Andhra Pradesh/Telangana, current conditions, hourly and 7-day forecasts, sunrise/sunset, warnings, cautious farm advice, 10-minute cache, honest errors instead of demo fallback, and weather translations in all five languages.
 - **Phase 3:** SQLite database via SQLAlchemy, optional farmer profile (state, district, crop, land size, soil, irrigation, interests) saved with `GET`/`PUT /api/profile/{id}`, and a dashboard that assembles a profile summary, local weather snapshot, alerts and advice, plus honest teaser cards for later modules.
-- **Phase 4:** community questions and replies in SQLite, seven topic categories, report buttons, backend hide/restore moderation endpoints, clearly labelled demo seed posts, and community translations in all five languages.
+- **Phase 4:** community questions and replies in SQLite, seven topic categories, report buttons, backend hide/restore moderation endpoints, no seeded posts, and community translations in all five languages.
 - **Phase 5:** owner-submitted equipment rental with category and district filters, an owner listing form, direct farmer enquiries, owner reply/status management and admin moderation. Nothing is seeded: owners enter their own real details, rates and contact information. See `docs/EQUIPMENT_RENTAL.md`. Equipment text is translated in all five languages.
-- **Phase 6:** eight clearly labelled sample produce listings with category and district filters, sample quantity and market hints, no invented mandi prices, and a buyer enquiry form that explains no real seller will be contacted. Marketplace text is translated in all five languages.
+- **Phase 6:** live wholesale mandi prices from the official Agmarknet/data.gov.in feed for Andhra Pradesh and Telangana, with category/location filters, market, arrival date, min/max/modal price, source label and short cache. No seller, enquiry or price is invented; if the feed fails the UI says so. Marketplace text is translated in all five languages.
 - **Phase 7:** six generic smart farming guidance topics (soil, water, crops, pests, records, weather) with translated explanations, plus five verified public YouTube videos on soil health, green manuring, soil health cards, pest management and irrigation. The field-note form was replaced at the farmer's request. All smart farming text is translated in all five languages.
-- **Phase 8:** eight clearly labelled sample video cards with topic filters and a local save list. No video file, channel, link or invented external content is included; video text is translated in all five languages.
 - **Phase 9:** seven generic scheme guidance topics (official sources, eligibility, documents, applying and help) that teach how to verify information through official channels, plus a personal question list. Scheme text is translated in all five languages. Verified official links were added in the post-release schemes workstream (see below); no benefit amounts or eligibility rules are ever stored.
-- **Phase 10:** a demo voice assistant with twelve fixed commands for navigation, read-aloud and help. Speech is recognised by the device's own browser engine; a typing fallback covers browsers without speech recognition. There is no AI model, no free-form question endpoint and no invented answers. Assistant text is translated in all five languages.
+- **Phase 10:** a rule-based voice assistant with eleven fixed commands for navigation, read-aloud and help. Speech is recognised by the device's own browser engine; a typing fallback covers browsers without speech recognition. There is no AI model without a key and no invented answers. Assistant text is translated in all five languages.
 - **Phase 11:** administrator sign-in with salted PBKDF2 password hashes and expiring session tokens. Reported and recent farmer content is shown in an admin queue; hiding/restoring community posts and replies now requires a valid admin token. Hidden-content reads also require a token. There is no default admin and no farmer login. Admin text is translated in all five languages.
-- **Phase 12:** release hardening: security headers including Content Security Policy, narrower CORS, a `/health` probe alias with version info, administrator login rate limiting, a one-command release check, and a documented release checklist. This is a demo release, not a production deployment.
+- **Phase 12:** release hardening: security headers including Content Security Policy, narrower CORS, a `/health` probe alias with version info, administrator login rate limiting, a one-command release check, and a documented release checklist.
 
-All feature pages are now implemented. The schemes page includes 13 verified official links, but there is still no eligibility checker or benefit calculator. The assistant accepts natural-language questions but needs a server-side AI key to answer them; without a key it honestly falls back to fixed commands. There is no farmer account system or role management beyond a single administrator level. Community questions/replies, saved videos, scheme questions and voice activity use plain text or a random browser ID, not a login. Equipment rental is different: owners and farmers each keep a private browser key (stored only as a hash on the server) so they can return to their own listings and enquiries. The community profile adds one locally stored photo or video per post; the display name is saved only in that browser. Smart Farming now shows five verified YouTube videos instead of a field-note form.
+All feature pages are now implemented. The schemes page includes 13 verified official links, but there is still no eligibility checker or benefit calculator. The assistant accepts natural-language questions but needs a server-side AI key to answer them; without a key it honestly falls back to fixed commands. There is no farmer account system or role management beyond a single administrator level. Community questions/replies, scheme questions and voice activity use plain text or a random browser ID, not a login. Equipment rental is different: owners and farmers each keep a private browser key (stored only as a hash on the server) so they can return to their own listings and enquiries. The community profile adds one locally stored photo or video per post; the display name is saved only in that browser. Smart Farming now shows five verified YouTube videos instead of a field-note form.
 
 ## Post-release workstreams
 
@@ -27,7 +26,7 @@ All feature pages are now implemented. The schemes page includes 13 verified off
 2. **Verified government schemes (done)** — central + Andhra Pradesh + Telangana official links, categorised and dated, in `docs/SCHEME_SOURCES.md`. No amounts, eligibility rules or application claims.
 3. **Real AI voice assistant (provider-ready, waiting for key)** — natural spoken answers in all five languages via OpenAI-compatible or Gemini endpoints; the key stays in `backend/.env`. See `docs/AI_ASSISTANT.md`.
 4. **Community social UI (done)** — Instagram-style profile with a three-column photo grid, lightbox and one photo/video per post. Files stay in `backend/uploads/` and are served from `/uploads`; see `docs/COMMUNITY_MEDIA.md`.
-5. **Real-time farm data (partly done)** — five verified public YouTube videos are embedded in Smart Farming without an API key; a legitimate mandi price feed still needs an approved key and data source. See `docs/SMART_FARMING_VIDEOS.md`.
+5. **Real-time farm data (done)** — live Open-Meteo weather on Home, Dashboard and Weather, live Agmarknet/data.gov.in mandi prices on the Marketplace page, and five verified public YouTube videos embedded in Smart Farming. Upstream failures are reported honestly instead of being replaced with demo values.
 6. **Real equipment rental (done)** — owners add their own listings, farmers enquire directly, owners manage replies and administrators moderate listings. No demo listings, prices, contacts or renters are seeded. See `docs/EQUIPMENT_RENTAL.md`.
 
 Translation review is **pending**: `docs/TRANSLATION_REVIEW.md` is a generated 537-key sheet awaiting native-speaker approval.
@@ -40,7 +39,7 @@ See `docs/RELEASE.md`, `docs/HOSTING.md`, `docs/SCHEME_SOURCES.md`, `docs/AI_ASS
 - Backend: Python + FastAPI
 - Database: SQLite now, designed so PostgreSQL can be used later
 - First audience: Telugu speakers in Andhra Pradesh and Telangana
-- Mock data lives in `frontend/src/services/mockData.js`
+- Static UI labels and page structure live in `frontend/src/services/mockData.js`; all weather and price values are fetched live from the backend.
   (the `.ts` extension from the original request is not usable without TypeScript tooling)
 - Crop Doctor is not part of the application
 
@@ -58,7 +57,7 @@ agri-guide/
 │  │  ├─ config.js          # public config only, no secrets
 │  │  └─ services/
 │  │     ├─ api.js          # backend calls
-│  │     └─ mockData.js     # clean sample data (filled in Phase 1)
+│  │     └─ mockData.js     # static UI labels and page structure
 │  ├─ public/               # icons and local images
 │  └─ .env.example          # public config documentation only
 ├─ backend/
@@ -118,7 +117,7 @@ http://127.0.0.1:8000/api/health
 Expected response:
 
 ```json
-{"status":"ok","service":"AgriGuide","mode":"development","version":"1.0.0-demo"}
+{"status":"ok","service":"AgriGuide","mode":"development","version":"1.1.0-live"}
 ```
 
 Interactive API documentation is available at:
@@ -135,7 +134,7 @@ From `agri-guide/backend`:
 .\.venv\Scripts\python.exe -m pytest -q
 ```
 
-All 68 tests should pass. They cover the API, database, community flow, local photo/video uploads, equipment, marketplace, smart farming topics and verified YouTube links, videos, schemes, verified official links, the keyless + AI assistant, cookie/CSRF auth, admin access control and release hardening.
+All 65 tests should pass. They cover the API, database, community flow, local photo/video uploads, equipment, live mandi prices, live weather, smart farming topics and verified YouTube links, schemes, verified official links, the keyless + AI assistant, cookie/CSRF auth, admin access control and release hardening.
 
 Re-check the stored official links before a release:
 
@@ -188,8 +187,8 @@ rollbacks, but Git history is now the primary record.
 5. Equipment rental
 6. Marketplace
 7. Smart farming
-8. Educational videos
+8. Educational videos (merged into Smart Farming; separate page removed)
 9. Government schemes
-10. Voice assistant demo (browser speech only, no AI)
+10. Rule-based voice assistant (browser speech only, no AI without a key)
 11. Administration and moderation — complete
 12. Testing, hardening and release — complete

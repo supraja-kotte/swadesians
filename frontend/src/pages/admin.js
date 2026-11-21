@@ -62,7 +62,7 @@ function renderItem(language, item, kind) {
     <article class="admin-item">
       <div class="community-badges">
         <span class="community-badge category">${t(language, isPost ? "adminPost" : "adminReply")}</span>
-        ${item.is_demo ? `<span class="community-badge demo">${escapeHtml(item.status)}</span>` : ""}
+        <span class="community-badge demo">${escapeHtml(item.status)}</span>
       </div>
       ${isPost && item.title ? `<strong>${escapeHtml(item.title)}</strong>` : ""}
       <p>${escapeHtml(item.body)}</p>

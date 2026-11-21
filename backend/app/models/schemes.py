@@ -16,7 +16,7 @@ class SchemeTopic(Base):
     id = Column(String, primary_key=True)
     category = Column(String(30), nullable=False, index=True)
     sort_order = Column(Integer, default=0, nullable=False)
-    is_demo = Column(Boolean, default=True, nullable=False)
+    is_demo = Column(Boolean, default=False, nullable=False)
     created_at = Column(DateTime, server_default=func.now())
 
 

@@ -288,7 +288,6 @@ function renderQuestionsList(language) {
 
 function renderPostCard(language, post) {
   const badges = [
-    post.is_demo ? badge(t(language, "demoPost"), "demo") : "",
     post.media ? badge(t(language, post.media.kind === "video" ? "communityVideo" : "communityPhoto"), "category") : "",
     badge(categoryLabel(language, post.category), "category"),
     badge(escapeHtml(post.language.toUpperCase()), "language"),
@@ -313,7 +312,6 @@ function renderPostCard(language, post) {
 
 function renderReply(language, reply) {
   const badges = [
-    reply.is_demo ? badge(t(language, "demoReply"), "demo") : "",
     badge(escapeHtml(reply.language.toUpperCase()), "language"),
   ].join("");
 
@@ -338,7 +336,6 @@ function renderDetail(language) {
   const post = communityState.detail.post;
   const replies = communityState.detail.replies ?? [];
   const badges = [
-    post.is_demo ? badge(t(language, "demoPost"), "demo") : "",
     post.media ? badge(t(language, post.media.kind === "video" ? "communityVideo" : "communityPhoto"), "category") : "",
     badge(categoryLabel(language, post.category), "category"),
     badge(escapeHtml(post.language.toUpperCase()), "language"),

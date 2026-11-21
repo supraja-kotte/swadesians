@@ -68,7 +68,7 @@ def ask(payload: AskIn, request: Request) -> dict[str, Any]:
 
 @router.get("/commands")
 def list_commands(category: str | None = Query(None, max_length=30)) -> dict[str, Any]:
-    """Return neutral demo command IDs, optionally filtered by category."""
+    """Return neutral command IDs, optionally filtered by category."""
     with SessionLocal() as db:
         statement = select(VoiceCommand).order_by(VoiceCommand.sort_order.asc())
 

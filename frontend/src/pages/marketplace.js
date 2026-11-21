@@ -5,12 +5,11 @@ import { API_BASE_URL } from "../config.js";
 
 const marketplaceState = {
   loading: true,
-  listings: [],
+  prices: [],
   category: "all",
   location: "",
-  selected: null,
-  enquiryOpen: false,
-  message: "",
+  source: "",
+  updatedAt: "",
   error: "",
 };
 
@@ -65,100 +64,73 @@ function renderFilters(language) {
         <button type="submit" class="primary-button">${t(language, "searchButton")}</button>
       </form>
       <div class="quick-places">${districts}</div>
-      <button type="button" id="clear-marketplace-filters" class="secondary-button">${t(language, "clearFilters")}</button>
+      <div class="form-actions">
+        <button type="button" id="clear-marketplace-filters" class="secondary-button">${t(language, "clearFilters")}</button>
+        <button type="button" id="refresh-marketplace" class="secondary-button">${t(language, "mkRefresh")}</button>
+      </div>
     </div>
   `;
 }
 
-function renderListingCard(language, item) {
+function formatMoney(value) {
+  if (value === null || value === undefined) return "—";
+  return new Intl.NumberFormat("en-IN", { maximumFractionDigits: 0 }).format(value);
+}
+
+function renderPriceCard(language, item) {
+  const price = item.modal_price ?? item.min_price ?? item.max_price;
   return `
     <article class="equipment-card">
       <div class="community-badges">
-        ${badge(t(language, "demoListing"), "demo")}
+        ${badge(t(language, "mkLive"), "category")}
         ${badge(categoryLabel(language, item.category), "category")}
       </div>
-      <h3>${escapeHtml(item.title)}</h3>
-      <p>${escapeHtml(item.description)}</p>
-      <p class="equipment-place">${icon("mapPin")} ${escapeHtml(item.district)}, ${escapeHtml(item.state)}</p>
-      <p class="market-detail"><strong>${t(language, "mkQuantity")}:</strong> ${escapeHtml(item.quantity_label)}</p>
-      <p class="market-detail"><strong>${t(language, "mkMarket")}:</strong> ${escapeHtml(item.market_hint)}</p>
-      <p class="equipment-price">${t(language, "priceUnavailable")}</p>
-      <button type="button" class="primary-button" data-mk-enquire="${escapeHtml(item.id)}">${t(language, "mkEnquire")}</button>
+      <h3>${escapeHtml(item.commodity)}</h3>
+      <p class="equipment-place">${icon("mapPin")} ${escapeHtml(item.market)}, ${escapeHtml(item.district)}, ${escapeHtml(item.state)}</p>
+      <p class="equipment-price">₹${formatMoney(price)} <span class="market-unit">${escapeHtml(t(language, "mkPriceUnit"))}</span></p>
+      <p class="market-detail"><strong>${escapeHtml(t(language, "mkMinPrice"))}:</strong> ${formatMoney(item.min_price)} &nbsp;
+        <strong>${escapeHtml(t(language, "mkMaxPrice"))}:</strong> ${formatMoney(item.max_price)}</p>
+      <p class="market-detail"><strong>${escapeHtml(t(language, "mkModalPrice"))}:</strong> ${formatMoney(item.modal_price)}</p>
+      <p class="market-detail"><strong>${escapeHtml(t(language, "mkArrivalDate"))}:</strong> ${escapeHtml(item.arrival_date)}</p>
+      ${item.variety ? `<p class="market-detail">${escapeHtml(item.variety)}</p>` : ""}
     </article>
   `;
 }
 
 function renderList(language) {
-  const cards = marketplaceState.listings.length
-    ? marketplaceState.listings.map((item) => renderListingCard(language, item)).join("")
-    : `<p class="weather-status">${t(language, "mkNoListings")}</p>`;
+  const cards = marketplaceState.prices.length
+    ? marketplaceState.prices.map((item) => renderPriceCard(language, item)).join("")
+    : `<p class="weather-status">${t(language, "mkNoPrices")}</p>`;
 
   return `
     ${renderFilters(language)}
     <div class="equipment-grid">${cards}</div>
+    <p class="report-note">${escapeHtml(t(language, "mkNote"))}</p>
+    ${
+      marketplaceState.source
+        ? `<p class="market-source">${escapeHtml(t(language, "mkSource"))} · ${escapeHtml(marketplaceState.updatedAt)}</p>`
+        : ""
+    }
   `;
-}
-
-function renderEnquiry(language) {
-  const item = marketplaceState.selected;
-  if (!item) return "";
-
-  return `
-    <div class="equipment-enquiry">
-      <button type="button" id="marketplace-back" class="secondary-button">${t(language, "mkBackToListings")}</button>
-      <article class="equipment-card is-selected">
-        <div class="community-badges">
-          ${badge(t(language, "demoListing"), "demo")}
-          ${badge(categoryLabel(language, item.category), "category")}
-        </div>
-        <h3>${escapeHtml(item.title)}</h3>
-        <p class="equipment-place">${icon("mapPin")} ${escapeHtml(item.district)}, ${escapeHtml(item.state)}</p>
-      </article>
-      <section class="composer-card">
-        <h3>${t(language, "mkEnquiryHeading")}</h3>
-        <p class="equipment-note">${t(language, "mkEnquiryNote")}</p>
-        <form id="marketplace-enquiry-form" class="profile-form">
-          <label class="field-label" for="marketplace-name">${t(language, "mkName")}</label>
-          <input id="marketplace-name" class="field-input" type="text" minlength="2" maxlength="60" required />
-          <label class="field-label" for="marketplace-phone">${t(language, "fieldPhone")}</label>
-          <input id="marketplace-phone" class="field-input" type="tel" minlength="7" maxlength="20"
-            placeholder="${t(language, "phonePlaceholder")}" required />
-          <label class="field-label" for="marketplace-quantity">${t(language, "mkQuantityLabel")}</label>
-          <input id="marketplace-quantity" class="field-input" type="text" maxlength="60"
-            placeholder="${t(language, "mkQuantityPlaceholder")}" />
-          <label class="field-label" for="marketplace-message">${t(language, "fieldMessage")}</label>
-          <textarea id="marketplace-message" class="field-input" rows="3" maxlength="500"
-            placeholder="${t(language, "mkMessagePlaceholder")}"></textarea>
-          <div class="form-actions">
-            <button type="submit" class="primary-button">${icon("check")} ${t(language, "mkSendEnquiry")}</button>
-            <button type="button" id="marketplace-cancel" class="secondary-button">${t(language, "cancel")}</button>
-          </div>
-        </form>
-      </section>
-    </div>
-  `;
-}
-
-function renderView(language) {
-  if (marketplaceState.enquiryOpen) return renderEnquiry(language);
-  if (marketplaceState.loading) return `<p class="weather-status">${t(language, "weatherLoading")}</p>`;
-  return renderList(language);
 }
 
 function updateView(language) {
   const target = document.querySelector("#marketplace-view");
-  if (target) target.innerHTML = renderView(language);
+  if (target) {
+    target.innerHTML = marketplaceState.loading
+      ? `<p class="weather-status">${t(language, "weatherLoading")}</p>`
+      : renderList(language);
+  }
 
   const status = document.querySelector("#marketplace-status");
   if (status) {
-    status.textContent = marketplaceState.message || marketplaceState.error;
+    status.textContent = marketplaceState.error;
     status.className = marketplaceState.error ? "error-message" : "success-message";
   }
 }
 
-async function loadListings(language) {
+async function loadPrices(language) {
   marketplaceState.loading = true;
-  marketplaceState.message = "";
   marketplaceState.error = "";
   updateView(language);
 
@@ -167,53 +139,21 @@ async function loadListings(language) {
   if (marketplaceState.location.trim()) params.set("location", marketplaceState.location.trim());
 
   try {
-    const response = await fetch(`${API_BASE_URL}/api/marketplace/listings?${params.toString()}`);
-    if (!response.ok) throw new Error("listing load failed");
-    marketplaceState.listings = (await response.json()).listings ?? [];
+    const response = await fetch(`${API_BASE_URL}/api/marketplace/prices?${params.toString()}`);
+    if (!response.ok) throw new Error("price load failed");
+    const data = await response.json();
+    marketplaceState.prices = data.prices ?? [];
+    marketplaceState.source = data.source ?? "";
+    marketplaceState.updatedAt = data.updated_at
+      ? t(language, "mkUpdated", { time: data.updated_at })
+      : "";
   } catch {
+    marketplaceState.prices = [];
     marketplaceState.error = t(language, "mkLoadError");
   } finally {
     marketplaceState.loading = false;
     updateView(language);
   }
-}
-
-function openEnquiry(listingId, language) {
-  marketplaceState.selected = marketplaceState.listings.find((item) => item.id === listingId) ?? null;
-  if (!marketplaceState.selected) return;
-  marketplaceState.enquiryOpen = true;
-  marketplaceState.message = "";
-  marketplaceState.error = "";
-  updateView(language);
-}
-
-async function submitEnquiry(language) {
-  const value = (selector) => document.querySelector(selector)?.value ?? "";
-  const payload = {
-    name: value("#marketplace-name"),
-    phone: value("#marketplace-phone"),
-    quantity: value("#marketplace-quantity"),
-    message: value("#marketplace-message"),
-  };
-
-  try {
-    const response = await fetch(
-      `${API_BASE_URL}/api/marketplace/listings/${encodeURIComponent(marketplaceState.selected.id)}/enquiries`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      },
-    );
-    if (!response.ok) throw new Error("enquiry failed");
-
-    marketplaceState.enquiryOpen = false;
-    marketplaceState.message = t(language, "mkEnquirySent");
-    marketplaceState.error = "";
-  } catch {
-    marketplaceState.error = t(language, "mkCreateError");
-  }
-  updateView(language);
 }
 
 function attachEvents(language) {
@@ -224,46 +164,32 @@ function attachEvents(language) {
     const category = event.target.closest("[data-mk-category]");
     if (category) {
       marketplaceState.category = category.dataset.mkCategory;
-      loadListings(language);
+      loadPrices(language);
       return;
     }
 
     const district = event.target.closest("[data-mk-district]");
     if (district) {
       marketplaceState.location = district.dataset.mkDistrict;
-      loadListings(language);
+      loadPrices(language);
       return;
     }
 
     if (event.target.closest("#clear-marketplace-filters")) {
       marketplaceState.category = "all";
       marketplaceState.location = "";
-      loadListings(language);
+      loadPrices(language);
       return;
     }
 
-    const enquire = event.target.closest("[data-mk-enquire]");
-    if (enquire) {
-      openEnquiry(enquire.dataset.mkEnquire, language);
-      return;
-    }
-
-    if (event.target.closest("#marketplace-back") || event.target.closest("#marketplace-cancel")) {
-      marketplaceState.enquiryOpen = false;
-      marketplaceState.selected = null;
-      updateView(language);
-    }
+    if (event.target.closest("#refresh-marketplace")) loadPrices(language);
   });
 
   root.addEventListener("submit", (event) => {
-    if (event.target.id === "marketplace-location-form") {
-      event.preventDefault();
-      marketplaceState.location = document.querySelector("#marketplace-location")?.value ?? "";
-      loadListings(language);
-    } else if (event.target.id === "marketplace-enquiry-form") {
-      event.preventDefault();
-      submitEnquiry(language);
-    }
+    if (event.target.id !== "marketplace-location-form") return;
+    event.preventDefault();
+    marketplaceState.location = document.querySelector("#marketplace-location")?.value ?? "";
+    loadPrices(language);
   });
 }
 
@@ -283,7 +209,13 @@ export function renderMarketplace(language) {
   `;
 }
 
+function renderView(language) {
+  return marketplaceState.loading
+    ? `<p class="weather-status">${t(language, "weatherLoading")}</p>`
+    : renderList(language);
+}
+
 export function initMarketplace(language) {
   attachEvents(language);
-  loadListings(language);
+  loadPrices(language);
 }

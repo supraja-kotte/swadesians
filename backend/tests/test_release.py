@@ -72,6 +72,6 @@ def test_runtime_code_has_no_removed_crop_doctor_feature() -> None:
     assert found == []
 
 
-def test_demo_release_version_is_visible() -> None:
+def test_live_release_version_is_visible() -> None:
     response = client.get("/api/health")
-    assert response.json()["version"].endswith("-demo")
+    assert response.json()["version"].endswith("-live")

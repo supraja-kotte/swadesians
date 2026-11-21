@@ -1,8 +1,8 @@
-"""Weather API endpoints."""
+"""Weather API endpoints backed by live Open-Meteo data only."""
 
 from typing import Any
 
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, HTTPException, Query
 
 from app.services import weather_service
 
@@ -11,25 +11,18 @@ router = APIRouter(prefix="/weather", tags=["weather"])
 
 @router.get("")
 def get_weather(
-    lat: float | None = Query(None, ge=-90, le=90, description="Latitude"),
-    lon: float | None = Query(None, ge=-180, le=180, description="Longitude"),
+    lat: float = Query(..., ge=-90, le=90, description="Latitude"),
+    lon: float = Query(..., ge=-180, le=180, description="Longitude"),
     crop: str | None = Query(None, max_length=40, description="Optional crop name"),
 ) -> dict[str, Any]:
-    """Return current weather, forecasts and farm advice.
-
-    Without coordinates this returns clearly labelled demo data, so the UI
-    works even before location permission is granted.
-    """
-    if lat is None or lon is None:
-        return weather_service.demo_weather(crop)
-
+    """Return current weather, forecasts and farm advice for a location."""
     try:
         return weather_service.get_weather(lat, lon, crop)
-    except Exception:
-        # Never break the page because an outside service is unavailable.
-        data = weather_service.demo_weather(crop)
-        data["source"] = "Demo fallback — live weather unavailable"
-        return data
+    except Exception as exc:
+        raise HTTPException(
+            status_code=503,
+            detail="Live weather is temporarily unavailable. No demo weather is shown.",
+        ) from exc
 
 
 @router.get("/places")

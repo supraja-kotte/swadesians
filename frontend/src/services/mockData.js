@@ -1,10 +1,7 @@
-// Clean, separate sample data for demo mode.
-// Nothing here is real-world information. Real data arrives from the backend
-// in later phases; the rest of the app reads only from this file right now.
+// Static UI labels and page structure. Live weather and mandi prices come
+// from the backend; nothing here pretends to be real-world data.
 
 export const mockData = {
-  note: "Demo data — not real-world information",
-
   languages: [
     { code: "en", label: "English" },
     { code: "te", label: "తెలుగు" },
@@ -77,15 +74,6 @@ export const mockData = {
       route: "#/marketplace",
       phase: 6,
     },
-    {
-      id: "videos",
-      icon: "video",
-      tone: "violet",
-      titleKey: "cardVideosTitle",
-      descKey: "cardVideosDesc",
-      route: "#/videos",
-      phase: 8,
-    },
   ],
 
   weatherQuickPlaces: [
@@ -103,7 +91,6 @@ export const mockData = {
     { value: "weather", key: "cardWeatherTitle" },
     { value: "schemes", key: "cardSchemesTitle" },
     { value: "community", key: "cardCommunityTitle" },
-    { value: "videos", key: "cardVideosTitle" },
     { value: "smart", key: "cardSmartFarmingTitle" },
     { value: "equipment", key: "cardEquipmentTitle" },
     { value: "marketplace", key: "cardMarketplaceTitle" },
@@ -136,29 +123,8 @@ export const mockData = {
   dashboardTeasers: [
     { id: "schemes", icon: "landmark", headingKey: "schemesHeading", bodyKey: "schemesTeaser", route: "#/schemes", phase: 9 },
     { id: "community", icon: "users", headingKey: "communityHeading", bodyKey: "communityTeaser", route: "#/community", phase: 4 },
-    { id: "videos", icon: "video", headingKey: "videosHeading", bodyKey: "videosTeaser", route: "#/videos", phase: 8 },
     { id: "smart", icon: "lightbulb", headingKey: "smartHeading", bodyKey: "smartTeaser", route: "#/smart-farming", phase: 7 },
   ],
-
-  videoCategories: [
-    { value: "soil", key: "vidSoil" },
-    { value: "water", key: "vidWater" },
-    { value: "crops", key: "vidCrops" },
-    { value: "pests", key: "vidPests" },
-    { value: "schemes", key: "vidSchemes" },
-    { value: "equipment", key: "vidEquipment" },
-  ],
-
-  videoContent: {
-    "demo-video-soil-prep": { title: "vidSoilPrepTitle", summary: "vidSoilPrepDesc" },
-    "demo-video-soil-testing": { title: "vidSoilTestTitle", summary: "vidSoilTestDesc" },
-    "demo-video-irrigation": { title: "vidIrrigationTitle", summary: "vidIrrigationDesc" },
-    "demo-video-rain-check": { title: "vidRainTitle", summary: "vidRainDesc" },
-    "demo-video-seed-selection": { title: "vidSeedTitle", summary: "vidSeedDesc" },
-    "demo-video-pest-checks": { title: "vidPestTitle", summary: "vidPestDesc" },
-    "demo-video-scheme-info": { title: "vidSchemeTitle", summary: "vidSchemeDesc" },
-    "demo-video-tool-care": { title: "vidToolTitle", summary: "vidToolDesc" },
-  },
 
   voiceCommandCategories: [
     { value: "navigation", key: "vcNavigation" },
@@ -173,7 +139,6 @@ export const mockData = {
     "nav-weather": { phraseKey: "vcWeather", route: "#/weather" },
     "nav-schemes": { phraseKey: "vcSchemes", route: "#/schemes" },
     "nav-community": { phraseKey: "vcCommunity", route: "#/community" },
-    "nav-videos": { phraseKey: "vcVideos", route: "#/videos" },
     "nav-marketplace": { phraseKey: "vcMarketplace", route: "#/marketplace" },
     "nav-equipment": { phraseKey: "vcEquipment", route: "#/equipment" },
     "nav-smart": { phraseKey: "vcSmart", route: "#/smart-farming" },

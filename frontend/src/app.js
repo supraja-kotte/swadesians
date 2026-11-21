@@ -5,11 +5,10 @@ import { renderLanguagePicker } from "./components/languagePicker.js";
 import { renderBottomNav } from "./components/bottomNav.js";
 import { renderVoiceButton } from "./components/voiceButton.js";
 import { renderVoicePanel } from "./components/voicePanel.js";
-import { renderHome } from "./pages/home.js";
+import { renderHome, initHome } from "./pages/home.js";
 import { renderAdmin, initAdmin } from "./pages/admin.js";
 import { renderAssistant, initAssistant } from "./pages/assistant.js";
 import { renderSchemes, initSchemes } from "./pages/schemes.js";
-import { renderVideos, initVideos } from "./pages/videos.js";
 import { renderSmartFarming, initSmartFarming } from "./pages/smartFarming.js";
 import { renderMarketplace, initMarketplace } from "./pages/marketplace.js";
 import { renderEquipment, initEquipment } from "./pages/equipment.js";
@@ -23,10 +22,11 @@ import { speak, stopSpeaking } from "./services/speech.js";
 const app = document.querySelector("#app");
 
 const pageMounts = {
+  "#/": initHome,
+  "#": initHome,
   "#/admin": initAdmin,
   "#/assistant": initAssistant,
   "#/schemes": initSchemes,
-  "#/videos": initVideos,
   "#/smart-farming": initSmartFarming,
   "#/marketplace": initMarketplace,
   "#/equipment": initEquipment,
@@ -40,7 +40,6 @@ function pageForRoute(route, language) {
   if (route === "#/admin") return renderAdmin(language);
   if (route === "#/assistant") return renderAssistant(language);
   if (route === "#/schemes") return renderSchemes(language);
-  if (route === "#/videos") return renderVideos(language);
   if (route === "#/smart-farming") return renderSmartFarming(language);
   if (route === "#/marketplace") return renderMarketplace(language);
   if (route === "#/equipment") return renderEquipment(language);

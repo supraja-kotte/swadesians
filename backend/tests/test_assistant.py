@@ -8,13 +8,13 @@ from app.schemas.assistant import VALID_COMMAND_CATEGORIES
 client = TestClient(app)
 
 
-def test_demo_commands_are_seeded_and_labelled() -> None:
+def test_navigation_commands_are_seeded_without_demo_labels() -> None:
     response = client.get("/api/assistant/commands")
 
     assert response.status_code == 200
     commands = response.json()["commands"]
-    assert len(commands) >= 12
-    assert all(command["is_demo"] is True for command in commands)
+    assert len(commands) >= 11
+    assert all(command["is_demo"] is False for command in commands)
     assert all(command["category"] in VALID_COMMAND_CATEGORIES for command in commands)
 
 

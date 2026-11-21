@@ -13,7 +13,7 @@ from fastapi.staticfiles import StaticFiles
 
 from app import config
 from app.db.connection import init_db
-from app.routers import admin, assistant, community, equipment, health, marketplace, profile, schemes, smart_farming, videos, weather
+from app.routers import admin, assistant, community, equipment, health, marketplace, profile, schemes, smart_farming, weather
 
 
 @asynccontextmanager
@@ -87,7 +87,6 @@ app.include_router(community.router, prefix=config.API_PREFIX)
 app.include_router(equipment.router, prefix=config.API_PREFIX)
 app.include_router(marketplace.router, prefix=config.API_PREFIX)
 app.include_router(smart_farming.router, prefix=config.API_PREFIX)
-app.include_router(videos.router, prefix=config.API_PREFIX)
 app.include_router(schemes.router, prefix=config.API_PREFIX)
 app.include_router(assistant.router, prefix=config.API_PREFIX)
 app.include_router(admin.router, prefix=config.API_PREFIX)

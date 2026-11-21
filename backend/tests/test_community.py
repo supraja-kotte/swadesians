@@ -7,13 +7,12 @@ from app.main import app
 client = TestClient(app)
 
 
-def test_demo_posts_are_seeded_and_labelled() -> None:
+def test_community_starts_without_demo_posts() -> None:
     response = client.get("/api/community/posts")
 
     assert response.status_code == 200
     posts = response.json()["posts"]
-    demo_posts = [post for post in posts if post["is_demo"] is True]
-    assert len(demo_posts) >= 4
+    assert all(post["is_demo"] is False for post in posts)
 
 
 def test_post_reply_and_report_flow() -> None:
@@ -104,6 +103,18 @@ def test_validation_and_category_filter() -> None:
         json={"category": "unknown", "title": "A valid length title", "body": "A valid body text"},
     )
     assert bad_category.status_code == 422
+
+    created = client.post(
+        "/api/community/posts",
+        json={
+            "author": "Test farmer",
+            "language": "en",
+            "category": "weather",
+            "title": "A real question about monsoon planning",
+            "body": "This post is created by the test suite to verify category filtering.",
+        },
+    )
+    assert created.status_code == 201
 
     filtered = client.get("/api/community/posts?category=weather").json()["posts"]
     assert filtered

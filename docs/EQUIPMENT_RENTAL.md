@@ -76,9 +76,9 @@ all owner-submitted listings and enquiries, and can hide or restore a listing.
 `equipment_listings` gained `owner_contact`, `owner_key_hash`, `availability`
 and `status`; `equipment_enquiries` gained `farmer_key_hash` and `owner_reply`.
 `init_db()` calls `ensure_schema()`, which adds missing columns to an existing
-SQLite database before seeding. Old sample rows are marked `is_demo = true` and
-are excluded from every public and owner-facing view. `seed_demo_equipment()`
-is now a no-op, so a fresh database starts empty.
+SQLite database before any reference content is seeded. No sample listings are
+inserted, and old sample rows are excluded from every public and owner-facing
+view. A fresh database starts with no equipment listings.
 
 Server-side text stays neutral: categories, units and statuses are IDs, and
 all farmer-facing sentences live in the five i18n dictionaries.

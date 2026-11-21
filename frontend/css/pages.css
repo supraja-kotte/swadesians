@@ -1086,6 +1086,56 @@ input[type="text"] {
   color: var(--stone-900);
 }
 
+.market-unit {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--stone-600);
+}
+
+.market-source {
+  font-size: 0.78rem;
+  color: var(--stone-600);
+  margin-top: 0.75rem;
+}
+
+.home-live-weather,
+.live-weather-summary {
+  background: var(--green-050);
+  border: 1px solid var(--green-100);
+  border-radius: 0.9rem;
+  padding: 0.9rem 1rem;
+  margin: 1rem 0;
+}
+
+.home-live-weather h3 {
+  margin: 0 0 0.4rem;
+  font-size: 1rem;
+}
+
+.home-weather-row {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.home-weather-row strong,
+.live-weather-summary strong {
+  font-size: 1.35rem;
+  color: var(--green-800);
+}
+
+.home-weather-row span,
+.live-weather-summary span {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--stone-600);
+}
+
+.home-weather-place {
+  font-weight: 600;
+}
+
 @media (min-width: 640px) {
   .equipment-grid {
     grid-template-columns: repeat(2, 1fr);

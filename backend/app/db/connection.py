@@ -66,27 +66,19 @@ def ensure_schema() -> None:
 
 
 def init_db() -> None:
-    """Create tables if needed, then add clearly labelled demo content once."""
-    from app.models import admin, assistant, community, equipment, marketplace, profile, schemes, smart_farming, videos  # noqa: F401  (imports register tables)
+    """Create tables and seed only verified or structural (non-demo) content."""
+    from app.models import admin, assistant, community, equipment, profile, schemes, smart_farming  # noqa: F401  (imports register tables)
 
     Base.metadata.create_all(bind=engine)
     ensure_schema()
 
-    from app.db.seed import seed_demo_community
-    from app.db.seed_assistant import seed_demo_commands
-    from app.db.seed_equipment import seed_demo_equipment
-    from app.db.seed_marketplace import seed_demo_marketplace
+    from app.db.seed_assistant import seed_navigation_commands
     from app.db.seed_scheme_links import seed_verified_scheme_links
-    from app.db.seed_schemes import seed_demo_scheme_topics
-    from app.db.seed_smart_farming import seed_demo_smart_topics, seed_verified_smart_videos
-    from app.db.seed_videos import seed_demo_videos
+    from app.db.seed_schemes import seed_guidance_topics
+    from app.db.seed_smart_farming import seed_smart_topics, seed_verified_smart_videos
 
-    seed_demo_community()
-    seed_demo_commands()
-    seed_demo_equipment()
-    seed_demo_marketplace()
-    seed_demo_scheme_topics()
+    seed_navigation_commands()
+    seed_guidance_topics()
     seed_verified_scheme_links()
-    seed_demo_smart_topics()
+    seed_smart_topics()
     seed_verified_smart_videos()
-    seed_demo_videos()

@@ -1,64 +1,90 @@
-"""Tests for demo marketplace listings and buyer enquiries."""
+"""Tests for the live mandi price API. The feed is stubbed, never called live."""
 
+import pytest
 from fastapi.testclient import TestClient
 
 from app.main import app
-from app.schemas.marketplace import VALID_MARKETPLACE_CATEGORIES
+from app.services import mandi_service
 
 client = TestClient(app)
 
+RECORDS = [
+    {
+        "state": "Andhra Pradesh",
+        "district": "Guntur",
+        "market": "Guntur APMC",
+        "commodity": "Paddy(Common)",
+        "variety": "Local",
+        "grade": "Local",
+        "arrival_date": "21/11/2026",
+        "min_price": 2400,
+        "max_price": 2500,
+        "modal_price": 2450,
+    },
+    {
+        "state": "Telangana",
+        "district": "Warangal",
+        "market": "Warangal APMC",
+        "commodity": "Tomato",
+        "variety": "Hybrid",
+        "grade": "Local",
+        "arrival_date": "21/11/2026",
+        "min_price": 1200,
+        "max_price": 1800,
+        "modal_price": 1500,
+    },
+]
 
-def test_demo_listings_are_labelled_without_prices() -> None:
-    response = client.get("/api/marketplace/listings")
+
+@pytest.fixture(autouse=True)
+def clear_cache():
+    mandi_service._CACHE.clear()
+    yield
+    mandi_service._CACHE.clear()
+
+
+def stub_fetch(monkeypatch):
+    def fake_fetch(state, limit):
+        return [row for row in RECORDS if row["state"] == state]
+
+    monkeypatch.setattr(mandi_service, "_fetch_state", fake_fetch)
+
+
+def test_live_prices_are_normalised(monkeypatch):
+    stub_fetch(monkeypatch)
+    response = client.get("/api/marketplace/prices")
 
     assert response.status_code == 200
-    listings = response.json()["listings"]
-    assert len(listings) >= 8
-    assert all(item["is_demo"] is True for item in listings)
-    assert all(item["price_amount"] is None for item in listings)
-    assert all(item["category"] in VALID_MARKETPLACE_CATEGORIES for item in listings)
+    body = response.json()
+    assert body["is_live"] is True
+    assert len(body["prices"]) == 2
+    first = body["prices"][0]
+    assert first["arrival_date"] == "21/11/2026" or "-" in first["arrival_date"]
+    assert first["price_unit"] == "INR per quintal"
+    assert "data.gov.in" in first["source"]
 
 
-def test_category_and_location_filters() -> None:
-    vegetables = client.get("/api/marketplace/listings?category=vegetables").json()["listings"]
-    assert vegetables
-    assert all(item["category"] == "vegetables" for item in vegetables)
+def test_category_and_location_filters(monkeypatch):
+    stub_fetch(monkeypatch)
+    grains = client.get("/api/marketplace/prices?category=grains").json()["prices"]
+    assert len(grains) == 1
+    assert grains[0]["commodity"] == "Paddy(Common)"
 
-    guntur = client.get("/api/marketplace/listings?location=Guntur").json()["listings"]
-    assert guntur
-    assert all(item["district"] == "Guntur" for item in guntur)
-
-
-def test_enquiry_flow() -> None:
-    enquiry = client.post(
-        "/api/marketplace/listings/demo-marketplace-1/enquiries",
-        json={
-            "name": "Test buyer",
-            "phone": "9876543210",
-            "quantity": "2 quintals",
-            "message": "Interested in demo produce",
-        },
-    )
-
-    assert enquiry.status_code == 201
-    body = enquiry.json()
-    assert body["status"] == "new"
-    assert body["is_demo"] is True
-    assert "No real seller" in body["note"]
+    guntur = client.get("/api/marketplace/prices?location=Guntur").json()["prices"]
+    assert len(guntur) == 1
+    assert guntur[0]["district"] == "Guntur"
 
 
-def test_enquiry_validation_and_missing_listing() -> None:
-    bad_phone = client.post(
-        "/api/marketplace/listings/demo-marketplace-1/enquiries",
-        json={"name": "Test buyer", "phone": "12"},
-    )
-    assert bad_phone.status_code == 422
+def test_unknown_category_is_rejected():
+    assert client.get("/api/marketplace/prices?category=unknown").status_code == 422
 
-    missing = client.post(
-        "/api/marketplace/listings/not-a-listing/enquiries",
-        json={"name": "Test buyer", "phone": "9876543210"},
-    )
-    assert missing.status_code == 404
 
-    bad_category = client.get("/api/marketplace/listings?category=unknown")
-    assert bad_category.status_code == 422
+def test_feed_failure_is_honest(monkeypatch):
+    def broken_fetch(state, limit):
+        raise RuntimeError("feed down")
+
+    monkeypatch.setattr(mandi_service, "_fetch_state", broken_fetch)
+    response = client.get("/api/marketplace/prices")
+
+    assert response.status_code == 503
+    assert "unavailable" in response.json()["detail"]

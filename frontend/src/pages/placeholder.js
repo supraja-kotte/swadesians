@@ -9,7 +9,6 @@ const pageIcons = {
   "#/smart-farming": "lightbulb",
   "#/equipment": "tractor",
   "#/marketplace": "basket",
-  "#/videos": "video",
   "#/assistant": "mic",
 };
 
@@ -21,7 +20,6 @@ const pageKeys = {
   "#/smart-farming": "cardSmartFarmingTitle",
   "#/equipment": "cardEquipmentTitle",
   "#/marketplace": "cardMarketplaceTitle",
-  "#/videos": "cardVideosTitle",
   "#/assistant": "navAssistant",
 };
 
@@ -33,7 +31,6 @@ const pagePhases = {
   "#/smart-farming": 7,
   "#/equipment": 5,
   "#/marketplace": 6,
-  "#/videos": 8,
   "#/assistant": 10,
 };
 

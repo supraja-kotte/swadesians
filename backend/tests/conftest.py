@@ -2,7 +2,7 @@
 
 Tests use an isolated temporary SQLite file so they never touch the real
 development database. A plain TestClient also skips the app's startup event,
-so we create the tables, demo content and one test administrator here.
+so we create the tables, non-demo reference content and one test administrator here.
 """
 
 import os

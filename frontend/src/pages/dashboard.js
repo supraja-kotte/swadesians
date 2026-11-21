@@ -15,6 +15,7 @@ const dashboardState = {
   error: "",
   weather: null,
   loadingWeather: true,
+  weatherHint: "",
 };
 
 const selectedInterests = new Set();
@@ -182,19 +183,15 @@ function renderWeatherArea(language) {
   const place = location?.name || "";
 
   if (!data) {
-    return `<div class="error-box">${t(language, "profileLoadError")}</div>`;
+    return `<p class="weather-status">${escapeHtml(dashboardState.weatherHint || t(language, "profileLoadError"))}</p>`;
   }
 
   const current = data.current;
-  const demoNote = data.is_demo
-    ? `<p class="demo-badge">${t(language, "demoLabel")} — ${t(language, "demoWeatherNote")}</p>`
-    : "";
   const placeLine = place
     ? t(language, "weatherFor", { place })
     : t(language, "setLocationHint");
 
   return `
-    ${demoNote}
     <p class="weather-place">${escapeHtml(placeLine)}</p>
     <div class="snapshot-main">
       <span class="snapshot-temp">${Math.round(current.temperature)}°C</span>
@@ -348,14 +345,20 @@ async function saveProfile(language) {
 
 async function loadWeather(language) {
   dashboardState.loadingWeather = true;
+  dashboardState.weatherHint = "";
   updateWeather(language);
 
   const params = new URLSearchParams();
   const location = getSavedLocation();
-  if (location && typeof location.lat === "number" && typeof location.lon === "number") {
-    params.set("lat", String(location.lat));
-    params.set("lon", String(location.lon));
+  if (!location || typeof location.lat !== "number" || typeof location.lon !== "number") {
+    dashboardState.weather = null;
+    dashboardState.weatherHint = t(language, "weatherLocationNeeded");
+    dashboardState.loadingWeather = false;
+    updateWeather(language);
+    return;
   }
+  params.set("lat", String(location.lat));
+  params.set("lon", String(location.lon));
   if (dashboardState.profile?.crop) params.set("crop", dashboardState.profile.crop);
 
   try {
@@ -438,7 +441,6 @@ export function renderDashboard(language) {
         ${renderTeasers(language)}
       </section>
 
-      <p class="demo-footnote">${t(language, "demoTip")}: ${t(language, "demoTipBody")}</p>
       <a class="back-link" href="#/">← ${t(language, "navHome")}</a>
     </section>
   `;

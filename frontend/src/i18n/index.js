@@ -9,7 +9,6 @@ import { communityTranslations } from "./communityStrings.js";
 import { equipmentTranslations } from "./equipmentStrings.js";
 import { marketplaceTranslations } from "./marketplaceStrings.js";
 import { smartFarmingTranslations } from "./smartFarmingStrings.js";
-import { videoTranslations } from "./videoStrings.js";
 import { schemeTranslations } from "./schemeStrings.js";
 import { assistantTranslations } from "./assistantStrings.js";
 import { adminTranslations } from "./adminStrings.js";
@@ -29,7 +28,6 @@ for (const language of supportedLanguages) {
     ...(equipmentTranslations[language] ?? {}),
     ...(marketplaceTranslations[language] ?? {}),
     ...(smartFarmingTranslations[language] ?? {}),
-    ...(videoTranslations[language] ?? {}),
     ...(schemeTranslations[language] ?? {}),
     ...(assistantTranslations[language] ?? {}),
     ...(adminTranslations[language] ?? {}),

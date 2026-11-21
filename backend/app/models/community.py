@@ -14,7 +14,6 @@ class CommunityPost(Base):
     category = Column(String(30), default="general", nullable=False)
     title = Column(String(140), nullable=False)
     body = Column(String(2000), nullable=False)
-    # Demo rows are sample content and are clearly labelled in the UI.
     is_demo = Column(Boolean, default=False, nullable=False)
     # "published" or "hidden". Hidden rows are excluded from normal listings.
     status = Column(String(20), default="published", nullable=False)

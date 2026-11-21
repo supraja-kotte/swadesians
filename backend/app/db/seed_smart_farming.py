@@ -3,6 +3,7 @@
 The actual explanations are translated in the frontend. Topic rows contain no
 recommendations, predictions or diagnoses. Video rows contain only an ID,
 category, public YouTube URL and order; titles stay in the frontend i18n.
+These are guidance topics, not demo content.
 """
 
 from sqlalchemy import select
@@ -10,7 +11,7 @@ from sqlalchemy import select
 from app.db.connection import SessionLocal
 from app.models.smart_farming import SmartTopic, SmartVideo
 
-DEMO_TOPICS = [
+GUIDANCE_TOPICS = [
     ("soil", "soil-health"),
     ("water", "irrigation-planning"),
     ("crops", "crop-rotation"),
@@ -72,20 +73,20 @@ def seed_verified_smart_videos() -> None:
         db.commit()
 
 
-def seed_demo_smart_topics() -> None:
+def seed_smart_topics() -> None:
     """Insert topic rows once, only when the table is empty."""
     with SessionLocal() as db:
         existing = db.execute(select(SmartTopic.id).limit(1)).first()
         if existing:
             return
 
-        for order, (category, topic_id) in enumerate(DEMO_TOPICS, start=1):
+        for order, (category, topic_id) in enumerate(GUIDANCE_TOPICS, start=1):
             db.add(
                 SmartTopic(
                     id=topic_id,
                     category=category,
                     sort_order=order,
-                    is_demo=True,
+                    is_demo=False,
                 )
             )
 

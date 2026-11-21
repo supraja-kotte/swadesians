@@ -2,6 +2,7 @@ import { mockData } from "../services/mockData.js";
 import { translate } from "../i18n/index.js";
 import { icon } from "../components/icons.js";
 import { API_BASE_URL } from "../config.js";
+import { fetchLiveWeather } from "../services/liveWeather.js";
 
 const smartState = {
   loading: true,
@@ -10,6 +11,8 @@ const smartState = {
   videos: [],
   videosLoading: true,
   error: "",
+  liveWeather: null,
+  weatherLoading: true,
 };
 
 // The backend stores only neutral IDs, categories and public URLs. These maps
@@ -148,11 +151,78 @@ function renderVideos(language) {
   `;
 }
 
+const WEATHER_LABELS = {
+  clear: "condClear",
+  mainly_clear: "condMainlyClear",
+  partly_cloudy: "condPartlyCloudy",
+  cloudy: "condCloudy",
+  fog: "condFog",
+  drizzle: "condDrizzle",
+  rain: "condRain",
+  heavy_rain: "condHeavyRain",
+  thunderstorm: "condThunderstorm",
+  snow: "condSnow",
+};
+
+function renderLiveWeather(language) {
+  let body = `<p class="weather-status">${t(language, "weatherLoading")}</p>`;
+
+  if (!smartState.weatherLoading) {
+    const data = smartState.liveWeather;
+    if (!data) {
+      body = `<p class="weather-status">${t(language, "weatherLocationNeeded")}</p>`;
+    } else {
+      const current = data.current ?? {};
+      const labelKey = WEATHER_LABELS[current.condition_key] ?? "condUnknown";
+      const advice = (data.advisories ?? [])
+        .map((item) => `<li>${escapeHtml(t(language, adviceTitleKey(item.code)))}</li>`)
+        .join("");
+      body = `
+        <div class="live-weather-summary">
+          <strong>${Math.round(current.temperature)}°C</strong>
+          <span>${escapeHtml(t(language, labelKey))}</span>
+          ${data.placeName ? `<span>${escapeHtml(data.placeName)}</span>` : ""}
+        </div>
+        ${advice ? `<ul class="smart-steps">${advice}</ul>` : ""}
+      `;
+    }
+  }
+
+  return `
+    <h3 class="smart-heading">${escapeHtml(t(language, "homeLiveWeather"))}</h3>
+    ${body}
+  `;
+}
+
+function adviceTitleKey(code) {
+  return {
+    heavy_rain: "adviceHeavyRainTitle",
+    rain_likely: "adviceRainLikelyTitle",
+    high_temperature: "adviceHeatTitle",
+    strong_wind: "adviceWindTitle",
+    favorable: "adviceFavorableTitle",
+  }[code] ?? "adviceFavorableTitle";
+}
+
+async function loadLiveWeather(language) {
+  smartState.weatherLoading = true;
+  updateView(language);
+  try {
+    smartState.liveWeather = await fetchLiveWeather();
+  } catch {
+    smartState.liveWeather = null;
+  } finally {
+    smartState.weatherLoading = false;
+    updateView(language);
+  }
+}
+
 function updateView(language) {
   const target = document.querySelector("#smart-view");
   if (target) {
     target.innerHTML = `
       <p class="equipment-note smart-disclaimer">${t(language, "sfDisclaimer")}</p>
+      <section class="smart-section">${renderLiveWeather(language)}</section>
       <section class="smart-section">${renderTopics(language)}</section>
       <section class="smart-section">${renderVideos(language)}</section>
     `;
@@ -241,6 +311,7 @@ export function renderSmartFarming(language) {
 export function initSmartFarming(language) {
   attachEvents(language);
   updateView(language);
+  loadLiveWeather(language);
   loadTopics(language);
   loadVideos(language);
 }

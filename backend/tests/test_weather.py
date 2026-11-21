@@ -43,11 +43,18 @@ def test_favorable_advice_when_no_warning() -> None:
     assert advice == [{"code": "favorable", "severity": "notice", "values": {"crop": ""}}]
 
 
-def test_demo_weather_endpoint() -> None:
-    response = client.get("/api/weather")
+def test_weather_requires_a_location() -> None:
+    assert client.get("/api/weather").status_code == 422
 
-    assert response.status_code == 200
-    body = response.json()
-    assert body["is_demo"] is True
-    assert len(body["daily"]) == 7
-    assert len(body["advisories"]) >= 1
+
+def test_weather_failure_has_no_demo_fallback(monkeypatch) -> None:
+    from app.services import weather_service
+
+    def broken_fetch(latitude, longitude):
+        raise RuntimeError("provider down")
+
+    monkeypatch.setattr(weather_service, "fetch_forecast", broken_fetch)
+    response = client.get("/api/weather?lat=17.4&lon=78.5")
+
+    assert response.status_code == 503
+    assert "unavailable" in response.json()["detail"]

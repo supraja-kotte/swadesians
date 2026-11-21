@@ -8,13 +8,13 @@ from app.schemas.schemes import VALID_SCHEME_CATEGORIES
 client = TestClient(app)
 
 
-def test_demo_topics_are_seeded_and_labelled() -> None:
+def test_guidance_topics_are_seeded_without_demo_labels() -> None:
     response = client.get("/api/schemes/topics")
 
     assert response.status_code == 200
     topics = response.json()["topics"]
     assert len(topics) >= 7
-    assert all(topic["is_demo"] is True for topic in topics)
+    assert all(topic["is_demo"] is False for topic in topics)
     assert all(topic["category"] in VALID_SCHEME_CATEGORIES for topic in topics)
 
 

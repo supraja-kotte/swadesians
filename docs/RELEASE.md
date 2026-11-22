@@ -1,8 +1,9 @@
 # AgriGuide live release checklist
 
-Version: **1.1.0-live**. This is the live working copy with real weather and
-mandi data, farmer/admin accounts, no standalone Videos feature and no demo
-content. Natural-language AI remains optional until a server-side key is set.
+Version: **1.1.0-live**. This is the live working copy with real weather, mandi
+and NASA POWER data, farmer/admin accounts, no standalone Videos feature and no
+demo content. Natural-language AI remains optional until a server-side key is
+set.
 
 ## Before sharing
 
@@ -65,6 +66,9 @@ content. Natural-language AI remains optional until a server-side key is set.
   beyond the short rate-limit window.
 - Weather comes live from Open-Meteo and needs no API key. Mandi prices come
   live from Agmarknet/data.gov.in; no prices are invented when the feed fails.
+  NASA POWER soil and weather estimates are grid-cell values, not a soil test
+  or field boundary; when the API is unavailable the page says so and shows no
+  invented values. See `docs/NASA_FIELD_ADVISORY.md`.
 - Equipment listings are entered by owners themselves; no owner, price, contact
   or availability is seeded. AgriGuide does not verify ownership or condition.
   See `docs/EQUIPMENT_RENTAL.md`.

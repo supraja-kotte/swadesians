@@ -2,7 +2,7 @@
 
 A beginner-friendly, full-stack agricultural platform for Indian farmers.
 
-**Current status: live-data release `1.1.0-live`. Weather comes from Open-Meteo, mandi prices from the official Agmarknet/data.gov.in feed, and there is no demo or sample data in the running app. Smart Farming keeps its five verified YouTube videos; the separate Videos page has been removed.**
+**Current status: live-data release `1.1.0-live`. Weather comes from Open-Meteo, mandi prices from the official Agmarknet/data.gov.in feed, and NASA POWER soil/weather estimates from the public NASA API. There is no demo or sample data in the running app. Smart Farming keeps its five verified YouTube videos; the separate Videos page has been removed.**
 
 Phases completed so far:
 - **Phase 0:** folder structure, FastAPI backend, static frontend, configuration examples and `/api/health`.
@@ -17,6 +17,7 @@ Phases completed so far:
 - **Phase 10:** a rule-based voice assistant with eleven fixed commands for navigation, read-aloud and help. Speech is recognised by the device's own browser engine; a typing fallback covers browsers without speech recognition. There is no AI model without a key and no invented answers. Assistant text is translated in all five languages.
 - **Phase 11:** administrator sign-in with salted PBKDF2 password hashes and expiring session tokens. Reported and recent farmer content is shown in an admin queue; hiding/restoring community posts and replies now requires a valid admin token. Hidden-content reads also require a token. There is no default admin. Admin text is translated in all five languages.
 - **Phase 12:** release hardening: security headers including Content Security Policy, narrower CORS, a `/health` probe alias with version info, administrator login rate limiting, a one-command release check, and a documented release checklist.
+- **Phase 13:** NASA POWER field advisor with saved field locations, GPS and weather-location reuse, 14-day satellite-based soil moisture/rainfall/temperature/humidity/wind/solar checks, labelled grid-cell limits and neutral advice. When NASA is unavailable the page says so; it never invents values. NASA text is translated in all five languages. See `docs/NASA_FIELD_ADVISORY.md`.
 - **Farmer accounts:** a dedicated `#/login` page with farmer registration/sign-in and administrator sign-in. Farmer sessions use a separate HttpOnly cookie and CSRF token, and the My Farm profile is saved under the signed-in account. Login text is translated in all five languages.
 
 All feature pages are now implemented. The schemes page includes 13 verified official links, but there is still no eligibility checker or benefit calculator. The assistant accepts natural-language questions but needs a server-side AI key to answer them; without a key it honestly falls back to fixed commands. The `#/login` page supports both farmer registration/sign-in and administrator sign-in with separate expiring cookie sessions. Signed-in farmers save their My Farm profile to their own account. Community questions/replies, scheme questions and voice activity still use plain text or a browser display name; equipment rental uses private browser keys stored only as hashes on the server. The community profile adds one locally stored photo or video per post. Smart Farming now shows five verified YouTube videos instead of a field-note form.
@@ -27,12 +28,12 @@ All feature pages are now implemented. The schemes page includes 13 verified off
 2. **Verified government schemes (done)** — central + Andhra Pradesh + Telangana official links, categorised and dated, in `docs/SCHEME_SOURCES.md`. No amounts, eligibility rules or application claims.
 3. **Real AI voice assistant (provider-ready, waiting for key)** — natural spoken answers in all five languages via OpenAI-compatible or Gemini endpoints; the key stays in `backend/.env`. See `docs/AI_ASSISTANT.md`.
 4. **Community social UI (done)** — Instagram-style profile with a three-column photo grid, lightbox and one photo/video per post. Files stay in `backend/uploads/` and are served from `/uploads`; see `docs/COMMUNITY_MEDIA.md`.
-5. **Real-time farm data (done)** — live Open-Meteo weather on Home, Dashboard and Weather, live Agmarknet/data.gov.in mandi prices on the Marketplace page, and five verified public YouTube videos embedded in Smart Farming. Upstream failures are reported honestly instead of being replaced with demo values.
+5. **Real-time farm data (done)** — live Open-Meteo weather on Home, Dashboard and Weather, live Agmarknet/data.gov.in mandi prices on the Marketplace page, live NASA POWER soil and weather estimates on the NASA field advisor, and five verified public YouTube videos embedded in Smart Farming. Upstream failures are reported honestly instead of being replaced with demo values.
 6. **Real equipment rental (done)** — owners add their own listings, farmers enquire directly, owners manage replies and administrators moderate listings. No demo listings, prices, contacts or renters are seeded. See `docs/EQUIPMENT_RENTAL.md`.
 
-Translation review is **pending**: `docs/TRANSLATION_REVIEW.md` is a generated 522-key sheet awaiting native-speaker approval.
+Translation review is **pending**: `docs/TRANSLATION_REVIEW.md` is a generated 613-key sheet awaiting native-speaker approval.
 
-See `docs/RELEASE.md`, `docs/HOSTING.md`, `docs/SCHEME_SOURCES.md`, `docs/AI_ASSISTANT.md`, `docs/COMMUNITY_MEDIA.md`, `docs/SMART_FARMING_VIDEOS.md` and `docs/EQUIPMENT_RENTAL.md` for details, limits and source policy.
+See `docs/RELEASE.md`, `docs/HOSTING.md`, `docs/SCHEME_SOURCES.md`, `docs/AI_ASSISTANT.md`, `docs/COMMUNITY_MEDIA.md`, `docs/SMART_FARMING_VIDEOS.md`, `docs/NASA_FIELD_ADVISORY.md` and `docs/EQUIPMENT_RENTAL.md` for details, limits and source policy.
 
 ## Decisions made so far
 
@@ -194,4 +195,5 @@ as extra local rollbacks, but Git history is now the primary record.
 10. Rule-based voice assistant (browser speech only, no AI without a key)
 11. Administration and moderation — complete
 12. Testing, hardening and release — complete
+13. NASA POWER field advisor — complete
 

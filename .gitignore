@@ -14,3 +14,7 @@ backend/uploads/
 
 # Local rollback snapshots
 _checkpoints/
+
+# Local submission archives
+AgriGuide_Project_Code.zip
+AgriGuide_Project_Code_100MB.zip

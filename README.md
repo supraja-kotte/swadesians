@@ -10,6 +10,13 @@ This is the working app running live with real weather, mandi, NASA POWER and ac
 
 > The demo is served through a temporary public HTTPS tunnel to the running app. Keep the host machine online while the demo is being used.
 
+## Hackathon presentation
+
+- [Download the 22-slide PowerPoint deck](AgriGuide_Hackathon_Presentation.pptx)
+- [Preview the same deck as PDF](AgriGuide_Hackathon_Presentation.pdf)
+
+The deck covers problem, solution, side-by-side comparison, every feature, architecture, security, validation, impact, limitations and the live demo. It uses a generic hackathon format and contains no SIH logo.
+
 **Current status: live-data release `1.1.0-live`, deployable as an installable PWA. Weather comes from Open-Meteo, mandi prices from the official Agmarknet/data.gov.in feed, and NASA POWER soil/weather estimates from the public NASA API. There is no demo or sample data in the running app. Smart Farming keeps its five verified YouTube videos; the separate Videos page has been removed. See `docs/MOBILE_DEPLOYMENT.md`.**
 
 Phases completed so far:

@@ -2,7 +2,7 @@
 
 A beginner-friendly, full-stack agricultural platform for Indian farmers.
 
-**Current status: live-data release `1.1.0-live`. Weather comes from Open-Meteo, mandi prices from the official Agmarknet/data.gov.in feed, and NASA POWER soil/weather estimates from the public NASA API. There is no demo or sample data in the running app. Smart Farming keeps its five verified YouTube videos; the separate Videos page has been removed.**
+**Current status: live-data release `1.1.0-live`, deployable as an installable PWA. Weather comes from Open-Meteo, mandi prices from the official Agmarknet/data.gov.in feed, and NASA POWER soil/weather estimates from the public NASA API. There is no demo or sample data in the running app. Smart Farming keeps its five verified YouTube videos; the separate Videos page has been removed. See `docs/MOBILE_DEPLOYMENT.md`.**
 
 Phases completed so far:
 - **Phase 0:** folder structure, FastAPI backend, static frontend, configuration examples and `/api/health`.
@@ -30,10 +30,11 @@ All feature pages are now implemented. The schemes page includes 13 verified off
 4. **Community social UI (done)** — Instagram-style profile with a three-column photo grid, lightbox and one photo/video per post. Files stay in `backend/uploads/` and are served from `/uploads`; see `docs/COMMUNITY_MEDIA.md`.
 5. **Real-time farm data (done)** — live Open-Meteo weather on Home, Dashboard and Weather, live Agmarknet/data.gov.in mandi prices on the Marketplace page, live NASA POWER soil and weather estimates on the NASA field advisor, and five verified public YouTube videos embedded in Smart Farming. Upstream failures are reported honestly instead of being replaced with demo values.
 6. **Real equipment rental (done)** — owners add their own listings, farmers enquire directly, owners manage replies and administrators moderate listings. No demo listings, prices, contacts or renters are seeded. See `docs/EQUIPMENT_RENTAL.md`.
+7. **Installable mobile PWA (done)** — manifest, app icons, offline app-shell cache and a Render blueprint for a public HTTPS link. Farmers and judges can add it to a phone home screen. See `docs/MOBILE_DEPLOYMENT.md`.
 
 Translation review is **pending**: `docs/TRANSLATION_REVIEW.md` is a generated 613-key sheet awaiting native-speaker approval.
 
-See `docs/RELEASE.md`, `docs/HOSTING.md`, `docs/SCHEME_SOURCES.md`, `docs/AI_ASSISTANT.md`, `docs/COMMUNITY_MEDIA.md`, `docs/SMART_FARMING_VIDEOS.md`, `docs/NASA_FIELD_ADVISORY.md` and `docs/EQUIPMENT_RENTAL.md` for details, limits and source policy.
+See `docs/RELEASE.md`, `docs/HOSTING.md`, `docs/MOBILE_DEPLOYMENT.md`, `docs/SCHEME_SOURCES.md`, `docs/AI_ASSISTANT.md`, `docs/COMMUNITY_MEDIA.md`, `docs/SMART_FARMING_VIDEOS.md`, `docs/NASA_FIELD_ADVISORY.md` and `docs/EQUIPMENT_RENTAL.md` for details, limits and source policy.
 
 ## Decisions made so far
 

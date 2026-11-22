@@ -2,6 +2,14 @@
 
 A beginner-friendly, full-stack agricultural platform for Indian farmers.
 
+## Live demo
+
+**https://crown-factor-wrote-commerce.trycloudflare.com/**
+
+This is the working app running live with real weather, mandi, NASA POWER and account data. It is an installable PWA; open it on a phone and choose **Add to Home screen** / **Install app**.
+
+> The demo is served through a temporary public HTTPS tunnel to the running app. Keep the host machine online while the demo is being used.
+
 **Current status: live-data release `1.1.0-live`, deployable as an installable PWA. Weather comes from Open-Meteo, mandi prices from the official Agmarknet/data.gov.in feed, and NASA POWER soil/weather estimates from the public NASA API. There is no demo or sample data in the running app. Smart Farming keeps its five verified YouTube videos; the separate Videos page has been removed. See `docs/MOBILE_DEPLOYMENT.md`.**
 
 Phases completed so far:

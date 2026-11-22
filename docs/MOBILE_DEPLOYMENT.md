@@ -58,6 +58,35 @@ registrations, profiles, community data and equipment data survive redeploys.
 - NASA page loads live data; Weather and Marketplace load live data
 - Browser console has no unexpected errors
 
+## Troubleshooting
+
+### The site shows a 503 / "Service waking up"
+
+Render puts free web services to sleep after about 15 minutes of no traffic. The
+first request after that returns a Render wake-up page and the response header
+`x-render-routing: hibernate-pending-wake`. Wait about a minute and open the URL
+again. The status call should then return JSON:
+
+```json
+{"status":"ok","service":"AgriGuide","version":"1.1.0-live"}
+```
+
+### The service never wakes and stays at 503
+
+Open the service's **Logs** tab in Render. If you see
+`Can't load plugin: sqlalchemy.dialects:postgres`, the database connection
+string used the `postgres://` spelling. This is fixed in commit `ff29b34`;
+make sure that commit (or newer) is deployed, then click **Manual Deploy →
+Deploy latest commit**.
+
+### The Render dashboard itself shows a 500 / "unavailable"
+
+A message such as *"A function needed by this page temporarily failed"* comes
+from Render's own dashboard, not from AgriGuide. Refresh the page, sign out and
+back in, or try a private browser window. If it persists, contact Render
+support; the deployed app can still be checked directly at
+`https://agriguide.onrender.com/health`.
+
 ## Important free-tier limits
 
 - A free web service sleeps after about 15 minutes with no traffic. The next

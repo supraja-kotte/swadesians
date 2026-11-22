@@ -11,9 +11,15 @@ from app.config import DATABASE_URL
 
 
 def normalize_database_url(url: str) -> str:
-    """Use psycopg 3 for plain postgresql:// URLs without changing the user's DSN."""
-    if url.startswith("postgresql://"):
-        return "postgresql+psycopg://" + url[len("postgresql://") :]
+    """Use psycopg 3 for plain Postgres URLs without changing the user's DSN.
+
+    Hosting platforms often hand out ``postgres://...`` while SQLAlchemy 2
+    expects ``postgresql://...``. Accept both spellings so a copied connection
+    string works without manual editing.
+    """
+    for prefix in ("postgres://", "postgresql://"):
+        if url.startswith(prefix):
+            return "postgresql+psycopg://" + url[len(prefix) :]
     return url
 
 

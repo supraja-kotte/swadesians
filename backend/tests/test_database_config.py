@@ -10,6 +10,13 @@ def test_plain_postgres_url_uses_psycopg_driver() -> None:
     )
 
 
+def test_render_style_postgres_url_uses_psycopg_driver() -> None:
+    url = "postgres://farmer:secret@host.render.com:5432/agriguide"
+    assert normalize_database_url(url) == (
+        "postgresql+psycopg://farmer:secret@host.render.com:5432/agriguide"
+    )
+
+
 def test_explicit_driver_and_sqlite_urls_are_unchanged() -> None:
     explicit = "postgresql+psycopg://farmer@localhost/agriguide"
     sqlite = "sqlite:///./agri_guide.db"

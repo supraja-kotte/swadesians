@@ -2,7 +2,7 @@
 
 from fastapi import APIRouter
 
-from app.config import MODE, RELEASE_VERSION
+from ..config import MODE, RELEASE_VERSION
 
 router = APIRouter(tags=["health"])
 

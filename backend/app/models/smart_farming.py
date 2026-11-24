@@ -6,7 +6,7 @@ Field notes store what the farmer typed — there is no analysis or prediction.
 
 from sqlalchemy import Boolean, Column, DateTime, Integer, String, func
 
-from app.db.connection import Base
+from ..db.connection import Base
 
 
 class SmartTopic(Base):

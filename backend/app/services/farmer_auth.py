@@ -13,9 +13,9 @@ import time
 
 from sqlalchemy import func, select
 
-from app.db.connection import SessionLocal
-from app.models.farmer import Farmer, FarmerSession
-from app.services.auth import SESSION_HOURS, hash_password, verify_password
+from ..db.connection import SessionLocal
+from ..models.farmer import Farmer, FarmerSession
+from ..services.auth import SESSION_HOURS, hash_password, verify_password
 
 MAX_FAILED_LOGINS = 5
 LOGIN_LOCKOUT_SECONDS = 15 * 60

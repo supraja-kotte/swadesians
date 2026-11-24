@@ -4,7 +4,7 @@ from typing import Any
 
 from fastapi import APIRouter, HTTPException, Query
 
-from app.services import weather_service
+from ..services import weather_service
 
 router = APIRouter(prefix="/weather", tags=["weather"])
 

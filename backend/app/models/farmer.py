@@ -6,7 +6,7 @@ only as salted PBKDF2 hashes, never as plain text.
 
 from sqlalchemy import Boolean, Column, DateTime, ForeignKey, String, func
 
-from app.db.connection import Base
+from ..db.connection import Base
 
 
 class Farmer(Base):

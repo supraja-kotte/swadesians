@@ -8,9 +8,9 @@ from typing import Any
 
 from fastapi import APIRouter
 
-from app.db.connection import SessionLocal
-from app.models.profile import FarmerProfile
-from app.schemas.profile import ProfileIn
+from ..db.connection import SessionLocal
+from ..models.profile import FarmerProfile
+from ..schemas.profile import ProfileIn
 
 router = APIRouter(prefix="/profile", tags=["profile"])
 

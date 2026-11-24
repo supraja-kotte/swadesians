@@ -6,7 +6,7 @@ moderators only; farmer accounts live in the separate farmer model.
 
 from sqlalchemy import Boolean, Column, DateTime, ForeignKey, String, func
 
-from app.db.connection import Base
+from ..db.connection import Base
 
 
 class Admin(Base):

@@ -7,8 +7,8 @@ They are navigation topics, not demo content.
 
 from sqlalchemy import select
 
-from app.db.connection import SessionLocal
-from app.models.schemes import SchemeTopic
+from ..db.connection import SessionLocal
+from ..models.schemes import SchemeTopic
 
 GUIDANCE_TOPICS = [
     ("official", "finding-official-info"),

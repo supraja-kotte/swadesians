@@ -7,8 +7,8 @@ These are navigation controls, not demo or invented data.
 
 from sqlalchemy import select
 
-from app.db.connection import SessionLocal
-from app.models.assistant import VoiceCommand
+from ..db.connection import SessionLocal
+from ..models.assistant import VoiceCommand
 
 NAVIGATION_COMMANDS = [
     ("navigation", "nav-home"),

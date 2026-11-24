@@ -2,7 +2,7 @@
 
 from sqlalchemy import Boolean, Column, DateTime, ForeignKey, Integer, String, func
 
-from app.db.connection import Base
+from ..db.connection import Base
 
 
 class CommunityPost(Base):

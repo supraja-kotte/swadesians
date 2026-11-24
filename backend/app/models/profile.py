@@ -7,7 +7,7 @@ the supported way to save a private profile.
 
 from sqlalchemy import Column, DateTime, String, func
 
-from app.db.connection import Base
+from ..db.connection import Base
 
 
 class FarmerProfile(Base):

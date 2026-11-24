@@ -11,9 +11,9 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
-from app import config
-from app.db.connection import init_db
-from app.routers import admin, assistant, community, equipment, farmer, health, marketplace, nasa, profile, schemes, smart_farming, weather
+from . import config
+from .db.connection import init_db
+from .routers import admin, assistant, community, equipment, farmer, health, marketplace, nasa, profile, schemes, smart_farming, weather
 
 
 @asynccontextmanager

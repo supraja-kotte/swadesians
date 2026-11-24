@@ -7,7 +7,7 @@ later. The only thing that changes is the DATABASE_URL in `.env`.
 from sqlalchemy import create_engine, inspect, text
 from sqlalchemy.orm import declarative_base, sessionmaker
 
-from app.config import DATABASE_URL
+from ..config import DATABASE_URL
 
 
 def normalize_database_url(url: str) -> str:

@@ -17,8 +17,8 @@ Run `python -m scripts.verify_scheme_links` to re-check the stored URLs.
 from sqlalchemy import select
 from urllib.parse import urlparse
 
-from app.db.connection import SessionLocal
-from app.models.schemes import SchemeLink
+from ..db.connection import SessionLocal
+from ..models.schemes import SchemeLink
 
 VERIFIED_ON = "2026-11-21"
 

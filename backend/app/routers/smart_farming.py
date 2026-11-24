@@ -11,9 +11,9 @@ from uuid import uuid4
 from fastapi import APIRouter, HTTPException, Query
 from sqlalchemy import select
 
-from app.db.connection import SessionLocal
-from app.models.smart_farming import FieldNote, SmartTopic, SmartVideo
-from app.schemas.smart_farming import FieldNoteIn, VALID_SMART_CATEGORIES
+from ..db.connection import SessionLocal
+from ..models.smart_farming import FieldNote, SmartTopic, SmartVideo
+from ..schemas.smart_farming import FieldNoteIn, VALID_SMART_CATEGORIES
 
 router = APIRouter(prefix="/smart-farming", tags=["smart-farming"])
 

@@ -8,8 +8,8 @@ These are guidance topics, not demo content.
 
 from sqlalchemy import select
 
-from app.db.connection import SessionLocal
-from app.models.smart_farming import SmartTopic, SmartVideo
+from ..db.connection import SessionLocal
+from ..models.smart_farming import SmartTopic, SmartVideo
 
 GUIDANCE_TOPICS = [
     ("soil", "soil-health"),

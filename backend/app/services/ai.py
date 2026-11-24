@@ -19,7 +19,7 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import quote
 from urllib.request import Request, urlopen
 
-from app.config import (
+from ..config import (
     AI_API_KEY,
     AI_BASE_URL,
     AI_MODEL,

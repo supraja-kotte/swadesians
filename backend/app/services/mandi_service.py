@@ -13,7 +13,7 @@ from typing import Any
 
 import httpx2
 
-from app import config
+from .. import config
 
 RESOURCE_URL = "https://api.data.gov.in/resource/9ef84268-d588-465a-a308-a864a43d0070"
 CACHE_TTL_SECONDS = 1800

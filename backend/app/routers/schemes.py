@@ -10,9 +10,9 @@ from uuid import uuid4
 from fastapi import APIRouter, HTTPException, Query
 from sqlalchemy import select
 
-from app.db.connection import SessionLocal
-from app.models.schemes import SchemeLink, SchemeQuestion, SchemeTopic
-from app.schemas.schemes import (
+from ..db.connection import SessionLocal
+from ..models.schemes import SchemeLink, SchemeQuestion, SchemeTopic
+from ..schemas.schemes import (
     QuestionIn,
     VALID_SCHEME_CATEGORIES,
     VALID_SCHEME_LEVELS,

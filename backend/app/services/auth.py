@@ -16,8 +16,8 @@ import time
 
 from sqlalchemy import select
 
-from app.db.connection import SessionLocal
-from app.models.admin import Admin, AdminSession
+from ..db.connection import SessionLocal
+from ..models.admin import Admin, AdminSession
 
 PBKDF2_ITERATIONS = 200_000
 SESSION_HOURS = 8

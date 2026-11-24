@@ -10,11 +10,11 @@ from typing import Any
 from fastapi import APIRouter, HTTPException, Query, Request
 from sqlalchemy import select
 
-from app.config import AI_PROVIDER, SUPPORTED_VOICE_LANGUAGES
-from app.db.connection import SessionLocal
-from app.models.assistant import VoiceCommand
-from app.schemas.assistant import AskIn, VALID_COMMAND_CATEGORIES
-from app.services.ai import (
+from ..config import AI_PROVIDER, SUPPORTED_VOICE_LANGUAGES
+from ..db.connection import SessionLocal
+from ..models.assistant import VoiceCommand
+from ..schemas.assistant import AskIn, VALID_COMMAND_CATEGORIES
+from ..services.ai import (
     AIProviderError,
     AIUnavailableError,
     AskRateLimited,

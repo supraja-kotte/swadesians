@@ -4,7 +4,7 @@ from typing import Any
 
 from fastapi import APIRouter, Query
 
-from app.services import nasa_service
+from ..services import nasa_service
 
 router = APIRouter(prefix="/nasa", tags=["nasa"])
 

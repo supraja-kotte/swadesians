@@ -7,7 +7,7 @@ but deliberately no benefit amounts, eligibility rules or application claims.
 
 from sqlalchemy import Boolean, Column, DateTime, Integer, String, func
 
-from app.db.connection import Base
+from ..db.connection import Base
 
 
 class SchemeTopic(Base):

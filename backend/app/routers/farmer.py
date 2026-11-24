@@ -10,19 +10,19 @@ from typing import Any
 
 from fastapi import APIRouter, Depends, HTTPException, Request, Response
 
-from app.config import (
+from ..config import (
     COOKIE_SECURE,
     FARMER_COOKIE_NAME,
     FARMER_CSRF_COOKIE_NAME,
     FARMER_HINT_COOKIE_NAME,
 )
-from app.db.connection import SessionLocal
-from app.dependencies import farmer_token_from_request, require_farmer
-from app.models.profile import FarmerProfile
-from app.routers.profile import save_record, serialize
-from app.schemas.farmer import FarmerLoginIn, FarmerRegisterIn
-from app.schemas.profile import ProfileIn
-from app.services.farmer_auth import (
+from ..db.connection import SessionLocal
+from ..dependencies import farmer_token_from_request, require_farmer
+from ..models.profile import FarmerProfile
+from ..routers.profile import save_record, serialize
+from ..schemas.farmer import FarmerLoginIn, FarmerRegisterIn
+from ..schemas.profile import ProfileIn
+from ..services.farmer_auth import (
     LOGIN_LOCKOUT_SECONDS,
     SESSION_HOURS,
     TooManyLoginAttempts,

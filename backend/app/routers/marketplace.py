@@ -9,7 +9,7 @@ from typing import Any
 
 from fastapi import APIRouter, HTTPException, Query
 
-from app.services import mandi_service
+from ..services import mandi_service
 
 router = APIRouter(prefix="/marketplace", tags=["marketplace"])
 logger = logging.getLogger(__name__)

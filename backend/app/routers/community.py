@@ -11,11 +11,11 @@ from fastapi import APIRouter, Depends, File, HTTPException, Query, Request, Upl
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
-from app.db.connection import SessionLocal
-from app.dependencies import require_admin, require_admin_value
-from app.models.community import CommunityMedia, CommunityPost, CommunityReply
-from app.schemas.community import ModerationIn, PostIn, ReplyIn, VALID_CATEGORIES
-from app.services.uploads import (
+from ..db.connection import SessionLocal
+from ..dependencies import require_admin, require_admin_value
+from ..models.community import CommunityMedia, CommunityPost, CommunityReply
+from ..schemas.community import ModerationIn, PostIn, ReplyIn, VALID_CATEGORIES
+from ..services.uploads import (
     UploadError,
     UploadRateLimited,
     check_upload_allowed,

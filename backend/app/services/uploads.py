@@ -17,7 +17,7 @@ from pathlib import Path
 
 from fastapi import UploadFile
 
-from app import config
+from .. import config
 
 # ext -> (expected content-type prefix, kind, magic bytes at offset 0)
 ALLOWED_TYPES = {

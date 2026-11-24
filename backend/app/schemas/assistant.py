@@ -2,7 +2,7 @@
 
 from pydantic import BaseModel, Field
 
-from app.config import SUPPORTED_VOICE_LANGUAGES
+from ..config import SUPPORTED_VOICE_LANGUAGES
 
 VALID_COMMAND_CATEGORIES = {
     "navigation",

@@ -11,14 +11,14 @@ from uuid import uuid4
 from fastapi import APIRouter, Header, HTTPException, Query
 from sqlalchemy import func, select
 
-from app.db.connection import SessionLocal
-from app.models.equipment import (
+from ..db.connection import SessionLocal
+from ..models.equipment import (
     EquipmentEnquiry,
     EquipmentListing,
     EquipmentProvider,
     EquipmentProviderEnquiry,
 )
-from app.schemas.equipment import (
+from ..schemas.equipment import (
     EnquiryIn,
     EnquiryUpdateIn,
     ListingIn,
@@ -28,7 +28,7 @@ from app.schemas.equipment import (
     ProviderIn,
     VALID_EQUIPMENT_CATEGORIES,
 )
-from app.services.keys import hash_browser_key
+from ..services.keys import hash_browser_key
 
 router = APIRouter(prefix="/equipment", tags=["equipment"])
 

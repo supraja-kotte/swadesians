@@ -5,14 +5,14 @@ from typing import Any
 
 from fastapi import HTTPException, Request
 
-from app.config import (
+from .config import (
     ADMIN_COOKIE_NAME,
     CSRF_COOKIE_NAME,
     FARMER_COOKIE_NAME,
     FARMER_CSRF_COOKIE_NAME,
 )
-from app.services.auth import get_admin_by_token
-from app.services.farmer_auth import get_farmer_by_token
+from .services.auth import get_admin_by_token
+from .services.farmer_auth import get_farmer_by_token
 
 MUTATING_METHODS = {"POST", "PUT", "PATCH", "DELETE"}
 

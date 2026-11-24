@@ -21,6 +21,11 @@ MODE = os.getenv("AGRIGUIDE_MODE", "development")
 RELEASE_VERSION = os.getenv("AGRIGUIDE_VERSION", "1.1.0-live")
 API_PREFIX = "/api"
 
+# Vercel runs functions with a read-only source tree and sets VERCEL=1. Use
+# /tmp for generated files there so importing the app never fails on a
+# read-only filesystem. Local development keeps the familiar project paths.
+IS_VERCEL = os.getenv("VERCEL", "").strip().lower() in {"1", "true", "yes"}
+
 # Cookie auth settings. Secure cookies require HTTPS, so they are only enabled
 # in production mode. SameSite=Strict blocks cross-site cookie sending.
 COOKIE_SECURE = MODE.strip().lower() == "production"
@@ -33,17 +38,24 @@ ADMIN_HINT_COOKIE_NAME = "agriguide_admin_hint"
 FARMER_COOKIE_NAME = "agriguide_farmer"
 FARMER_CSRF_COOKIE_NAME = "agriguide_farmer_csrf"
 FARMER_HINT_COOKIE_NAME = "agriguide_farmer_hint"
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./agri_guide.db")
+DEFAULT_DATABASE_URL = (
+    "sqlite:////tmp/agri_guide.db" if IS_VERCEL else "sqlite:///./agri_guide.db"
+)
+DATABASE_URL = os.getenv("DATABASE_URL", DEFAULT_DATABASE_URL)
 
 # Community photos and videos are stored on this server only, never in git or
-# in a CDN. Tests point UPLOAD_DIR at a temporary folder.
-UPLOAD_DIR = Path(os.getenv("UPLOAD_DIR", str(BACKEND_DIR / "uploads"))).resolve()
+# in a CDN. Tests point UPLOAD_DIR at a temporary folder. On Vercel the source
+# tree is read-only, so generated uploads go to /tmp.
+DEFAULT_UPLOAD_DIR = "/tmp/agriguide-uploads" if IS_VERCEL else str(BACKEND_DIR / "uploads")
+UPLOAD_DIR = Path(os.getenv("UPLOAD_DIR", DEFAULT_UPLOAD_DIR)).resolve()
 UPLOAD_URL_PREFIX = "/uploads"
 UPLOAD_MAX_IMAGE_BYTES = 8 * 1024 * 1024
 UPLOAD_MAX_VIDEO_BYTES = 60 * 1024 * 1024
 ALLOWED_ORIGINS = os.getenv(
     "ALLOWED_ORIGINS",
-    "http://localhost:8000,http://127.0.0.1:8000,http://localhost:8010,http://127.0.0.1:8010,http://localhost:3000,http://127.0.0.1:3000",
+    "http://localhost:8000,http://127.0.0.1:8000,http://localhost:8010,"
+    "http://127.0.0.1:8010,http://localhost:3000,http://127.0.0.1:3000,"
+    "https://swadesians.vercel.app,https://swadesians-backend.vercel.app",
 )
 
 # Integration settings. Weather and mandi data are fetched live; no fallback

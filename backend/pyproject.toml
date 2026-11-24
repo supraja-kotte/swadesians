@@ -1,0 +1,18 @@
+[project]
+name = "agriguide-backend"
+version = "1.1.0"
+description = "FastAPI backend for the AgriGuide farming platform"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi",
+    "uvicorn[standard]",
+    "python-dotenv",
+    "sqlalchemy",
+    "psycopg[binary]",
+    "python-multipart",
+    "pytest",
+    "httpx2",
+]
+
+[tool.vercel]
+entrypoint = "app.main:app"

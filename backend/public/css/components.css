@@ -1,0 +1,282 @@
+/* Reusable UI pieces: language picker, cards, navigation and voice helper. */
+
+.language-card {
+  background: var(--white);
+  border: 1px solid var(--stone-200);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.25rem;
+  margin: 2rem 0 1.5rem;
+}
+
+.section-label {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--stone-600);
+  margin-bottom: 0.75rem;
+}
+
+.language-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.language-pill {
+  min-height: 3rem;
+  padding: 0.5rem 1.1rem;
+  border-radius: 999px;
+  border: 2px solid var(--stone-200);
+  background: var(--white);
+  color: var(--stone-900);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.language-pill.is-active {
+  border-color: var(--green-700);
+  background: var(--green-700);
+  color: var(--white);
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.feature-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.25rem;
+  min-height: 11rem;
+  padding: 1.25rem;
+  background: var(--white);
+  border: 2px solid var(--stone-200);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.feature-card:hover,
+.feature-card:focus-visible {
+  border-color: var(--green-700);
+  box-shadow: 0 10px 24px rgba(28, 25, 23, 0.12);
+  transform: translateY(-2px);
+}
+
+.feature-card:active {
+  transform: scale(0.99);
+}
+
+.feature-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.feature-icon {
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 1.25rem;
+  display: grid;
+  place-items: center;
+  color: var(--white);
+  flex: none;
+}
+
+.feature-icon .icon {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.tone-green {
+  background: var(--green-700);
+}
+
+.tone-sky {
+  background: var(--sky-700);
+}
+
+.tone-amber {
+  background: var(--amber-600);
+}
+
+.tone-violet {
+  background: var(--violet-700);
+}
+
+.feature-chevron {
+  color: var(--stone-600);
+}
+
+.feature-text h2 {
+  font-size: 1.4rem;
+  line-height: 1.2;
+  margin-bottom: 0.35rem;
+}
+
+.feature-text p {
+  margin-bottom: 0;
+  color: var(--stone-600);
+}
+
+.demo-badge {
+  display: inline-block;
+  background: #fef3c7;
+  color: #92400e;
+  border-radius: 999px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.bottom-nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--white);
+  border-top: 1px solid var(--stone-200);
+  z-index: 10;
+}
+
+.bottom-nav-inner {
+  max-width: 48rem;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  padding: 0.35rem 0.5rem calc(0.35rem + env(safe-area-inset-bottom));
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.4rem 0.1rem;
+  color: var(--stone-600);
+  font-size: 0.7rem;
+  text-align: center;
+  border-radius: 0.75rem;
+}
+
+.nav-item .icon {
+  width: 1.35rem;
+  height: 1.35rem;
+}
+
+.nav-item.is-active {
+  color: var(--green-700);
+  font-weight: 700;
+}
+
+.voice-fab {
+  position: fixed;
+  right: 1rem;
+  bottom: 5.25rem;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 999px;
+  border: none;
+  background: var(--green-700);
+  color: var(--white);
+  display: grid;
+  place-items: center;
+  box-shadow: 0 8px 24px rgba(21, 128, 61, 0.4);
+  cursor: pointer;
+  z-index: 20;
+}
+
+.voice-fab:active {
+  transform: scale(0.95);
+}
+
+.voice-fab .icon {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.voice-panel {
+  position: fixed;
+  left: 1rem;
+  right: 1rem;
+  bottom: 9.5rem;
+  max-width: 46rem;
+  margin: 0 auto;
+  background: var(--white);
+  border: 2px solid var(--stone-200);
+  border-radius: var(--radius);
+  box-shadow: 0 12px 32px rgba(28, 25, 23, 0.18);
+  padding: 1.25rem;
+  z-index: 30;
+}
+
+.voice-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.voice-panel-head h2 {
+  font-size: 1.15rem;
+  margin-bottom: 0;
+}
+
+.icon-button {
+  border: none;
+  background: transparent;
+  font-size: 1.75rem;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--stone-600);
+}
+
+.voice-panel-desc {
+  color: var(--stone-600);
+  font-size: 0.9rem;
+  margin: 0.75rem 0 1rem;
+}
+
+.voice-panel-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.primary-button,
+.secondary-button {
+  min-height: 2.75rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.primary-button {
+  border: 2px solid var(--green-700);
+  background: var(--green-700);
+  color: var(--white);
+}
+
+.secondary-button {
+  border: 2px solid var(--stone-200);
+  background: var(--white);
+  color: var(--stone-900);
+}
+
+.speech-status {
+  margin: 0.75rem 0 0;
+  font-size: 0.85rem;
+  color: #b91c1c;
+}
+
+@media (min-width: 640px) {
+  .feature-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

@@ -1,4 +1,5 @@
 import { translate } from "../i18n/index.js";
+import { setFlashMessage, refreshApp } from "../state.js";
 import { icon } from "../components/icons.js";
 import { adminFetch, hasSessionHint as hasAdminSession, loginAdmin, logoutAdmin } from "../services/adminAuth.js";
 import {
@@ -13,11 +14,16 @@ const authState = {
   role: "farmer",
   mode: "login",
   checking: false,
+  redirecting: false,
   identity: null,
   message: "",
   error: "",
   form: { username: "", password: "", displayName: "", confirm: "" },
 };
+
+// Sign-in moves straight into the app after a short success beat. Keep the
+// timer cancellable so navigation or sign-out never triggers a late redirect.
+let redirectTimer = 0;
 
 function escapeHtml(value) {
   return String(value ?? "")
@@ -37,6 +43,32 @@ function roleHasSession(role) {
 
 function clearForm() {
   authState.form = { username: "", password: "", displayName: "", confirm: "" };
+}
+
+function destinationForRole(role) {
+  return role === "farmer" ? "#/dashboard" : "#/admin";
+}
+
+export function cancelAuthRedirect() {
+  if (redirectTimer) {
+    window.clearTimeout(redirectTimer);
+    redirectTimer = 0;
+  }
+  authState.redirecting = false;
+}
+
+function scheduleRedirect(language, destination) {
+  cancelAuthRedirect();
+  authState.redirecting = true;
+  authState.checking = true;
+  setFlashMessage(authState.message);
+  updateView(language);
+
+  redirectTimer = window.setTimeout(() => {
+    redirectTimer = 0;
+    authState.redirecting = false;
+    window.location.hash = destination;
+  }, 750);
 }
 
 function renderRoleTabs(language) {
@@ -127,18 +159,20 @@ function renderForm(language) {
 
 function renderSession(language) {
   const isFarmer = authState.identity.role === "farmer";
-  const destination = isFarmer ? "#/dashboard" : "#/admin";
+  const destination = destinationForRole(authState.identity.role);
   const actionKey = isFarmer ? "authGoDashboard" : "authGoAdmin";
+  const transitioning = authState.redirecting;
 
   return `
-    <section class="auth-session-card">
+    <section class="auth-session-card${transitioning ? " is-transitioning" : ""}" ${transitioning ? 'aria-busy="true"' : ""}>
       <p class="success-message">${escapeHtml(authState.message)}</p>
       <p>${escapeHtml(t(language, "authSignedInAs"))}
         <strong>${escapeHtml(authState.identity.name)}</strong>
         <span class="auth-role-badge">${escapeHtml(t(language, isFarmer ? "authRoleFarmer" : "authRoleAdmin"))}</span>
       </p>
+      ${transitioning ? '<div class="auth-progress" aria-hidden="true"><span></span></div>' : ""}
       <div class="form-actions">
-        <a class="primary-button" href="${destination}">${escapeHtml(t(language, actionKey))}</a>
+        <a class="primary-button" data-auth-open href="${destination}">${escapeHtml(t(language, actionKey))}</a>
         <button type="button" id="auth-signout" class="secondary-button" ${authState.checking ? "disabled" : ""}>
           ${escapeHtml(t(language, "authSignOut"))}
         </button>
@@ -205,6 +239,7 @@ async function submit(language) {
   if (authState.checking) return;
 
   const isRegister = authState.role === "farmer" && authState.mode === "register";
+  const role = authState.role;
   const username = authState.form.username.trim();
   const password = authState.form.password;
 
@@ -219,9 +254,10 @@ async function submit(language) {
   authState.message = "";
   updateView(language);
 
+  let signedIn = false;
   try {
     let body;
-    if (authState.role === "admin") {
+    if (role === "admin") {
       body = await loginAdmin(username, password);
     } else if (isRegister) {
       body = await registerFarmer(username, password, authState.form.displayName.trim());
@@ -230,22 +266,25 @@ async function submit(language) {
     }
 
     authState.identity = {
-      role: authState.role,
+      role,
       name: body.display_name ?? body.username ?? username,
     };
-    authState.message = t(language, isRegister || authState.role === "farmer" ? "authSuccessFarmer" : "authSuccessAdmin");
+    authState.message = t(language, isRegister || role === "farmer" ? "authSuccessFarmer" : "authSuccessAdmin");
     clearForm();
+    signedIn = true;
   } catch {
     authState.error = t(language, "authError");
   } finally {
     authState.checking = false;
     updateView(language);
+    if (signedIn) scheduleRedirect(language, destinationForRole(role));
   }
 }
 
 async function signOut(language) {
   if (!authState.identity || authState.checking) return;
 
+  cancelAuthRedirect();
   authState.checking = true;
   updateView(language);
 
@@ -262,6 +301,7 @@ async function signOut(language) {
   authState.error = "";
   authState.checking = false;
   updateView(language);
+  refreshApp();
 }
 
 function attachEvents(language) {
@@ -285,6 +325,7 @@ function attachEvents(language) {
   root.addEventListener("click", (event) => {
     const roleButton = event.target.closest("[data-auth-role]");
     if (roleButton) {
+      cancelAuthRedirect();
       authState.role = roleButton.dataset.authRole;
       authState.mode = "login";
       authState.identity = null;
@@ -305,6 +346,7 @@ function attachEvents(language) {
       return;
     }
 
+    if (event.target.closest("[data-auth-open]")) cancelAuthRedirect();
     if (event.target.closest("#auth-signout")) signOut(language);
   });
 }
@@ -326,6 +368,7 @@ export function renderLoginPage(language) {
 }
 
 export function initLoginPage(language) {
+  cancelAuthRedirect();
   attachEvents(language);
   const initialRole = hasFarmerSession() ? "farmer" : hasAdminSession() ? "admin" : "farmer";
   authState.role = initialRole;

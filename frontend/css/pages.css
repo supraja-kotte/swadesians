@@ -1667,6 +1667,35 @@ input[type="text"] {
   margin: 0;
 }
 
+.auth-session-card.is-transitioning {
+  border-color: var(--green-700);
+}
+
+.auth-progress {
+  height: 0.35rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--green-050);
+}
+
+.auth-progress span {
+  display: block;
+  width: 40%;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--green-700);
+  animation: auth-progress 0.9s ease-in-out infinite;
+}
+
+@keyframes auth-progress {
+  from {
+    transform: translateX(-110%);
+  }
+  to {
+    transform: translateX(260%);
+  }
+}
+
 .auth-role-badge {
   display: inline-block;
   margin-left: 0.4rem;

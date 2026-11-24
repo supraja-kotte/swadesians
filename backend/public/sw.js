@@ -4,7 +4,7 @@
  * come from the network. This worker only caches the static shell so a
  * previously installed PWA opens instantly and survives brief connection loss.
  */
-const CACHE_NAME = "agriguide-shell-v1";
+const CACHE_NAME = "agriguide-shell-v2";
 const SHELL = [
   "/",
   "/index.html",

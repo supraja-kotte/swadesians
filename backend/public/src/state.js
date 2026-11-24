@@ -4,6 +4,7 @@
 import { supportedLanguages } from "./i18n/index.js";
 
 const STORAGE_KEY = "agriguide.language";
+const FLASH_KEY = "agriguide.flashMessage";
 
 export const state = {
   language: "en",
@@ -63,5 +64,29 @@ export function toggleVoicePanel() {
 export function closeVoicePanel() {
   if (!state.voicePanelOpen) return;
   state.voicePanelOpen = false;
+  notify();
+}
+
+// A signed-in user is taken straight into the app. The destination page shows
+// this one-time message so the hand-off feels intentional instead of abrupt.
+export function setFlashMessage(message) {
+  try {
+    sessionStorage.setItem(FLASH_KEY, message);
+  } catch {
+    // Session storage may be blocked; navigation still works without the toast.
+  }
+}
+
+export function consumeFlashMessage() {
+  try {
+    const message = sessionStorage.getItem(FLASH_KEY) ?? "";
+    if (message) sessionStorage.removeItem(FLASH_KEY);
+    return message;
+  } catch {
+    return "";
+  }
+}
+
+export function refreshApp() {
   notify();
 }

@@ -1,4 +1,13 @@
-import { initState, state, subscribe, setLanguage, setRoute, toggleVoicePanel, closeVoicePanel } from "./state.js";
+import {
+  initState,
+  state,
+  subscribe,
+  setLanguage,
+  setRoute,
+  toggleVoicePanel,
+  closeVoicePanel,
+  consumeFlashMessage,
+} from "./state.js";
 import { startRouter } from "./router.js";
 import { renderHeader } from "./components/header.js";
 import { renderLanguagePicker } from "./components/languagePicker.js";
@@ -7,7 +16,7 @@ import { renderVoiceButton } from "./components/voiceButton.js";
 import { renderVoicePanel } from "./components/voicePanel.js";
 import { renderHome, initHome } from "./pages/home.js";
 import { renderAdmin, initAdmin } from "./pages/admin.js";
-import { renderLoginPage, initLoginPage } from "./pages/login.js";
+import { renderLoginPage, initLoginPage, cancelAuthRedirect } from "./pages/login.js";
 import { renderAssistant, initAssistant } from "./pages/assistant.js";
 import { renderSchemes, initSchemes } from "./pages/schemes.js";
 import { renderSmartFarming, initSmartFarming } from "./pages/smartFarming.js";
@@ -83,8 +92,26 @@ function attachEvents() {
   });
 }
 
+function showFlashMessage() {
+  const message = consumeFlashMessage();
+  if (!message) return;
+
+  const shell = app.querySelector(".app-shell");
+  if (!shell) return;
+
+  const toast = document.createElement("div");
+  toast.className = "app-toast";
+  toast.setAttribute("role", "status");
+  toast.textContent = message;
+  shell.appendChild(toast);
+
+  window.setTimeout(() => toast.classList.add("is-hiding"), 2600);
+  window.setTimeout(() => toast.remove(), 3200);
+}
+
 function render() {
   const { language, route, voicePanelOpen } = state;
+  if (route !== "#/login") cancelAuthRedirect();
   document.documentElement.lang = language;
   stopSpeaking();
 
@@ -101,6 +128,7 @@ function render() {
 
   attachEvents();
   pageMounts[route]?.(language);
+  showFlashMessage();
 }
 
 initState();
